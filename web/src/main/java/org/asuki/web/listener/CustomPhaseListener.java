@@ -6,24 +6,24 @@ import javax.faces.event.PhaseListener;
 
 public class CustomPhaseListener implements PhaseListener {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	public void afterPhase(PhaseEvent arg0) {
-		// TODO Auto-generated method stub
+    @Override
+    public void afterPhase(PhaseEvent arg0) {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public void beforePhase(PhaseEvent arg0) {
-		// TODO Auto-generated method stub
+    @Override
+    public void beforePhase(PhaseEvent arg0) {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public PhaseId getPhaseId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public PhaseId getPhaseId() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

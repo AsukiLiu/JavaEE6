@@ -10,39 +10,39 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 public class NioDemo {
 
-	public static void stringToFile(String filePath, String content)
-			throws IOException {
-		Files.write(Paths.get(filePath), content.getBytes());
-	}
+    public static void stringToFile(String filePath, String content)
+            throws IOException {
+        Files.write(Paths.get(filePath), content.getBytes());
+    }
 
-	public static String fileToString(String filePath) throws IOException {
-		return new String(Files.readAllBytes(Paths.get(filePath)));
-	}
+    public static String fileToString(String filePath) throws IOException {
+        return new String(Files.readAllBytes(Paths.get(filePath)));
+    }
 
-	public static void deleteRecursively(String directoryPath)
-			throws IOException {
+    public static void deleteRecursively(String directoryPath)
+            throws IOException {
 
-		Path path = Paths.get(directoryPath);
+        Path path = Paths.get(directoryPath);
 
-		Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
+        Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
 
-			@Override
-			public FileVisitResult visitFile(Path file,
-					BasicFileAttributes attrs) throws IOException {
+            @Override
+            public FileVisitResult visitFile(Path file,
+                    BasicFileAttributes attrs) throws IOException {
 
-				Files.delete(file);
-				return FileVisitResult.CONTINUE;
-			}
+                Files.delete(file);
+                return FileVisitResult.CONTINUE;
+            }
 
-			@Override
-			public FileVisitResult postVisitDirectory(Path dir, IOException exc)
-					throws IOException {
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc)
+                    throws IOException {
 
-				Files.delete(dir);
-				return FileVisitResult.CONTINUE;
-			}
+                Files.delete(dir);
+                return FileVisitResult.CONTINUE;
+            }
 
-		});
-	}
+        });
+    }
 
 }
