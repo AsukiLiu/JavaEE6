@@ -11,6 +11,7 @@
     <modules>
         <module>common</module>
         <module>web</module>
+        <module>model</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,6 +29,11 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.12.6</version>
+        </dependency>
         <!-- Utility -->
         <dependency>
             <groupId>com.google.guava</groupId>
