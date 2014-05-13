@@ -15,6 +15,7 @@
         <module>dao</module>
         <module>app</module>
         <module>service</module>
+        <module>service-impl</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
