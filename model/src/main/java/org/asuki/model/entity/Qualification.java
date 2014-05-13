@@ -1,4 +1,4 @@
-package org.asuki.model;
+package org.asuki.model.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import lombok.*;
 
 @Entity
-@Table(name = "QUALIFICATION")
+@Table(name = "qualification")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -20,13 +20,13 @@ public class Qualification implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "QUALIFICATION_ID", nullable = false)
+    @Column(name = "qualification_id", nullable = false)
     private int qualificationId;
 
-    @Column(name = "QUALIFICATION_NAME", nullable = false)
+    @Column(name = "qualification_name", nullable = false)
     private String qualificationName;
 
-    @Column(name = "QUALIFICATION_TYPE")
+    @Column(name = "qualification_type")
     private String qualificationType;
 
     @ManyToMany(targetEntity = Employee.class, mappedBy = "qualifications")

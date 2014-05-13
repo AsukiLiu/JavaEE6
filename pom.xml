@@ -12,9 +12,12 @@
         <module>common</module>
         <module>web</module>
         <module>model</module>
+        <module>dao</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- TODO -->
+        <project.version>0.0.1-SNAPSHOT</project.version>
     </properties>
     <!-- JBoss Enterprise Application Platform - Version 6.1.0.GA -->
     <dependencyManagement>

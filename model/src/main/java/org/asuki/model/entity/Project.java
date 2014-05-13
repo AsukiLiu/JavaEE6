@@ -1,4 +1,4 @@
-package org.asuki.model;
+package org.asuki.model.entity;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import lombok.*;
 
 @Entity
-@Table(name = "PROJECT")
+@Table(name = "project")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -18,13 +18,13 @@ public class Project implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "PROJECT_ID", nullable = false)
+    @Column(name = "project_id", nullable = false)
     private int projectId;
 
-    @Column(name = "PROJECT_NAME", nullable = false)
+    @Column(name = "project_name", nullable = false)
     private String projectName;
 
-    @Column(name = "PLATFORM")
+    @Column(name = "platform")
     private String platform;
 
 }

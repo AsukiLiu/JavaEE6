@@ -1,4 +1,4 @@
-package org.asuki.model;
+package org.asuki.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 import lombok.*;
 
 @Entity
-@Table(name = "EMPLOYEE")
+@Table(name = "employee")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -28,44 +28,44 @@ public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "EMPLOYEE_ID", nullable = false)
+    @Column(name = "employee_id", nullable = false)
     private int employeeId;
 
-    @Column(name = "EMPLOYEE_NAME", nullable = false)
+    @Column(name = "employee_name", nullable = false)
     private String employeeName;
 
     @OneToOne(targetEntity = Address.class)
-    @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ADDRESS_ID")
+    @JoinColumn(name = "address_id", referencedColumnName = "address_id")
     private Address address;
 
     @OneToOne(targetEntity = Phone.class, mappedBy = "employee")
     private Phone phone;
 
     @OneToMany(targetEntity = Email.class)
-    @JoinTable(name = "EMPLOYEE_EMAIL", joinColumns = @JoinColumn(name = "HOLDER_ID", referencedColumnName = "EMPLOYEE_ID"), inverseJoinColumns = @JoinColumn(name = "EMAIL_ID", referencedColumnName = "EMAIL_ID"))
+    @JoinTable(name = "employee_email", joinColumns = @JoinColumn(name = "holder_id", referencedColumnName = "employee_id"), inverseJoinColumns = @JoinColumn(name = "email_id", referencedColumnName = "email_id"))
     private List<Email> emails;
 
     @ManyToOne(targetEntity = Department.class)
-    @JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "DEPARTMENT_ID")
+    @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     private Department department;
 
-    @Column(name = "ENTRANCE_DATE", nullable = false)
+    @Column(name = "entrance_date", nullable = false)
     @Temporal(value = TemporalType.DATE)
     private Date entranceDate;
 
     @ManyToOne(targetEntity = Job.class)
-    @JoinColumn(name = "JOB_ID", referencedColumnName = "JOB_ID", nullable = false)
+    @JoinColumn(name = "job_id", referencedColumnName = "job_id", nullable = false)
     private Job job;
 
-    @Column(name = "MONTHLY_SALARY", nullable = false)
+    @Column(name = "monthly_salary", nullable = false)
     private int monthlySalary;
 
     @ManyToMany(targetEntity = Project.class)
-    @JoinTable(name = "EMPLOYEE_PROJECT", joinColumns = @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID"), inverseJoinColumns = @JoinColumn(name = "PROJECT_ID", referencedColumnName = "PROJECT_ID"))
+    @JoinTable(name = "employee_project", joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "employee_id"), inverseJoinColumns = @JoinColumn(name = "project_id", referencedColumnName = "project_id"))
     private List<Project> projects;
 
     @ManyToMany(targetEntity = Qualification.class)
-    @JoinTable(name = "EMPLOYEE_QUALIFICATION", joinColumns = @JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID"), inverseJoinColumns = @JoinColumn(name = "QUALIFICATION_ID", referencedColumnName = "QUALIFICATION_ID"))
+    @JoinTable(name = "employee_qualification", joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "employee_id"), inverseJoinColumns = @JoinColumn(name = "qualification_id", referencedColumnName = "qualification_id"))
     private List<Qualification> qualifications;
 
 }

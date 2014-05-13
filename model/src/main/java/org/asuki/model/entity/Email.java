@@ -1,4 +1,4 @@
-package org.asuki.model;
+package org.asuki.model.entity;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import lombok.*;
 
 @Entity
-@Table(name = "EMAIL")
+@Table(name = "email")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -18,13 +18,13 @@ public class Email implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "EMAIL_ID")
+    @Column(name = "email_id")
     private int emailId;
 
-    @Column(name = "EMAIL_TYPE", nullable = false)
+    @Column(name = "email_type", nullable = false)
     private int emailType;
 
-    @Column(name = "EMAIL_ADDRESS", nullable = false)
+    @Column(name = "email_address", nullable = false)
     private String emailAddress;
 
 }
