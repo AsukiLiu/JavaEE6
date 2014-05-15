@@ -113,7 +113,6 @@ public class AddressServiceIT extends Arquillian {
         assertThat(addresses.size(), is(0));
 
         Address address = new Address();
-        address.setAddressId(1);
         address.setCity("city");
         address.setPrefecture("prefecture");
         address.setZipCode("zipCode");
@@ -124,7 +123,7 @@ public class AddressServiceIT extends Arquillian {
         addresses = service.findAll();
         assertThat(addresses.size(), is(1));
 
-        address = service.findById(address.getAddressId());
+        address = service.findById(address.getId());
         assertThat(address.toString(), is(expected));
 
     }

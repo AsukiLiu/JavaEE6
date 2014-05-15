@@ -1,12 +1,12 @@
 package org.asuki.model.entity;
 
-import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.asuki.model.BaseEntity;
 
 import lombok.*;
 
@@ -15,13 +15,9 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Qualification implements Serializable {
+public class Qualification extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @Column(name = "qualification_id", nullable = false)
-    private int qualificationId;
 
     @Column(name = "qualification_name", nullable = false)
     private String qualificationName;
