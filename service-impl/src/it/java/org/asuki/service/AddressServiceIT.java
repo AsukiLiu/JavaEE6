@@ -41,7 +41,7 @@ public class AddressServiceIT extends Arquillian {
                         "META-INF/jboss-deployment-structure.xml",
                         "jboss-deployment-structure.xml");
 
-        // System.out.println(ear.toString(true));
+        System.out.println(ear.toString(true));
         // export(ear, format("/tmp/%s", EAR_FILE_NAME));
 
         return ear;
@@ -76,14 +76,14 @@ public class AddressServiceIT extends Arquillian {
 
         deleteConflictedLibraries(war);
 
-        // System.out.println(war.toString(true));
+        System.out.println(war.toString(true));
 
         return war;
     }
 
     private static void deleteConflictedLibraries(Archive<?> archive) {
         Map<ArchivePath, Node> content = archive.getContent(Filters
-                .include("^/WEB-INF/lib/dao-.*\\.jar$"));
+                .include("^/WEB-INF/lib/demo-.*\\.jar$"));
         for (ArchivePath ap : content.keySet()) {
             archive.delete(ap.get());
         }

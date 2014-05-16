@@ -8,8 +8,8 @@
         <artifactId>javaee6</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>common</artifactId>
-    <name>common</name>
+    <artifactId>demo-common</artifactId>
+    <name>Demo common utility</name>
     <dependencies>
     </dependencies>
 </project>

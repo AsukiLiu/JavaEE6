@@ -8,18 +8,18 @@
         <artifactId>javaee6</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>dao</artifactId>
-    <name>dao</name>
+    <artifactId>demo-dao</artifactId>
+    <name>Demo dao</name>
     <dependencies>
         <!-- Module -->
         <dependency>
             <groupId>org.asuki</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>demo-common</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.asuki</groupId>
-            <artifactId>model</artifactId>
+            <artifactId>demo-model</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- Spec -->

@@ -14,8 +14,8 @@ import javax.persistence.TypedQuery;
 
 import lombok.Setter;
 
-import com.beust.jcommander.internal.Maps;
 import com.google.common.base.Optional;
+import com.google.common.collect.Maps;
 
 public abstract class BaseDao<E extends Serializable, K extends Serializable> {
 

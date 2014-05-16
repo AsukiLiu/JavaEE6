@@ -8,16 +8,16 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>service</artifactId>
+    <artifactId>demo-service</artifactId>
     <packaging>ejb</packaging>
 
-    <name>service</name>
+    <name>Demo EJB services</name>
 
     <dependencies>
         <!-- Module -->
         <dependency>
             <groupId>org.asuki</groupId>
-            <artifactId>model</artifactId>
+            <artifactId>demo-model</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- Spec -->

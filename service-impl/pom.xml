@@ -8,23 +8,23 @@
         <artifactId>javaee6</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>service-impl</artifactId>
-    <name>service-impl</name>
+    <artifactId>demo-service-impl</artifactId>
+    <name>Demo service implements</name>
     <dependencies>
         <!-- Module -->
         <dependency>
             <groupId>org.asuki</groupId>
-            <artifactId>model</artifactId>
+            <artifactId>demo-model</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.asuki</groupId>
-            <artifactId>dao</artifactId>
+            <artifactId>demo-dao</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.asuki</groupId>
-            <artifactId>service</artifactId>
+            <artifactId>demo-service</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!--Spec -->

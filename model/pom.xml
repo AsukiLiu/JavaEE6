@@ -8,8 +8,8 @@
         <artifactId>javaee6</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>model</artifactId>
-    <name>model</name>
+    <artifactId>demo-model</artifactId>
+    <name>Demo model</name>
     <dependencies>
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>

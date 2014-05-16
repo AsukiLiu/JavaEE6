@@ -8,9 +8,9 @@
         <artifactId>javaee6</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>web</artifactId>
+    <artifactId>demo-web</artifactId>
     <packaging>war</packaging>
-    <name>Webapp</name>
+    <name>Demo web application</name>
     <dependencies>
         <dependency>
             <groupId>org.jboss.spec.javax.faces</groupId>
@@ -18,7 +18,4 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-    <build>
-        <finalName>web</finalName>
-    </build>
 </project>

@@ -8,15 +8,15 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>app</artifactId>
+    <artifactId>demo-app</artifactId>
     <packaging>ear</packaging>
 
-    <name>app</name>
+    <name>Demo enterprise application</name>
 
     <dependencies>
         <dependency>
             <groupId>org.asuki</groupId>
-            <artifactId>dao</artifactId>
+            <artifactId>demo-dao</artifactId>
             <version>${project.version}</version>
             <type>ejb</type>
         </dependency>
