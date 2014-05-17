@@ -2,16 +2,25 @@
     <wb-module deploy-name="demo-app">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/application" tag="defaultRootSource"/>
-        <dependent-module archiveName="demo-dao-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/demo-dao/demo-dao">
+        <dependent-module archiveName="demo-service-impl.jar" deploy-path="/" handle="module:/resource/demo-service-impl/demo-service-impl">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="demo-common-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/demo-common/demo-common">
+        <dependent-module archiveName="demo-model.jar" deploy-path="/lib" handle="module:/resource/demo-model/demo-model">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="demo-model-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/demo-model/demo-model">
+        <dependent-module archiveName="demo-dao.jar" deploy-path="/lib" handle="module:/resource/demo-dao/demo-dao">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="lombok-1.12.6.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/projectlombok/lombok/1.12.6/lombok-1.12.6.jar">
+        <dependent-module archiveName="demo-common.jar" deploy-path="/lib" handle="module:/resource/demo-common/demo-common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="demo-service.jar" deploy-path="/lib" handle="module:/resource/demo-service/demo-service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jboss-ejb3-ext-api.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/jboss/ejb3/jboss-ejb3-ext-api/2.0.0/jboss-ejb3-ext-api-2.0.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="lombok.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/projectlombok/lombok/1.12.6/lombok-1.12.6.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

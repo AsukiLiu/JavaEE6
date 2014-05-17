@@ -7,12 +7,15 @@ import javax.persistence.Table;
 import org.asuki.model.BaseEntity;
 
 import lombok.*;
+import lombok.experimental.Builder;
 
 @Entity
 @Table(name = "email")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Email extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

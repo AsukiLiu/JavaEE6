@@ -9,12 +9,15 @@ import javax.persistence.Table;
 import org.asuki.model.BaseEntity;
 
 import lombok.*;
+import lombok.experimental.Builder;
 
 @Entity
 @Table(name = "address")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Address extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

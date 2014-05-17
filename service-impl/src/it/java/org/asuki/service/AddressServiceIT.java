@@ -1,5 +1,6 @@
 package org.asuki.service;
 
+import static org.asuki.model.entity.Address.builder;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
@@ -112,19 +113,21 @@ public class AddressServiceIT extends Arquillian {
         List<Address> addresses = service.findAll();
         assertThat(addresses.size(), is(0));
 
-        Address address = new Address();
-        address.setCity("city");
-        address.setPrefecture("prefecture");
-        address.setZipCode("zipCode");
-        String expected = address.toString();
+        // @formatter:off
+        Address expected = builder()
+                .city("city")
+                .prefecture("prefecture")
+                .zipCode("zipCode")
+                .build();
+        // @formatter:on
 
-        address = service.create(address);
+        expected = service.create(expected);
 
         addresses = service.findAll();
         assertThat(addresses.size(), is(1));
 
-        address = service.findById(address.getId());
-        assertThat(address.toString(), is(expected));
+        Address actual = service.findById(expected.getId());
+        assertThat(actual.toString(), is(expected.toString()));
 
     }
 
