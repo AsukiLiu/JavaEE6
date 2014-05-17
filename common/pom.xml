@@ -11,5 +11,10 @@
     <artifactId>demo-common</artifactId>
     <name>Demo common utility</name>
     <dependencies>
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

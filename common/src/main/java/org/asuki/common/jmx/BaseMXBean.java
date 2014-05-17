@@ -38,7 +38,9 @@ public abstract class BaseMXBean {
         MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
 
         try {
-            mBeanServer.registerMBean(this, getObjectName());
+            if (!mBeanServer.isRegistered(objectName)) {
+                mBeanServer.registerMBean(this, getObjectName());
+            }
         } catch (InstanceAlreadyExistsException | MBeanRegistrationException
                 | NotCompliantMBeanException e) {
 
