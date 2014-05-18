@@ -8,7 +8,12 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-public class NioDemo {
+public final class NioUtil {
+
+    private NioUtil() {
+        // Reflectionを防ぐ
+        throw new Error("インスタンス化できない");
+    }
 
     public static void stringToFile(String filePath, String content)
             throws IOException {

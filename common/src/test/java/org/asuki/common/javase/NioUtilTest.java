@@ -1,6 +1,6 @@
 package org.asuki.common.javase;
 
-import static org.asuki.common.javase.NioDemo.*;
+import static org.asuki.common.javase.NioUtil.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 import org.testng.annotations.Test;
 
-public class NioDemoTest {
+public class NioUtilTest {
 
     private final static String FILE_PATH = "./test.txt";
 

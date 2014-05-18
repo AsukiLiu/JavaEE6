@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://jboss.org/schema/arquillian" xsi:schemaLocation="http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+    <defaultProtocol type="Servlet 3.0" />
+
+    <container qualifier="jboss-local" default="true">
+        <configuration>
+            <!-- -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8787 -->
+            <property name="javaVmArguments">-Djboss.socket.binding.port-offset=100
+                -Xmx512m -XX:MaxPermSize=360m
+            </property>
+            <property name="managementPort">10099</property>
+            <property name="outputToConsole">true</property>
+        </configuration>
+    </container>
+</arquillian>

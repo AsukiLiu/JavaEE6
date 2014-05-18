@@ -6,7 +6,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.asuki.model.BaseEntity;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+//import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.*;
 import lombok.experimental.Builder;
@@ -18,17 +26,26 @@ import lombok.experimental.Builder;
 @Getter
 @Setter
 @Builder
+@XmlRootElement(name = "address")
+@JsonIgnoreProperties(ignoreUnknown = true)
+// @JsonPropertyOrder({ "city", "zipCode", "prefecture" })
 public class Address extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     @Column(name = "zip_code")
+    @XmlElement
+    @JsonProperty
     private String zipCode;
 
     @Column(name = "prefecture")
+    @XmlElement
+    @JsonProperty
     private String prefecture;
 
     @Column(name = "city")
+    @XmlAttribute
+    @JsonProperty
     private String city;
 
     // @formatter:off
