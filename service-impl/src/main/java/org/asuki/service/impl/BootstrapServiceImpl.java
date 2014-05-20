@@ -2,26 +2,26 @@ package org.asuki.service.impl;
 
 import static org.asuki.model.entity.Address.builder;
 
-import javax.ejb.EJB;
-import javax.ejb.Remote;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
+import org.asuki.dao.AddressDao;
 import org.asuki.model.entity.Address;
-import org.asuki.service.AddressService;
 import org.asuki.service.BootstrapService;
 
 @Stateless(name = "BootstrapService")
-@Remote(BootstrapService.class)
+@Local(BootstrapService.class)
 public class BootstrapServiceImpl implements BootstrapService {
 
-    @EJB
-    private AddressService addressService;
+    @Inject
+    private AddressDao addressDao;
 
     @Override
     public void initializeDatabase() {
 
         for (Address address : createAddresses()) {
-            addressService.create(address);
+            addressDao.create(address);
         }
     }
 
