@@ -1,4 +1,4 @@
-package org.asuki.common.jackson;
+package org.asuki.model.jackson;
 
 import java.io.IOException;
 

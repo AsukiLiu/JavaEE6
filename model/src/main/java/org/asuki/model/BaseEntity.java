@@ -1,14 +1,25 @@
 package org.asuki.model;
 
-import java.io.Serializable;
+import static org.asuki.common.javase.DateUtil.createNow;
 
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import org.asuki.model.jaxb.IsoDateAdapter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -34,5 +45,30 @@ public abstract class BaseEntity implements Serializable {
     @XmlTransient
     @JsonIgnore
     private Integer id;
+
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @XmlJavaTypeAdapter(IsoDateAdapter.class)
+    @XmlTransient
+    @JsonIgnore
+    private Date createdTime;
+
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @XmlJavaTypeAdapter(IsoDateAdapter.class)
+    @XmlTransient
+    @JsonIgnore
+    private Date updatedTime;
+
+    @PrePersist
+    private void prePersist() {
+        setCreatedTime(new Date(createNow()));
+        setUpdatedTime(getCreatedTime());
+    }
+
+    @PreUpdate
+    private void preUpdate() {
+        setUpdatedTime(new Date(createNow()));
+    }
 
 }

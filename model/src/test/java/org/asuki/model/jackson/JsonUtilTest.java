@@ -1,6 +1,6 @@
-package org.asuki.common.jackson;
+package org.asuki.model.jackson;
 
-import static org.asuki.common.jackson.JsonUtil.*;
+import static org.asuki.model.jackson.JsonUtil.*;
 import static org.asuki.model.entity.Address.builder;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;

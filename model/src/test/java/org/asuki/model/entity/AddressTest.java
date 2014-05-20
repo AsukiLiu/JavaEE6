@@ -1,4 +1,4 @@
-package org.asuki.model;
+package org.asuki.model.entity;
 
 import static org.asuki.model.entity.Address.builder;
 import static org.hamcrest.CoreMatchers.*;

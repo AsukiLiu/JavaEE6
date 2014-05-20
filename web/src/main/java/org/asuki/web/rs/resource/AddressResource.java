@@ -1,6 +1,6 @@
 package org.asuki.web.rs.resource;
 
-import static org.asuki.common.jackson.JsonUtil.jsonSerialize;
+import static org.asuki.model.jackson.JsonUtil.jsonSerialize;
 
 import java.util.List;
 

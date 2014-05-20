@@ -12,12 +12,6 @@
     <name>Demo common utility</name>
 
     <dependencies>
-        <!-- Module -->
-        <dependency>
-            <groupId>org.asuki</groupId>
-            <artifactId>demo-model</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <!-- Spec -->
         <dependency>
             <groupId>javax.enterprise</groupId>
