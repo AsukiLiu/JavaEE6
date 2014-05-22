@@ -4,7 +4,6 @@ import static org.asuki.model.jackson.JsonUtil.jsonSerialize;
 
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -16,7 +15,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.asuki.common.Constants.Services;
 import org.asuki.model.entity.Address;
 import org.asuki.service.AddressService;
 import org.slf4j.Logger;
@@ -28,7 +26,7 @@ public class AddressResource extends BaseResource {
     @Inject
     private Logger log;
 
-    @EJB(lookup = Services.ADDRESS_SERVICE)
+    @Inject
     private AddressService addressService;
 
     @Path("/all")

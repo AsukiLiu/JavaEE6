@@ -49,14 +49,14 @@ public abstract class BaseEntity implements Serializable {
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @XmlJavaTypeAdapter(IsoDateAdapter.class)
-    @XmlTransient
+//    @XmlTransient
     @JsonIgnore
     private Date createdTime;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @XmlJavaTypeAdapter(IsoDateAdapter.class)
-    @XmlTransient
+//    @XmlTransient
     @JsonIgnore
     private Date updatedTime;
 

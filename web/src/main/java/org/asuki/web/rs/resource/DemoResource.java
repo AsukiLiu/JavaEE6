@@ -29,7 +29,7 @@ public class DemoResource extends BaseResource {
         throw new IllegalArgumentException("IllegalArgumentException throwed");
     }
 
-    // http://localhost:8080/demo-web/rs/address/user/a01/xxx@gmail.com/090-9999-9999
+    // http://localhost:8080/demo-web/rs/demo/user/a01/xxx@gmail.com/090-9999-9999
     @Path("user/{id: [a-zA-Z][a-zA-Z0-9]*}/{mail}/{phone}")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -48,7 +48,7 @@ public class DemoResource extends BaseResource {
         return user.toString();
     }
 
-    // http://localhost:8080/demo-web/rs/address/position;latitude=37.12;longitude=165.26
+    // http://localhost:8080/demo-web/rs/demo/position;latitude=37.12;longitude=165.26
     // @formatter:off
     @Path("/position")
     @GET
