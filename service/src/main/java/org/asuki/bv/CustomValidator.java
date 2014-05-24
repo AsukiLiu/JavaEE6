@@ -12,6 +12,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.validation.groups.Default;
 
+import org.asuki.exception.ServiceException;
+
 import com.google.common.base.Joiner;
 
 @ApplicationScoped
@@ -20,7 +22,7 @@ public class CustomValidator {
     @Inject
     private Validator validator;
 
-    public <T> void validate(T t, Class<?>... groups) throws Exception {
+    public <T> void validate(T t, Class<?>... groups) throws ServiceException {
 
         List<Class<?>> list = newArrayList();
         list.add(Default.class);
@@ -43,8 +45,13 @@ public class CustomValidator {
                     + violation.getMessage());
         }
 
-        throw new Exception(Joiner.on(LINE_SEPARATOR).skipNulls()
-                .join(errorMessages));
+        String message = Joiner.on(LINE_SEPARATOR).skipNulls()
+                .join(errorMessages);
+
+        throw new ServiceException(message) {
+            private static final long serialVersionUID = 1L;
+        };
+
     }
 
 }

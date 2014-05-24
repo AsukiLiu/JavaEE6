@@ -13,6 +13,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.asuki.bv.CustomValidator;
+import org.asuki.exception.ServiceException;
 import org.asuki.test.BaseArquillian;
 
 import org.testng.annotations.BeforeMethod;
@@ -52,7 +53,7 @@ public class ValidatorIT extends BaseArquillian {
 
         try {
             customValidator.validate(ib);
-        } catch (Exception e) {
+        } catch (ServiceException e) {
 
             Iterable<String> messages = Splitter.on(LINE_SEPARATOR)
                     .trimResults().split(e.getMessage());
