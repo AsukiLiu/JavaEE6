@@ -3,12 +3,14 @@ package org.asuki.service;
 import static org.asuki.model.entity.Address.builder;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
+import static org.testng.Assert.fail;
 
 import java.io.File;
 import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 
 import org.asuki.model.entity.Address;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -24,6 +26,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
 import org.jboss.arquillian.testng.Arquillian;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class AddressServiceIT extends Arquillian {
@@ -108,7 +111,7 @@ public class AddressServiceIT extends Arquillian {
     }
 
     @Test
-    public void shouldCrud() {
+    public void testCrud() {
 
         List<Address> addresses = service.findAll();
         assertThat(addresses.size(), is(0));
@@ -129,6 +132,34 @@ public class AddressServiceIT extends Arquillian {
         Address actual = service.findById(expected.getId());
         assertThat(actual.toString(), is(expected.toString()));
 
+        service.delete(expected.getId());
+
+        addresses = service.findAll();
+        assertThat(addresses.size(), is(0));
+
+    }
+
+    @Test(dataProvider = "data", expectedExceptions = EJBException.class, expectedExceptionsMessageRegExp = "(?s).*ConstraintViolationException.*")
+    public void testValidate(String zipCode) {
+
+        // @formatter:off
+        Address expected = builder()
+                .city("city")
+                .prefecture("prefecture")
+                .zipCode(zipCode)
+                .build();
+        // @formatter:on
+
+        service.create(expected);
+
+        fail("No exception happened!");
+    }
+
+    // TODO 重複実行
+    @DataProvider(name = "data")
+    public Object[][] dataProvider() {
+
+        return new Object[][] { { null }, { "" }, { "  " } };
     }
 
 }

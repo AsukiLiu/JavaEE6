@@ -21,6 +21,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <org.hibernate.version>4.2.0.Final</org.hibernate.version>
     </properties>
 
     <!-- JBoss Enterprise Application Platform - Version 6.1.0.GA -->

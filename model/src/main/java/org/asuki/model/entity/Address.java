@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.asuki.model.BaseEntity;
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,6 +37,7 @@ public class Address extends BaseEntity {
     @Column(name = "zip_code")
     @XmlElement
     @JsonProperty
+    @NotBlank   // 全角スペースはOK
     private String zipCode;
 
     @Column(name = "prefecture")

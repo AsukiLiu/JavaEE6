@@ -10,9 +10,7 @@
     </parent>
     <artifactId>demo-service-impl</artifactId>
     <name>Demo service implements</name>
-    <properties>
-        <org.hibernate.version>4.2.0.Final</org.hibernate.version>
-    </properties>
+
     <dependencies>
         <!-- Module -->
         <dependency>
@@ -60,12 +58,6 @@
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>${org.hibernate.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${org.hibernate.version}</version>
             <scope>provided</scope>
@@ -77,6 +69,12 @@
             <version>2.0.0-beta-2</version>
             <scope>test</scope>
             <type>pom</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jboss.arquillian</groupId>
@@ -110,4 +108,5 @@
             </exclusions>
         </dependency>
     </dependencies>
+
 </project>
