@@ -11,19 +11,84 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-
-import lombok.Setter;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
 
+/**
+ * @param <E>
+ *            Entity
+ * @param <K>
+ *            Key
+ */
 public abstract class BaseDao<E extends Serializable, K extends Serializable> {
 
     @PersistenceContext
     private EntityManager em;
 
-    @Setter
-    private Class<E> entityClass;
+    protected abstract Class<E> getEntityClass();
+
+    /**
+     * @param <R>
+     *            Result
+     */
+    protected interface Query<E, R> {
+        CriteriaQuery<R> execute(CriteriaBuilder builder,
+                CriteriaQuery<R> query, Root<E> root);
+    }
+
+    protected interface EntityQuery<E> extends Query<E, E> {
+    }
+
+    // -----------------------Query by Criteria API-----------------------
+
+    protected E getSingleResult(EntityQuery<E> query) {
+        return createQuery(query, getEntityClass()).getSingleResult();
+    }
+
+    protected <R> R getSingleResult(Query<E, R> query, Class<R> resultClass) {
+        return createQuery(query, resultClass).getSingleResult();
+    }
+
+    protected List<E> getResultList(EntityQuery<E> query) {
+        return createQuery(query, getEntityClass()).getResultList();
+    }
+
+    protected List<E> getResultList(EntityQuery<E> query, int firstResult,
+            int maxResults) {
+
+        return createQuery(query, getEntityClass()).setFirstResult(firstResult)
+                .setMaxResults(maxResults).getResultList();
+    }
+
+    public Long countAll() {
+
+        return getSingleResult(new Query<E, Long>() {
+            @Override
+            public CriteriaQuery<Long> execute(CriteriaBuilder builder,
+                    CriteriaQuery<Long> query, Root<E> root) {
+
+                return query.select(builder.count(root));
+            }
+        }, Long.class);
+    }
+
+    private <R> TypedQuery<R> createQuery(Query<E, R> query,
+            Class<R> resultClass) {
+
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<R> criteriaQuery = criteriaBuilder
+                .createQuery(resultClass);
+        Root<E> root = criteriaQuery.from(getEntityClass());
+
+        return em.createQuery(query.execute(criteriaBuilder, criteriaQuery,
+                root));
+    }
+
+    // -----------------------Query by JPQL-----------------------
 
     public Long count(String queryName) {
 
@@ -43,22 +108,24 @@ public abstract class BaseDao<E extends Serializable, K extends Serializable> {
 
     public E findByKey(K key) {
 
-        return em.find(entityClass, key);
+        return em.find(getEntityClass(), key);
     }
 
-    public Optional<E> findOne(String queryName, Map<String, Object> parameters) {
+    public Optional<E> getSingleResult(String queryName,
+            Map<String, Object> parameters) {
 
-        return fromNullable(getFirst(findAll(queryName, parameters), null));
+        return fromNullable(getFirst(getResultList(queryName, parameters), null));
     }
 
-    public List<E> findAll(String queryName) {
+    public List<E> getResultList(String queryName) {
 
-        return findAll(queryName, Maps.<String, Object> newHashMap());
+        return getResultList(queryName, Maps.<String, Object> newHashMap());
     }
 
-    public List<E> findAll(String queryName, Map<String, Object> parameters) {
+    public List<E> getResultList(String queryName,
+            Map<String, Object> parameters) {
 
-        TypedQuery<E> query = em.createNamedQuery(queryName, entityClass);
+        TypedQuery<E> query = em.createNamedQuery(queryName, getEntityClass());
 
         for (Map.Entry<String, Object> entry : parameters.entrySet()) {
             query.setParameter(entry.getKey(), entry.getValue());
@@ -66,6 +133,8 @@ public abstract class BaseDao<E extends Serializable, K extends Serializable> {
 
         return query.getResultList();
     }
+
+    // -----------------------Other-----------------------
 
     public void create(E entity) {
 
