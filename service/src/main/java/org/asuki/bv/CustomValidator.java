@@ -1,7 +1,7 @@
 package org.asuki.bv;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.asuki.common.Constants.Systems.LINE_SEPARATOR;
-import static org.testng.collections.Lists.newArrayList;
 
 import java.util.List;
 import java.util.Set;
