@@ -12,6 +12,7 @@ import static com.google.common.base.Strings.nullToEmpty;
 import static com.google.common.base.Strings.padEnd;
 import static com.google.common.base.Strings.padStart;
 import static com.google.common.base.Strings.repeat;
+import static com.google.common.collect.Iterables.toArray;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.partition;
 import static com.google.common.collect.Sets.difference;
@@ -19,8 +20,6 @@ import static com.google.common.collect.Sets.intersection;
 import static com.google.common.collect.Sets.newHashSet;
 import static com.google.common.collect.Sets.union;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
 import static org.testng.Assert.*;
 
 import java.io.File;
@@ -34,8 +33,10 @@ import java.nio.charset.Charset;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -48,11 +49,13 @@ import com.google.common.base.Defaults;
 import com.google.common.base.Function;
 import com.google.common.base.Functions;
 import com.google.common.base.Joiner;
+import com.google.common.base.Joiner.MapJoiner;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.base.Splitter;
+import com.google.common.base.Splitter.MapSplitter;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import com.google.common.base.Throwables;
@@ -84,10 +87,10 @@ public class GuavaTest {
         Optional<Integer> possible = Optional.of(3);
 
         if (possible.isPresent()) {
-            assertThat(possible.get(), is(3));
+            assertEquals(possible.get(), Integer.valueOf(3));
         }
 
-        assertThat(possible.or(10), is(3));
+        assertEquals(possible.or(10), Integer.valueOf(3));
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
@@ -109,14 +112,14 @@ public class GuavaTest {
         assertEquals(Arrays.hashCode(customers),
                 Objects.hashCode(customer1, customer2));
 
-        assertThat(Objects.equal("a", null), is(false));
-        assertThat(Objects.equal(null, null), is(true));
+        assertFalse(Objects.equal("a", null));
+        assertTrue(Objects.equal(null, null));
 
         Integer a = Objects.firstNonNull(null, 3);
         Integer b = Objects.firstNonNull(9, 3);
 
-        assertThat(Integer.valueOf(3), is(a));
-        assertThat(Integer.valueOf(9), is(b));
+        assertEquals(a, Integer.valueOf(3));
+        assertEquals(b, Integer.valueOf(9));
 
         Objects.firstNonNull(null, null);
 
@@ -146,7 +149,7 @@ public class GuavaTest {
 
         ImmutableSet<String> strings = ImmutableSet.of("A", "B", "C");
         String joined = Joiner.on(":").join(strings);
-        assertThat("A:B:C", is(joined));
+        assertEquals(joined, "A:B:C");
 
         final String string = ": A::: B : C :::";
 
@@ -155,7 +158,37 @@ public class GuavaTest {
                 .trimResults().split(string);
 
         joined = Joiner.on(":").join(parts);
-        assertThat("A:B:C", is(joined));
+        assertEquals(joined, "A:B:C");
+
+        String[] array = new String[] { "aa", "bb", null, "cc" };
+
+        assertEquals(Joiner.on(",").skipNulls().join(array), "aa,bb,cc");
+        assertEquals(Joiner.on(',').useForNull("-").join(array), "aa,bb,-,cc");
+
+        Map<String, String> source = new TreeMap<>();
+        source.put("xxx", "yyy");
+
+        StringBuilder sb = new StringBuilder();
+        Joiner.on(',').withKeyValueSeparator("=").appendTo(sb, source);
+
+        assertEquals(sb.toString(), "xxx=yyy");
+
+        Map<String, String> dictionary = new HashMap<>();
+        dictionary.put("key1", "value1");
+        dictionary.put("key2", "value2");
+        dictionary.put("key3", null);
+
+        MapJoiner joiner = Joiner.on(", ").withKeyValueSeparator(":")
+                .useForNull("none");
+
+        assertEquals(joiner.join(dictionary),
+                "key3:none, key2:value2, key1:value1");
+
+        String str = "xxx=yyy#aaa=bbb";
+        MapSplitter mapSplitter = Splitter.on("#").withKeyValueSeparator("=");
+        Map<String, String> splitMap = mapSplitter.split(str);
+
+        assertEquals(splitMap.toString(), "{xxx=yyy, aaa=bbb}");
     }
 
     @Test
@@ -173,11 +206,18 @@ public class GuavaTest {
 
         ImmutableList<Character> result = ImmutableList.of('a', 'd');
 
-        assertThat(toCharArray(filter), is(toCharArray(result)));
-    }
+        assertEquals(toArray(filter, Character.class),
+                toArray(result, Character.class));
 
-    private static Character[] toCharArray(Collection<Character> filter) {
-        return filter.toArray(new Character[0]);
+        String telnum = "090 1234 5678";
+        matcher = CharMatcher.WHITESPACE.or(CharMatcher.is('-'));
+
+        Iterable<String> splits = Splitter.on(matcher).split(telnum);
+        // JDK way
+        String[] splitsByJdk = telnum.split("\\s|-");
+
+        assertEquals(splits.toString(), "[090, 1234, 5678]");
+        assertEquals(toArray(splits, String.class), splitsByJdk);
     }
 
     @Test
@@ -244,7 +284,7 @@ public class GuavaTest {
         SortedMap<String, String> filtered = Maps.filterValues(map,
                 Predicates.notNull());
 
-        assertThat(filtered.size(), is(3));
+        assertEquals(filtered.size(), 3);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
