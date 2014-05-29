@@ -31,6 +31,7 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -264,7 +265,8 @@ public class GuavaTest {
     @Test
     public void testFiles() {
 
-        final File file = new File("test.txt");
+        final String fileName = "test.txt";
+        final File file = new File(fileName);
         final String content = "This is test!";
 
         try {
@@ -277,6 +279,8 @@ public class GuavaTest {
 
             assertEquals(Files.readFirstLine(file, UTF_8), content);
             assertEquals(Files.toString(file, UTF_8), content);
+
+            java.nio.file.Files.deleteIfExists(Paths.get(fileName));
 
         } catch (IOException e) {
             Throwables.propagate(e);
