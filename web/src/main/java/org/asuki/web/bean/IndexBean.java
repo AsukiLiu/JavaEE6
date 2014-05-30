@@ -36,11 +36,11 @@ public class IndexBean implements Serializable {
     public void validate(FacesContext context, UIComponent component,
             Object value) {
 
-        String text = value.toString().trim();
+        String input = value.toString().trim();
 
-        checkArgument(!isNullOrEmpty(text), "Input must not be empty");
+        checkArgument(!isNullOrEmpty(input), "Input must not be empty");
 
-        if (text.equals("error")) {
+        if (input.equals("error")) {
             throw new ValidatorException(new FacesMessage("Error"));
         }
     }

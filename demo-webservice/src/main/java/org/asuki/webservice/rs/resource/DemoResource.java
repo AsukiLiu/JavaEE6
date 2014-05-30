@@ -57,7 +57,8 @@ public class DemoResource extends BaseResource {
             @MatrixParam("latitude") double latitude,
             @MatrixParam("longitude") double longitude) {
 
-        return format("%3.2f%s %3.2f%s", // 37.12N 165.26E
+        // 37.12N 165.26E
+        return format("%3.2f%s %3.2f%s",
                 Math.abs(latitude),
                 latitude == 0.0 ? "" : (latitude > 0.0 ? "N" : "S"),
                 Math.abs(longitude), 

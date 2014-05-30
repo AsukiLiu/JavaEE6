@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.StringWriter;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -13,8 +14,10 @@ public class ErrorResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Getter
     private String message;
 
+    @Getter
     private String stackTrace;
 
     public ErrorResponse(Throwable e) {

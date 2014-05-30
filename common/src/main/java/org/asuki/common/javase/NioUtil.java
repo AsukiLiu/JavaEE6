@@ -1,5 +1,7 @@
 package org.asuki.common.javase;
 
+import static org.asuki.common.exception.CommonError.CANNOT_BE_INSTANCED;
+
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -8,11 +10,13 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import org.asuki.common.exception.CommonError;
+
 public final class NioUtil {
 
     private NioUtil() {
         // Reflectionを防ぐ
-        throw new Error("インスタンス化できない");
+        throw new CommonError(CANNOT_BE_INSTANCED);
     }
 
     public static void stringToFile(String filePath, String content)
