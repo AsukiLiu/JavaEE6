@@ -24,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>org.asuki</groupId>
-            <artifactId>demo-web</artifactId>
+            <artifactId>demo-webservice</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!--Spec -->

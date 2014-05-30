@@ -1,4 +1,4 @@
-package org.asuki.web.rs;
+package org.asuki.webservice.rs;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

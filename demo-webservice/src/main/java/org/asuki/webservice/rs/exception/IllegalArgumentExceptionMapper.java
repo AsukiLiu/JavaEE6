@@ -1,4 +1,4 @@
-package org.asuki.web.rs.exception;
+package org.asuki.webservice.rs.exception;
 
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 

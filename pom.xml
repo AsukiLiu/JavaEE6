@@ -18,6 +18,7 @@
         <module>service</module>
         <module>service-impl</module>
         <module>demo-test</module>
+        <module>demo-webservice</module>
     </modules>
 
     <properties>
@@ -116,7 +117,6 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <!-- <outputFileNameMapping>@{artifactId}@.@{extension}@</outputFileNameMapping> -->
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <webResources>
                         <resource>

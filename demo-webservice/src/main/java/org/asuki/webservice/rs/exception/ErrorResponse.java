@@ -1,4 +1,4 @@
-package org.asuki.web.rs.exception;
+package org.asuki.webservice.rs.exception;
 
 import java.io.PrintWriter;
 import java.io.Serializable;

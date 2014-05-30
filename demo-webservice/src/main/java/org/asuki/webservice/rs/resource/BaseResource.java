@@ -1,4 +1,4 @@
-package org.asuki.web.rs.resource;
+package org.asuki.webservice.rs.resource;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;

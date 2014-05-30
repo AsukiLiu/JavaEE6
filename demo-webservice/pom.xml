@@ -8,9 +8,8 @@
         <artifactId>javaee6</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>demo-web</artifactId>
-    <packaging>war</packaging>
-    <name>Demo web application</name>
+    <artifactId>demo-webservice</artifactId>
+    <name>Webservice demo</name>
 
     <dependencies>
         <!-- Module -->
@@ -29,25 +28,10 @@
             <artifactId>demo-service</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.asuki</groupId>
-            <artifactId>demo-webservice</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <!-- Spec -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.faces</groupId>
-            <artifactId>jboss-jsf-api_2.1_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.servlet</groupId>
-            <artifactId>jboss-servlet-api_3.0_spec</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -55,17 +39,20 @@
             <artifactId>jboss-ejb-api_3.1_spec</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!-- Primefaces -->
         <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>3.4.2</version>
+            <groupId>org.jboss.ejb3</groupId>
+            <artifactId>jboss-ejb3-ext-api</artifactId>
+            <version>2.0.0</version>
         </dependency>
         <dependency>
-            <groupId>org.primefaces.extensions</groupId>
-            <artifactId>primefaces-extensions</artifactId>
-            <version>0.6.2</version>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.ws.rs</groupId>
+            <artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
-
 </project>

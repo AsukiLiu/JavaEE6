@@ -1,4 +1,4 @@
-package org.asuki.web.rs.resource;
+package org.asuki.webservice.rs.resource;
 
 import static org.asuki.model.jackson.JsonUtil.jsonSerialize;
 

@@ -9,7 +9,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.MediaType;
 
 import org.asuki.test.BaseArquillian;
-import org.asuki.web.rs.RestApplication;
+import org.asuki.webservice.rs.RestApplication;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.resteasy.client.ClientRequest;
