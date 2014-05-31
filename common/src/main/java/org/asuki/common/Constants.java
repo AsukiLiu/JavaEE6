@@ -1,6 +1,7 @@
 package org.asuki.common;
 
 import com.google.common.base.Ascii;
+import com.google.common.base.Charsets;
 
 public interface Constants {
 
@@ -16,6 +17,10 @@ public interface Constants {
         String PATH_SEPARATOR = System.getProperty("path.separator");
 
         String CARRIAGE_RETURN = new String(new byte[] { Ascii.CR });
+    }
+
+    interface Webs {
+        String DEFAULT_CHARSET = Charsets.UTF_8.toString();
     }
 
 }
