@@ -1,5 +1,6 @@
 package org.asuki.common.guava;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 
 @NoArgsConstructor
+@AllArgsConstructor
 public class Customer implements Comparable<Customer> {
 
     @Getter

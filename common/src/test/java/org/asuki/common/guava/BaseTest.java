@@ -13,12 +13,6 @@ import static com.google.common.base.Strings.padEnd;
 import static com.google.common.base.Strings.padStart;
 import static com.google.common.base.Strings.repeat;
 import static com.google.common.collect.Iterables.toArray;
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Lists.partition;
-import static com.google.common.collect.Sets.difference;
-import static com.google.common.collect.Sets.intersection;
-import static com.google.common.collect.Sets.newHashSet;
-import static com.google.common.collect.Sets.union;
 
 import static org.testng.Assert.*;
 
@@ -34,11 +28,8 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.testng.annotations.Test;
@@ -53,18 +44,15 @@ import com.google.common.base.Joiner.MapJoiner;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import com.google.common.base.Splitter;
 import com.google.common.base.Splitter.MapSplitter;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Collections2;
-import com.google.common.collect.Constraints;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Maps;
 import com.google.common.io.Closeables;
 import com.google.common.io.Files;
 import com.google.common.io.Flushables;
@@ -72,12 +60,11 @@ import com.google.common.io.Resources;
 import com.google.common.net.InetAddresses;
 import com.google.common.primitives.Ints;
 
-public class GuavaTest {
+public class BaseTest {
 
     private Customer customer1 = new Customer(1, "Name1");
     private Customer customer2 = new Customer(2, "Name2");
     private Customer customer3 = new Customer(3, "Name3");
-    private Customer customer4 = new Customer(null, "Unknown");
 
     /* Base */
 
@@ -236,70 +223,6 @@ public class GuavaTest {
         assertEquals(Ints.join(" : ", array), "1 : 2 : 3");
     }
 
-    /* Collect */
-
-    @Test
-    public void testLists() {
-
-        List<Integer> items = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
-
-        List<List<Integer>> pages = partition(items, 3);
-
-        assertEquals(pages.toString(), "[[1, 2, 3], [4, 5, 6], [7]]");
-    }
-
-    @Test
-    public void testSets() {
-
-        ImmutableSet<Customer> customersA = ImmutableSet.of(customer1,
-                customer2, customer3);
-        ImmutableSet<Customer> customersB = ImmutableSet.of(customer3,
-                customer4);
-
-        assertEquals(union(customersA, customersB).size(), 4);
-        assertEquals(intersection(customersA, customersB),
-                ImmutableSet.of(customer3));
-
-        List<String> list = newArrayList("aa", "bb", "cc", "cc");
-        Set<String> set = newHashSet(list);
-        assertEquals(set.toString(), "[aa, bb, cc]");
-
-        Set<Integer> a = newHashSet(Arrays.asList(1, 2, 3));
-        Set<Integer> b = newHashSet(Arrays.asList(3, 4, 5));
-
-        assertEquals(intersection(a, b).toString(), "[3]");
-        assertEquals(difference(a, b).toString(), "[1, 2]");
-        assertEquals(union(a, b).toString(), "[1, 2, 3, 4, 5]");
-    }
-
-    @Test
-    public void testMaps() {
-
-        SortedMap<String, String> map = new TreeMap<>();
-        map.put("1", "one");
-        map.put("2", "two");
-        map.put("3", null);
-        map.put("4", "four");
-
-        SortedMap<String, String> filtered = Maps.filterValues(map,
-                Predicates.notNull());
-
-        assertEquals(filtered.size(), 3);
-    }
-
-    @Test(expectedExceptions = NullPointerException.class)
-    public void testConstraints() {
-
-        HashSet<Customer> customers = newHashSet();
-        customers.add(null);
-
-        Set<Customer> noMoreNulls = Constraints.constrainedSet(customers,
-                Constraints.notNull());
-        noMoreNulls.add(null);
-
-        fail("No exception happened!");
-    }
-
     /* IO */
 
     @Test
@@ -348,7 +271,7 @@ public class GuavaTest {
     @Test
     public void testResources() {
 
-        final String location = "org/asuki/common/guava/GuavaTest.class";
+        final String location = "org/asuki/common/guava/BaseTest.class";
 
         URL guavaWay = Resources.getResource(location);
         checkArgument(guavaWay != null, "Resource[%s] not found", location);
