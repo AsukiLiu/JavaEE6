@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import lombok.AccessLevel;
 import lombok.Getter;
 
+import org.asuki.webservice.event.annotation.Ejb;
 import org.slf4j.Logger;
 
 public class CdiConsumer extends BaseConsumer {
@@ -16,7 +17,7 @@ public class CdiConsumer extends BaseConsumer {
     private Logger log;
 
     public void consumeEvent(
-            @Observes(during = TransactionPhase.AFTER_COMPLETION) MyEvent myEvent) {
+            @Observes(during = TransactionPhase.AFTER_COMPLETION) @Ejb MyEvent myEvent) {
 
         consume(myEvent);
     }

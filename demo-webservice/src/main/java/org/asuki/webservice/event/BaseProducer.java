@@ -1,14 +1,12 @@
 package org.asuki.webservice.event;
 
 import javax.enterprise.event.Event;
-import javax.inject.Inject;
 
 import org.slf4j.Logger;
 
 public abstract class BaseProducer {
 
-    @Inject
-    private Event<MyEvent> events;
+    protected abstract Event<MyEvent> getEvents();
 
     protected abstract Logger getLog();
 
@@ -20,7 +18,7 @@ public abstract class BaseProducer {
 
             getLog().info("Produced: " + event);
 
-            events.fire(event);
+            getEvents().fire(event);
         }
     }
 }

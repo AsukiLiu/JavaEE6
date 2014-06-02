@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import lombok.AccessLevel;
 import lombok.Getter;
 
+import org.asuki.webservice.event.annotation.Cdi;
 import org.slf4j.Logger;
 
 @Singleton
@@ -21,7 +22,7 @@ public class EjbConsumer extends BaseConsumer {
 
     @Asynchronous
     @Lock(LockType.READ)
-    public void consumeEvent(@Observes MyEvent myEvent) {
+    public void consumeEvent(@Observes @Cdi MyEvent myEvent) {
 
         consume(myEvent);
     }
