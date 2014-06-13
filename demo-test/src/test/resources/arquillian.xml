@@ -6,6 +6,7 @@
 
     <container qualifier="jboss-local" default="true">
         <configuration>
+            <property name="javaHome">/usr/lib/jvm/java-7-oracle</property>
             <!-- -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8787 -->
             <property name="javaVmArguments">-Djboss.socket.binding.port-offset=100
                 -Xmx512m -XX:MaxPermSize=360m
