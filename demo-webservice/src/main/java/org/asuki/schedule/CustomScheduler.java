@@ -55,8 +55,8 @@ public class CustomScheduler {
         }
 
         ScheduleExpression expression = new ScheduleExpression();
-        expression.second("*/10").minute("*").hour("*");
-        // expression.month(5).dayOfMonth("20-Last").minute(0).hour(8);
+        // expression.second("*/10").minute("*").hour("*");
+        expression.month(5).dayOfMonth("20-Last").minute(0).hour(8);
 
         final TimerConfig config = new TimerConfig(TIMER_NAME, false);
         timerService.createCalendarTimer(expression, config);
