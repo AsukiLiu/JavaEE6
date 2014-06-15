@@ -5,6 +5,8 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -13,6 +15,8 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
+
+import org.asuki.common.annotation.TimeLog;
 import org.slf4j.Logger;
 
 import javax.inject.Named;
@@ -22,6 +26,7 @@ import lombok.Setter;
 
 @Named
 @RequestScoped
+@TimeLog
 public class IndexBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,6 +37,16 @@ public class IndexBean implements Serializable {
     @Setter
     @Getter
     private String text;
+
+    @PostConstruct
+    private void init() {
+        log.info("init");
+    }
+
+    @PreDestroy
+    private void destroy() {
+        log.info("destroy");
+    }
 
     public void validate(FacesContext context, UIComponent component,
             Object value) {
