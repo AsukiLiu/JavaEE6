@@ -31,10 +31,12 @@ public class AsyncServlet extends HttpServlet {
     @Inject
     private Logger log;
 
+    @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
     }
 
+    @Override
     public void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -69,6 +71,7 @@ class JobThread implements Runnable {
     }
 
     @SneakyThrows
+    @Override
     public void run() {
 
         log.info("Do one thing ...");
