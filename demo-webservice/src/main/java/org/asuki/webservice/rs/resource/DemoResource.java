@@ -25,13 +25,6 @@ public class DemoResource extends BaseResource {
     @Inject
     private Logger log;
 
-    @Path("/errmsg")
-    @GET
-    public String getErrorMessage() {
-
-        throw new IllegalArgumentException("IllegalArgumentException throwed");
-    }
-
     // user/a01/xxx@gmail.com/090-9999-9999
     @Path("user/{id: [a-zA-Z][a-zA-Z0-9]*}/{mail}/{phone}")
     @GET
