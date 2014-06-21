@@ -13,15 +13,16 @@
 
 <body>
 
-    <h:form>
+    <h:form id="form">
         <h:messages />
 
-        <h:inputText value="#{indexBean.text}"
+        <h:inputText id="inputText" value="#{indexBean.text}"
             valueChangeListener="#{indexBean.valueChanged}"
             validator="#{indexBean.validate}"
             converter="customConverter" />
 
-        <h:commandButton actionListener="#{indexBean.actionListener}"
+        <h:commandButton id="sendButton"
+            actionListener="#{indexBean.actionListener}"
             action="#{indexBean.action}" value="SEND" />
     </h:form>
 

@@ -18,7 +18,7 @@ import org.asuki.schedule.EventScheduler;
 import org.asuki.test.BaseArquillian;
 import org.testng.annotations.Test;
 
-public class EventSchedulerTest extends BaseArquillian {
+public class EventSchedulerIT extends BaseArquillian {
 
     public static final CountDownLatch events = new CountDownLatch(3);
 
