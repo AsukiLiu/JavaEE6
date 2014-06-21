@@ -56,7 +56,7 @@ public class ResourceClientIT extends BaseArquillian {
                 is("<address city=\"city\"><zipCode>zipCode</zipCode><prefecture>prefecture</prefecture></address>"));
     }
 
-    @Test
+    @Test(enabled=false)
     public void testDemoResource() throws Exception {
 
         String uri = deploymentUrl.toString() + APPLICATION_PATH
