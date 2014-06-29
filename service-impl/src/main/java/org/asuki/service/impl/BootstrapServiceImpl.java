@@ -116,19 +116,20 @@ public class BootstrapServiceImpl implements BootstrapService {
         address.setZipCode("123-0000");
         address.setCity("Tokyo");
         address.setPrefecture("Tokyo Metropolis");
-        addressDao.create(address);
 
         Phone phone = new Phone();
         phone.setHomePhoneNumber("03-1234-5678");
         phone.setMobilePhoneNumber("080-1234-5678");
-        phoneDao.create(phone);
 
-        Email email = new Email();
-        email.setEmailType(1);
-        email.setEmailAddress("dev@gmail.com");
-        emailDao.create(email);
-        List<Email> emails = newArrayList();
-        emails.add(email);
+        Email gmail = new Email();
+        gmail.setEmailType(1);
+        gmail.setEmailAddress("dev@gmail.com");
+        emailDao.create(gmail);
+        Email ymail = new Email();
+        ymail.setEmailType(2);
+        ymail.setEmailAddress("dev@yahoo.com");
+        emailDao.create(ymail);
+        List<Email> emails = newArrayList(gmail, ymail);
 
         Project project = projectDao.findByKey(1);
         List<Project> projects = newArrayList(project);

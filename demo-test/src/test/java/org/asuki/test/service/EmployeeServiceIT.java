@@ -41,6 +41,7 @@ public class EmployeeServiceIT extends BaseServiceArquillian {
         assertThat(employee.getAddress(), is(notNullValue()));
         assertThat(employee.getPhone(), is(notNullValue()));
         assertThat(employee.getJob(), is(notNullValue()));
+        assertThat(employee.getDepartment(), is(notNullValue()));
         assertThat(employee.getEmails().size() > 0, is(true));
 
         employee.setMonthlySalary(employee.getMonthlySalary() + 1000);
