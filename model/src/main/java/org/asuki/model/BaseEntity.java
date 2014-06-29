@@ -46,17 +46,17 @@ public abstract class BaseEntity implements Serializable {
     @JsonIgnore
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "created_time", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @XmlJavaTypeAdapter(IsoDateAdapter.class)
-//    @XmlTransient
+    // @XmlTransient
     @JsonIgnore
     private Date createdTime;
 
-    @Column(nullable = false)
+    @Column(name = "updated_time", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @XmlJavaTypeAdapter(IsoDateAdapter.class)
-//    @XmlTransient
+    // @XmlTransient
     @JsonIgnore
     private Date updatedTime;
 

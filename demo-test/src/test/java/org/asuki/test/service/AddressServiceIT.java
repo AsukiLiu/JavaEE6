@@ -12,24 +12,12 @@ import javax.ejb.EJBException;
 
 import org.asuki.model.entity.Address;
 import org.asuki.service.AddressService;
-import org.asuki.test.BaseArquillian;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class AddressServiceIT extends BaseArquillian {
-
-    static {
-        webInfResources.put("META-INF/xml/entity.xml",
-                "classes/META-INF/xml/entity.xml");
-        webInfResources.put("META-INF/xml/jpql.xml",
-                "classes/META-INF/xml/jpql.xml");
-        webInfResources.put("META-INF/xml/sql.xml",
-                "classes/META-INF/xml/sql.xml");
-        webInfResources.put("META-INF/testPersistence.xml",
-                "classes/META-INF/persistence.xml");
-    }
+public class AddressServiceIT extends BaseServiceArquillian {
 
     @EJB
     private AddressService service;
@@ -49,7 +37,7 @@ public class AddressServiceIT extends BaseArquillian {
         Address expected = builder()
                 .city("city")
                 .prefecture("prefecture")
-                .zipCode("zipCode")
+                .zipCode("123-1234")
                 .build();
         // @formatter:on
 
@@ -88,7 +76,12 @@ public class AddressServiceIT extends BaseArquillian {
     @DataProvider(name = "data")
     public Object[][] dataProvider() {
 
-        return new Object[][] { { null }, { "" }, { "  " } };
+        // @formatter:off
+        return new Object[][] { 
+                { null }, { "" }, { "  " }, 
+                {"123-12345"}, {"123-123"}, {"12-1234"}, {"1234-1234"}
+        };
+        // @formatter:on
     }
 
 }

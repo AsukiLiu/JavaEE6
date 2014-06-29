@@ -76,6 +76,21 @@ public abstract class BaseDao<E extends Serializable, K extends Serializable> {
         }, Long.class);
     }
 
+    public List<E> findAll() {
+
+        Class<E> resultClass = getEntityClass();
+
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<E> criteriaQuery = criteriaBuilder
+                .createQuery(resultClass);
+        Root<E> root = criteriaQuery.from(resultClass);
+
+        criteriaQuery.select(root);
+
+        TypedQuery<E> typedQuery = em.createQuery(criteriaQuery);
+        return typedQuery.getResultList();
+    }
+
     private <R> TypedQuery<R> createQuery(Query<E, R> query,
             Class<R> resultClass) {
 

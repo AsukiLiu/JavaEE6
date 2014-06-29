@@ -3,6 +3,7 @@ package org.asuki.service.impl;
 import java.util.List;
 
 import org.asuki.dao.AddressDao;
+import org.asuki.dao.BaseDao;
 import org.asuki.model.entity.Address;
 import org.asuki.service.AddressService;
 import org.asuki.service.ContextService;
@@ -15,7 +16,8 @@ import javax.inject.Inject;
 
 @Stateless(name = "AddressService")
 @Remote(AddressService.class)
-public class AddressServiceImpl implements AddressService {
+public class AddressServiceImpl extends BaseServiceImpl<Address, Integer>
+        implements AddressService {
 
     @Inject
     private AddressDao addressDao;
@@ -36,28 +38,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Address findById(Integer addressId) {
-
-        return addressDao.findByKey(addressId);
-    }
-
-    @Override
-    public Address create(Address address) {
-
-        addressDao.create(address);
-        return address;
-    }
-
-    @Override
-    public Address edit(Address address) {
-
-        return addressDao.update(address);
-    }
-
-    @Override
-    public void delete(Integer addressId) {
-
-        addressDao.deleteByKey(addressId);
+    protected BaseDao<Address, Integer> getDao() {
+        return addressDao;
     }
 
 }

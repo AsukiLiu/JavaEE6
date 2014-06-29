@@ -48,4 +48,10 @@ public class AddressServiceMock implements AddressService {
 
     }
 
+    @Override
+    public void delete(Address address) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

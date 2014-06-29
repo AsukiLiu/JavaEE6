@@ -23,6 +23,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Employee extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -30,37 +31,44 @@ public class Employee extends BaseEntity {
     @Column(name = "employee_name", nullable = false)
     private String employeeName;
 
-    @OneToOne(targetEntity = Address.class)
-    @JoinColumn(name = "address_id")
-    private Address address;
-
-    @OneToOne(targetEntity = Phone.class, mappedBy = "employee")
-    private Phone phone;
-
-    @OneToMany(targetEntity = Email.class)
-    @JoinTable(name = "employee_email", joinColumns = @JoinColumn(name = "holder_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "email_id"))
-    private List<Email> emails;
-
-    @ManyToOne(targetEntity = Department.class)
-    @JoinColumn(name = "department_id")
-    private Department department;
+    @Column(name = "monthly_salary", nullable = false)
+    private int monthlySalary;
 
     @Column(name = "entrance_date", nullable = false)
     @Temporal(value = TemporalType.DATE)
     private Date entranceDate;
 
-    @ManyToOne(targetEntity = Job.class)
-    @JoinColumn(name = "job_id", referencedColumnName = "id", nullable = false)
+    // One way
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+    // Two way
+    @OneToOne(mappedBy = "employee", orphanRemoval = true)
+    private Phone phone;
+
+    // One way
+    @OneToMany(orphanRemoval = true)
+    @JoinTable(name = "employee_email", joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "email_id", referencedColumnName = "id"))
+    private List<Email> emails;
+
+    // One way
+    @ManyToOne
+    @JoinColumn(name = "job_id", nullable = false)
     private Job job;
 
-    @Column(name = "monthly_salary", nullable = false)
-    private int monthlySalary;
+    // Two way
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
 
-    @ManyToMany(targetEntity = Project.class)
+    // One way
+    @ManyToMany
     @JoinTable(name = "employee_project", joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"))
     private List<Project> projects;
 
-    @ManyToMany(targetEntity = Qualification.class)
+    // Two way
+    @ManyToMany
     @JoinTable(name = "employee_qualification", joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "qualification_id", referencedColumnName = "id"))
     private List<Qualification> qualifications;
 

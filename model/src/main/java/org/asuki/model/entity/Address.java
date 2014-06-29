@@ -6,12 +6,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import javax.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.asuki.model.BaseEntity;
-import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -34,10 +36,12 @@ public class Address extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    // 全角スペースはOK
     @Column(name = "zip_code")
     @XmlElement
     @JsonProperty
-    @NotBlank   // 全角スペースはOK
+    @NotBlank
+    @Pattern(regexp = "[0-9]{3}-[0-9]{4}")
     private String zipCode;
 
     @Column(name = "prefecture")

@@ -16,6 +16,7 @@ import lombok.experimental.Builder;
 @Getter
 @Setter
 @Builder
+@ToString
 public class Email extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

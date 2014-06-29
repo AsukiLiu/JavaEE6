@@ -11,8 +11,10 @@ import lombok.*;
 @Entity
 @Table(name = "job")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Job extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

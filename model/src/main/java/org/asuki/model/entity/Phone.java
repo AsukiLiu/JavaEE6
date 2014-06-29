@@ -1,5 +1,7 @@
 package org.asuki.model.entity;
 
+import static com.google.common.base.Objects.toStringHelper;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -19,7 +21,8 @@ public class Phone extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @OneToOne(targetEntity = Employee.class)
+    // Two way
+    @OneToOne
     @PrimaryKeyJoinColumn
     private Employee employee;
 
@@ -28,5 +31,15 @@ public class Phone extends BaseEntity {
 
     @Column(name = "mobile_phone_number")
     private String mobilePhoneNumber;
+
+    // @formatter:off
+    @Override
+    public String toString() {
+        return toStringHelper(this)
+                .add("homePhoneNumber", homePhoneNumber)
+                .add("mobilePhoneNumber", mobilePhoneNumber)
+                .toString();
+    }
+    // @formatter:on
 
 }

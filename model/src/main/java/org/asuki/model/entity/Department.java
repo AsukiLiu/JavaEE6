@@ -31,11 +31,12 @@ public class Department extends BaseEntity {
     @Column(name = "floor", nullable = false)
     private Integer floor;
 
-    @OneToMany(targetEntity = Employee.class, mappedBy = "department")
+    // Two way
+    @OneToMany(mappedBy = "department")
     private List<Employee> employees;
 
-    @OneToMany(targetEntity = Employee.class, mappedBy = "department")
-    @MapKey(name = "id")
-    private Map<Integer, Employee> employeeMap;
+    // @OneToMany(mappedBy = "department")
+    // @MapKey(name = "id")
+    // private Map<Integer, Employee> employeeMap;
 
 }

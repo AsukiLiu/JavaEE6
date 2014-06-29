@@ -25,7 +25,8 @@ public class Qualification extends BaseEntity {
     @Column(name = "qualification_type")
     private String qualificationType;
 
-    @ManyToMany(targetEntity = Employee.class, mappedBy = "qualifications")
+    // Two way
+    @ManyToMany(mappedBy = "qualifications")
     private List<Employee> employees;
 
 }

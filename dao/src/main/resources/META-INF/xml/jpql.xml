@@ -13,4 +13,15 @@
         </query>
     </named-query>
 
+    <named-query name="employee.all">
+        <query>
+            SELECT
+                e
+            FROM
+                Employee e
+            JOIN FETCH
+                e.emails
+        </query>
+    </named-query>
+
 </entity-mappings>

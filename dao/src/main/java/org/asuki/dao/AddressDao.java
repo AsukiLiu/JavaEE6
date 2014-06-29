@@ -16,12 +16,10 @@ public class AddressDao extends BaseDao<Address, Integer> {
 
     @Override
     protected Class<Address> getEntityClass() {
-
         return Address.class;
     }
 
     public List<Address> findAll() {
-
         return getResultList("address.all");
     }
 
