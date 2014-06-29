@@ -21,9 +21,6 @@ public class Email extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "email_type", nullable = false)
-    private int emailType;
-
     @Column(name = "email_address", nullable = false)
     private String emailAddress;
 

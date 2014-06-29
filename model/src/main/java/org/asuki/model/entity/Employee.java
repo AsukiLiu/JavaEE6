@@ -1,6 +1,7 @@
 package org.asuki.model.entity;
 
 import static javax.persistence.CascadeType.*;
+import static javax.persistence.EnumType.STRING;
 import static javax.persistence.TemporalType.DATE;
 
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -18,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 import org.asuki.model.BaseEntity;
+import org.asuki.model.enumeration.Gender;
 
 import lombok.*;
 
@@ -30,6 +33,10 @@ import lombok.*;
 public class Employee extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+
+    @Enumerated(STRING)
+    @Column(nullable = false)
+    private Gender gender;
 
     @Column(name = "employee_name", nullable = false)
     private String employeeName;

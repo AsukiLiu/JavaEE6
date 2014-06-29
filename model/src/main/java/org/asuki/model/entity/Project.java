@@ -3,8 +3,12 @@ package org.asuki.model.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.Valid;
 
 import org.asuki.model.BaseEntity;
+import org.asuki.model.jackson.Tool;
+import org.asuki.model.jackson.JsonItem;
+import org.hibernate.annotations.Type;
 
 import lombok.*;
 
@@ -20,7 +24,16 @@ public class Project extends BaseEntity {
     @Column(name = "project_name", nullable = false)
     private String projectName;
 
-    @Column(name = "platform")
+    @Column
     private String platform;
+
+    @Type(type = "org.asuki.model.hibernate.ToolType")
+    @Valid
+    private Tool tool;
+
+    @Type(type = "org.asuki.model.hibernate.JsonItemType")
+    @Column(name = "json_item")
+    @Valid
+    private JsonItem jsonItem;
 
 }

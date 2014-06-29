@@ -1,8 +1,10 @@
 package org.asuki.service.impl;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Sets.newHashSet;
 import static java.util.Calendar.getInstance;
 import static org.asuki.model.entity.Address.builder;
+import static org.asuki.model.enumeration.Gender.MALE;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -30,6 +32,7 @@ import org.asuki.model.entity.Job;
 import org.asuki.model.entity.Phone;
 import org.asuki.model.entity.Project;
 import org.asuki.model.entity.Qualification;
+import org.asuki.model.jackson.Tool;
 import org.asuki.service.BootstrapService;
 
 @Stateless(name = "BootstrapService")
@@ -106,6 +109,15 @@ public class BootstrapServiceImpl implements BootstrapService {
         Project project = new Project();
         project.setProjectName("Demo");
         project.setPlatform("JavaEE6");
+
+        Tool tool = new Tool();
+        tool.setToolName("Eclipse");
+        tool.setVersion("4.2");
+        tool.setOpenSource(true);
+        tool.setPlugins(newHashSet("plugin-A", "plugin-B", "plugin-C"));
+        project.setTool(tool);
+        project.setJsonItem(tool);
+
         Project[] projects = { project };
         return projects;
     }
@@ -122,11 +134,9 @@ public class BootstrapServiceImpl implements BootstrapService {
         phone.setMobilePhoneNumber("080-1234-5678");
 
         Email gmail = new Email();
-        gmail.setEmailType(1);
         gmail.setEmailAddress("dev@gmail.com");
         emailDao.create(gmail);
         Email ymail = new Email();
-        ymail.setEmailType(2);
         ymail.setEmailAddress("dev@yahoo.com");
         emailDao.create(ymail);
         List<Email> emails = newArrayList(gmail, ymail);
@@ -148,6 +158,7 @@ public class BootstrapServiceImpl implements BootstrapService {
         Calendar cal = getInstance();
         cal.set(2014, 6, 28);
         Employee employee = new Employee();
+        employee.setGender(MALE);
         employee.setMonthlySalary(2000);
         employee.setEmployeeName("Andy");
         employee.setEntranceDate(new Date(cal.getTimeInMillis()));
