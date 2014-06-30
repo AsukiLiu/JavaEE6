@@ -3,6 +3,9 @@ package org.asuki.service.impl;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
+
 import org.asuki.dao.BaseDao;
 import org.asuki.model.BaseEntity;
 import org.asuki.service.BaseService;
@@ -11,6 +14,9 @@ public abstract class BaseServiceImpl<E extends BaseEntity, K extends Serializab
         implements BaseService<E, K> {
 
     protected abstract BaseDao<E, K> getDao();
+
+    @Resource
+    protected SessionContext ctx;
 
     @Override
     public List<E> findAll() {

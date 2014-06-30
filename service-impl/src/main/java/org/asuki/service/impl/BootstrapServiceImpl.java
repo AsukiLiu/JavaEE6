@@ -1,6 +1,7 @@
 package org.asuki.service.impl;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newHashSet;
 import static java.util.Calendar.getInstance;
 import static org.asuki.model.entity.Address.builder;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -118,6 +120,14 @@ public class BootstrapServiceImpl implements BootstrapService {
         tool.setPlugins(newHashSet("plugin-A", "plugin-B", "plugin-C"));
         project.setTool(tool);
         project.setJsonItem(tool);
+
+        project.setLanguages(newArrayList("Java", "C#", "PHP"));
+
+        Map<Integer, String> steps = newHashMap();
+        steps.put(1, "Plan");
+        steps.put(2, "Do");
+        steps.put(3, "See");
+        project.setSteps(steps);
 
         Project[] projects = { project };
         return projects;
