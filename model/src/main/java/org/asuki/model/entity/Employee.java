@@ -9,7 +9,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Enumerated;
+import javax.persistence.ExcludeSuperclassListeners;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -18,12 +20,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 import org.asuki.model.BaseEntity;
 import org.asuki.model.enumeration.Gender;
+import org.asuki.model.listener.CustomListener;
+import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.*;
 
+@ExcludeSuperclassListeners()
+@EntityListeners({ CustomListener.class })
 @Entity
 @Table(name = "employee")
 @NoArgsConstructor
@@ -39,13 +46,20 @@ public class Employee extends BaseEntity {
     private Gender gender;
 
     @Column(name = "employee_name", nullable = false)
+    @NotBlank
     private String employeeName;
+
+    @Temporal(DATE)
+    private Date birthday;
+
+    @Transient
+    private Integer age;
 
     @Column(name = "monthly_salary", nullable = false)
     private int monthlySalary;
 
     @Column(name = "entrance_date", nullable = false)
-    @Temporal(value = DATE)
+    @Temporal(DATE)
     private Date entranceDate;
 
     // One way

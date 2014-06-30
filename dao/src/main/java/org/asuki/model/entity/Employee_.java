@@ -7,9 +7,10 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import org.asuki.model.enumeration.Gender;
 
-@Generated(value="Dali", date="2014-06-29T20:58:33.022+0900")
+@Generated(value="Dali", date="2014-06-30T21:25:55.304+0900")
 @StaticMetamodel(Employee.class)
 public class Employee_ {
+	public static volatile SingularAttribute<Employee, Gender> gender;
 	public static volatile SingularAttribute<Employee, String> employeeName;
 	public static volatile SingularAttribute<Employee, Integer> monthlySalary;
 	public static volatile SingularAttribute<Employee, Date> entranceDate;
@@ -20,5 +21,5 @@ public class Employee_ {
 	public static volatile SingularAttribute<Employee, Department> department;
 	public static volatile ListAttribute<Employee, Project> projects;
 	public static volatile ListAttribute<Employee, Qualification> qualifications;
-	public static volatile SingularAttribute<Employee, Gender> gender;
+	public static volatile SingularAttribute<Employee, Date> birthday;
 }

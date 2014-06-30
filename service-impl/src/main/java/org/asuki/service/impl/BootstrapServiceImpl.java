@@ -34,6 +34,7 @@ import org.asuki.model.entity.Project;
 import org.asuki.model.entity.Qualification;
 import org.asuki.model.jackson.Tool;
 import org.asuki.service.BootstrapService;
+import org.joda.time.DateTime;
 
 @Stateless(name = "BootstrapService")
 @Local(BootstrapService.class)
@@ -157,10 +158,13 @@ public class BootstrapServiceImpl implements BootstrapService {
 
         Calendar cal = getInstance();
         cal.set(2014, 6, 28);
+        DateTime dateTime = new DateTime("1990-08-19");
+
         Employee employee = new Employee();
         employee.setGender(MALE);
         employee.setMonthlySalary(2000);
         employee.setEmployeeName("Andy");
+        employee.setBirthday(new Date(dateTime.getMillis()));
         employee.setEntranceDate(new Date(cal.getTimeInMillis()));
         employee.setAddress(address);
         employee.setPhone(phone);
