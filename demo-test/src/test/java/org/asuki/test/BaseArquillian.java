@@ -46,7 +46,8 @@ public abstract class BaseArquillian extends Arquillian {
     private static Archive<?> createWarArchive() {
 
         File[] libs = Maven.resolver().loadPomFromFile("pom.xml")
-                .importRuntimeAndTestDependencies().asFile();
+                .importRuntimeAndTestDependencies().resolve()
+                .withTransitivity().asFile();
 
         // @formatter:off
         WebArchive war = ShrinkWrap
@@ -55,6 +56,9 @@ public abstract class BaseArquillian extends Arquillian {
                 .addAsWebInfResource(
                         "META-INF/beans.xml",
                         "beans.xml")
+                .addAsWebInfResource(
+                        "META-INF/jboss-deployment-structure.xml",
+                        "jboss-deployment-structure.xml")
                 .addAsLibraries(libs);
         // @formatter:on
 

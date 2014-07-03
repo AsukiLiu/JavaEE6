@@ -4,6 +4,8 @@
         <dependencies>
             <module name="org.joda.time" export="true" />
             <module name="com.google.guava" export="true" />
+            <module name="org.hibernate" export="true" />
+            <module name="org.hibernate.validator" export="true" />
             <module name="javax.activation.api" export="true" />
             <module name="javax.annotation.api" export="true" />
             <module name="javax.ejb.api" export="true" />

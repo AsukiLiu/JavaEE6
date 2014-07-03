@@ -6,8 +6,11 @@ import static org.hamcrest.MatcherAssert.*;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import lombok.SneakyThrows;
+
 import org.asuki.test.BaseArquillian;
 import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,10 +26,13 @@ public class WebDriverIT extends BaseArquillian {
         jarFilterRegexp += "|^/WEB-INF/lib/resteasy-.*\\.jar$";
     }
 
-    private static WebDriver driver;
-
     @ArquillianResource
     private URL deploymentUrl;
+
+    private static WebDriver driver;
+
+    @Drone
+    private WebDriver droneDriver;
 
     @BeforeClass
     public static void setUpBeforeClass() {
@@ -39,19 +45,30 @@ public class WebDriverIT extends BaseArquillian {
     }
 
     @Test
-    public void shouldSendText() throws InterruptedException {
+    public void shouldSendText() {
+        testWebDriver(driver);
+    }
+
+    @Test
+    public void shouldSendTextByDrone() {
+        testWebDriver(droneDriver);
+    }
+
+    @SneakyThrows
+    private void testWebDriver(WebDriver webDriver) {
         final String expected = "test";
 
         // Change default url
-        driver.get(deploymentUrl.toString().replace("test", "demo-web"));
+        webDriver.get(deploymentUrl.toString().replace("test", "demo-web"));
 
-        driver.findElement(By.id("form:inputText")).sendKeys(expected);
+        webDriver.findElement(By.id("form:inputText")).sendKeys(expected);
         TimeUnit.SECONDS.sleep(2);
-        driver.findElement(By.id("form:sendButton")).click();
+        webDriver.findElement(By.id("form:sendButton")).click();
 
-        assertThat(driver.getTitle(), is("Success page"));
-        assertThat(driver.findElement(By.id("sentText")).getText(),
+        assertThat(webDriver.getTitle(), is("Success page"));
+        assertThat(webDriver.findElement(By.id("sentText")).getText(),
                 is(expected));
         TimeUnit.SECONDS.sleep(2);
     }
+
 }
