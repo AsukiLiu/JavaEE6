@@ -2,6 +2,7 @@ package org.asuki.model.entity;
 
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.TemporalType.DATE;
 
 import java.util.Date;
@@ -18,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
@@ -72,8 +74,9 @@ public class Employee extends BaseEntity {
     private Phone phone;
 
     // One way
-    @OneToMany(orphanRemoval = true)
+    @OneToMany(fetch = EAGER, cascade = PERSIST, orphanRemoval = true)
     @JoinTable(name = "employee_email", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "email_id"))
+    @OrderBy("emailAddress ASC")
     private List<Email> emails;
 
     // One way

@@ -33,6 +33,7 @@ import org.asuki.model.entity.Employee;
 import org.asuki.model.entity.Job;
 import org.asuki.model.entity.Phone;
 import org.asuki.model.entity.Project;
+import org.asuki.model.entity.ProjectDetail;
 import org.asuki.model.entity.Qualification;
 import org.asuki.model.jackson.Tool;
 import org.asuki.service.BootstrapService;
@@ -113,24 +114,32 @@ public class BootstrapServiceImpl implements BootstrapService {
         project.setProjectName("Demo");
         project.setPlatform("JavaEE6");
 
+        project.setProjectDetail(createProjectDetail());
+
+        Project[] projects = { project };
+        return projects;
+    }
+
+    private ProjectDetail createProjectDetail() {
+        ProjectDetail detail = new ProjectDetail();
+
         Tool tool = new Tool();
         tool.setToolName("Eclipse");
         tool.setVersion("4.2");
         tool.setOpenSource(true);
         tool.setPlugins(newHashSet("plugin-A", "plugin-B", "plugin-C"));
-        project.setTool(tool);
-        project.setJsonItem(tool);
+        detail.setTool(tool);
+        detail.setJsonItem(tool);
 
-        project.setLanguages(newArrayList("Java", "C#", "PHP"));
+        detail.setLanguages(newArrayList("Java", "C#", "PHP"));
 
         Map<Integer, String> steps = newHashMap();
         steps.put(1, "Plan");
         steps.put(2, "Do");
         steps.put(3, "See");
-        project.setSteps(steps);
+        detail.setSteps(steps);
 
-        Project[] projects = { project };
-        return projects;
+        return detail;
     }
 
     private void createEmployee() {
