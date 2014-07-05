@@ -22,10 +22,6 @@ import org.testng.annotations.Test;
 @RunAsClient
 public class WebDriverIT extends BaseArquillian {
 
-    static {
-        jarFilterRegexp += "|^/WEB-INF/lib/resteasy-.*\\.jar$";
-    }
-
     @ArquillianResource
     private URL deploymentUrl;
 
@@ -58,7 +54,7 @@ public class WebDriverIT extends BaseArquillian {
     private void testWebDriver(WebDriver webDriver) {
         final String expected = "test";
 
-        // Change default url
+        // Assuming demo-web.war exists in deployments folder
         webDriver.get(deploymentUrl.toString().replace("test", "demo-web"));
 
         webDriver.findElement(By.id("form:inputText")).sendKeys(expected);
