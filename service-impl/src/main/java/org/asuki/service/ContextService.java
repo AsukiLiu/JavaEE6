@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptors;
 import javax.interceptor.InvocationContext;
+import javax.transaction.TransactionSynchronizationRegistry;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,12 +22,19 @@ import org.asuki.model.entity.Address;
 public class ContextService {
 
     @Resource
-    private SessionContext ctx;
+    private SessionContext sc;
+
+    @Resource
+    private TransactionSynchronizationRegistry tsr;
 
     @Interceptors(ContextInterceptor.class)
-    public Address getContextData() {
+    public Address getContextDataBySc() {
+        return (Address) sc.getContextData().get(PARAM.getKey());
+    }
 
-        return (Address) ctx.getContextData().get(PARAM.getKey());
+    @Interceptors(ContextInterceptor.class)
+    public Address getContextDataByTsr() {
+        return (Address) tsr.getResource(PARAM.getKey());
     }
 
     @AllArgsConstructor
@@ -41,7 +49,10 @@ public class ContextService {
     public static class ContextInterceptor {
 
         @Resource
-        private SessionContext ctx;
+        private SessionContext sc;
+
+        @Resource
+        private TransactionSynchronizationRegistry tsr;
 
         @AroundInvoke
         public Object intercept(InvocationContext ic) throws Exception {
@@ -55,7 +66,9 @@ public class ContextService {
                     .build();
             // @formatter:on
 
-            ctx.getContextData().put(PARAM.getKey(), address);
+            sc.getContextData().put(PARAM.getKey(), address);
+
+            tsr.putResource(PARAM.getKey(), address);
 
             return ic.proceed();
         }
