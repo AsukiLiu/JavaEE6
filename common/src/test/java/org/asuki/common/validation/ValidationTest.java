@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 public class ValidationTest {
 
     @Test(dataProvider = "data")
-    public void method(String target, boolean isValid, String errorMessages) {
+    public void testValidate(String target, boolean isValid, String errorMessages) {
         ValidationResult result = ValidationUtil.validate(target);
 
         assertThat(result.isValid(), is(isValid));
