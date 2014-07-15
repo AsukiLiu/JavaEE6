@@ -7,7 +7,7 @@ import org.asuki.common.exception.CommonError;
 public final class DateUtil {
 
     private DateUtil() {
-        // Reflectionを防ぐ
+        // prevent Reflection
         throw new CommonError(CANNOT_BE_INSTANCED);
     }
 

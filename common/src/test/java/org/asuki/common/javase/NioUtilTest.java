@@ -19,8 +19,8 @@ public class NioUtilTest {
 
         final String expected = "This is test";
 
-        stringToFile(FILE_PATH, expected);
-        String actual = fileToString(FILE_PATH);
+        saveFile(FILE_PATH, expected);
+        String actual = readFile(FILE_PATH);
 
         assertThat(actual, is(expected));
 

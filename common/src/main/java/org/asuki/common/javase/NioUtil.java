@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import org.asuki.common.exception.CommonError;
@@ -15,17 +16,28 @@ import org.asuki.common.exception.CommonError;
 public final class NioUtil {
 
     private NioUtil() {
-        // Reflectionを防ぐ
+        // prevent Reflection
         throw new CommonError(CANNOT_BE_INSTANCED);
     }
 
-    public static void stringToFile(String filePath, String content)
+    public static void saveFile(String filePath, String content)
             throws IOException {
-        Files.write(Paths.get(filePath), content.getBytes());
+
+        // Path path = FileSystems.getDefault().getPath(filePath);
+        Path path = Paths.get(filePath);
+        // Files.write(path, content.getBytes());
+        Files.write(path, content.getBytes(), StandardOpenOption.CREATE_NEW);
     }
 
-    public static String fileToString(String filePath) throws IOException {
-        return new String(Files.readAllBytes(Paths.get(filePath)));
+    public static String readFile(String filePath) throws IOException {
+
+        Path path = Paths.get(filePath);
+
+        if (!Files.exists(path)) {
+            return "";
+        }
+
+        return new String(Files.readAllBytes(path));
     }
 
     public static void deleteRecursively(String directoryPath)
