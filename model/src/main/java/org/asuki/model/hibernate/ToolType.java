@@ -5,7 +5,7 @@ import org.asuki.model.jackson.Tool;
 public class ToolType extends BaseUserType<Tool> {
 
     @Override
-    protected Class<Tool> getClazz() {
+    public Class<Tool> returnedClass() {
         return Tool.class;
     }
 

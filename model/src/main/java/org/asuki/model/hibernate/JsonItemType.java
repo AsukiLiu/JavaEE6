@@ -5,7 +5,7 @@ import org.asuki.model.jackson.JsonItem;
 public class JsonItemType extends BaseUserType<JsonItem> {
 
     @Override
-    protected Class<JsonItem> getClazz() {
+    public Class<JsonItem> returnedClass() {
         return JsonItem.class;
     }
 

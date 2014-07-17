@@ -17,16 +17,9 @@ public abstract class BaseUserType<T extends Serializable> implements UserType {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    protected abstract Class<T> getClazz();
-
     @Override
     public int[] sqlTypes() {
         return new int[] { Types.CLOB };
-    }
-
-    @Override
-    public Class<T> returnedClass() {
-        return getClazz();
     }
 
     @Override
@@ -47,14 +40,11 @@ public abstract class BaseUserType<T extends Serializable> implements UserType {
         return x.hashCode();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Object nullSafeGet(ResultSet rs, String[] names,
             SessionImplementor session, Object owner)
             throws HibernateException, SQLException {
-
-        if (rs.wasNull()) {
-            return null;
-        }
 
         String json = rs.getString(names[0]);
         if (json == null) {
@@ -63,7 +53,7 @@ public abstract class BaseUserType<T extends Serializable> implements UserType {
 
         T result = null;
         try {
-            result = OBJECT_MAPPER.readValue(json, getClazz());
+            result = (T) OBJECT_MAPPER.readValue(json, returnedClass());
         } catch (IOException e) {
             throw new HibernateException(e);
         }
@@ -103,7 +93,7 @@ public abstract class BaseUserType<T extends Serializable> implements UserType {
     @Override
     public Serializable disassemble(Object value) throws HibernateException {
 
-        if (!getClazz().isInstance(value)) {
+        if (!returnedClass().isInstance(value)) {
             throw new UnsupportedOperationException("Convert error: "
                     + value.getClass());
         }
