@@ -2,6 +2,7 @@ package org.asuki.service.impl;
 
 import java.util.List;
 
+import org.asuki.common.annotation.TimeLog;
 import org.asuki.dao.AddressDao;
 import org.asuki.dao.BaseDao;
 import org.asuki.model.entity.Address;
@@ -23,6 +24,7 @@ public class AddressServiceImpl extends BaseServiceImpl<Address, Integer>
     @Inject
     private Logger log;
 
+    @TimeLog
     @Override
     public List<Address> findAll() {
         return addressDao.findAll();

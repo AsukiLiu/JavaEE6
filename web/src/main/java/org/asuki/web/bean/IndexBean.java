@@ -16,7 +16,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 
-import org.asuki.common.annotation.TimeLog;
+import org.asuki.service.AddressService;
 import org.slf4j.Logger;
 
 import javax.inject.Named;
@@ -26,7 +26,6 @@ import lombok.Setter;
 
 @Named
 @RequestScoped
-@TimeLog
 public class IndexBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,6 +36,9 @@ public class IndexBean implements Serializable {
     @Setter
     @Getter
     private String text;
+
+    @Inject
+    private AddressService addressService;
 
     @PostConstruct
     private void init() {
@@ -65,7 +67,7 @@ public class IndexBean implements Serializable {
     }
 
     public void actionListener(ActionEvent e) {
-
+        log.info("All addresses: " + addressService.findAll());
     }
 
     public String action() {
