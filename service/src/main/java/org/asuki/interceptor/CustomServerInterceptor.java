@@ -1,5 +1,7 @@
 package org.asuki.interceptor;
 
+import static org.asuki.common.Constants.Ejbs.CONTEXT_DATA_KEY;
+
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -22,7 +24,7 @@ public class CustomServerInterceptor {
 
         Map<String, Object> contextData = context.getContextData();
 
-        Object obj = contextData.get("xKey");
+        Object obj = contextData.get(CONTEXT_DATA_KEY);
 
         log.info("Received: " + obj);
 

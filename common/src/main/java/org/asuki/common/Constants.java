@@ -23,4 +23,8 @@ public interface Constants {
         String DEFAULT_CHARSET = Charsets.UTF_8.toString();
     }
 
+    interface Ejbs {
+        String CONTEXT_DATA_KEY = "xKey";
+    }
+
 }

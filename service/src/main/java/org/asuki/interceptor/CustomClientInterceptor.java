@@ -1,17 +1,17 @@
 package org.asuki.interceptor;
 
-import java.util.Map;
+import static org.asuki.common.Constants.Ejbs.CONTEXT_DATA_KEY;
 
-import javax.inject.Inject;
+import java.util.Map;
 
 import org.jboss.ejb.client.EJBClientInterceptor;
 import org.jboss.ejb.client.EJBClientInvocationContext;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CustomClientInterceptor implements EJBClientInterceptor {
 
-    @Inject
-    private Logger log;
+    private Logger log = LoggerFactory.getLogger(getClass());
 
     @Override
     public void handleInvocation(EJBClientInvocationContext context)
@@ -21,7 +21,7 @@ public class CustomClientInterceptor implements EJBClientInterceptor {
 
         Map<String, Object> contextData = context.getContextData();
 
-        contextData.put("xKey", "dummy");
+        contextData.put(CONTEXT_DATA_KEY, "dummy");
 
         context.sendRequest();
     }

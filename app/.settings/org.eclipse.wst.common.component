@@ -2,10 +2,7 @@
     <wb-module deploy-name="demo-app">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/application" tag="defaultRootSource"/>
-        <dependent-module archiveName="demo-service-impl.jar" deploy-path="/" handle="module:/resource/demo-service-impl/demo-service-impl">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="demo-model.jar" deploy-path="/lib" handle="module:/resource/demo-model/demo-model">
+        <dependent-module archiveName="demo-model.jar" deploy-path="/" handle="module:/resource/demo-model/demo-model">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="demo-common.jar" deploy-path="/lib" handle="module:/resource/demo-common/demo-common">
@@ -18,6 +15,9 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="jackson-core.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/fasterxml/jackson/core/jackson-core/2.2.2/jackson-core-2.2.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="demo-service-impl.jar" deploy-path="/" handle="module:/resource/demo-service-impl/demo-service-impl">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="demo-dao.jar" deploy-path="/lib" handle="module:/resource/demo-dao/demo-dao">

@@ -16,10 +16,25 @@
     <dependencies>
         <dependency>
             <groupId>org.asuki</groupId>
+            <artifactId>demo-model</artifactId>
+            <version>${project.version}</version>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>org.asuki</groupId>
             <artifactId>demo-service-impl</artifactId>
             <version>${project.version}</version>
             <type>ejb</type>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
