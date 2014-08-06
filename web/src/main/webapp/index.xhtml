@@ -1,31 +1,26 @@
-<!DOCTYPE html>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="/template/main.xhtml">
 
-<h:head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="css/common.css" rel="stylesheet" />
-    <title>Index page</title>
-</h:head>
+    <ui:define name="content">
 
-<body>
+        <h:form id="form">
+            <h:messages />
 
-    <h:form id="form">
-        <h:messages />
+            <h:inputText id="inputText" value="#{indexBean.text}"
+                valueChangeListener="#{indexBean.valueChanged}"
+                validator="#{indexBean.validate}"
+                converter="customConverter" />
 
-        <h:inputText id="inputText" value="#{indexBean.text}"
-            valueChangeListener="#{indexBean.valueChanged}"
-            validator="#{indexBean.validate}"
-            converter="customConverter" />
+            <h:commandButton id="sendButton"
+                actionListener="#{indexBean.actionListener}"
+                action="#{indexBean.action}" value="SEND" />
+        </h:form>
 
-        <h:commandButton id="sendButton"
-            actionListener="#{indexBean.actionListener}"
-            action="#{indexBean.action}" value="SEND" />
-    </h:form>
-
-</body>
-
-</html>
+    </ui:define>
+</ui:composition>

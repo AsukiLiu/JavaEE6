@@ -1,50 +1,46 @@
-<!DOCTYPE html>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
+    xmlns:p="http://primefaces.org/ui"
+    template="/template/main.xhtml">
 
-<h:head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="css/common.css" rel="stylesheet" />
-    <title>Success page</title>
-</h:head>
+    <ui:define name="content">
 
-<body>
+        <h:outputText id="sentText" value="#{indexBean.text}" />
 
-    <h:outputText id="sentText" value="#{indexBean.text}" />
+        <h:form id="form">
 
-    <h:form id="form">
+            <h:outputText id="noSpecified" value="#{successBean.result}" />
+            <br />
 
-        <h:outputText id="noSpecified" value="#{successBean.result}" />
-        <br />
+            <h:commandButton value="JSF Button"
+                action="#{successBean.action}"
+                actionListener="#{successBean.actionListener}">
 
-        <h:commandButton value="JSF Button"
-            action="#{successBean.action}"
-            actionListener="#{successBean.actionListener}">
+                <f:ajax execute="@this" render=":form:specified" />
+                <f:setPropertyActionListener
+                    value="#{successBean.valueG}"
+                    target="#{successBean.valueS}" />
 
-            <f:ajax execute="@this" render=":form:specified" />
-            <f:setPropertyActionListener value="#{successBean.valueG}"
-                target="#{successBean.valueS}" />
+            </h:commandButton>
+            <br />
+            <p:commandButton value="Primefaces Button"
+                action="#{successBean.action}" process="@this"
+                update=":form:specified"
+                actionListener="#{successBean.actionListener}">
 
-        </h:commandButton>
-        <br />
-        <p:commandButton value="Primefaces Button"
-            action="#{successBean.action}" process="@this"
-            update=":form:specified"
-            actionListener="#{successBean.actionListener}">
+                <f:setPropertyActionListener
+                    value="#{successBean.valueG}"
+                    target="#{successBean.valueS}" />
 
-            <f:setPropertyActionListener value="#{successBean.valueG}"
-                target="#{successBean.valueS}" />
+            </p:commandButton>
 
-        </p:commandButton>
+            <br />
+            <h:outputText id="specified" value="#{successBean.result}" />
+        </h:form>
 
-        <br />
-        <h:outputText id="specified" value="#{successBean.result}" />
-    </h:form>
-
-</body>
-
-</html>
+    </ui:define>
+</ui:composition>

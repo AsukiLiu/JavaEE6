@@ -2,3 +2,35 @@ body {
     color: white;
     background-color: #222
 }
+
+#container {
+    margin: 0 auto;
+    padding: 0 20px 10px 20px;
+    width: 800px;
+    padding-top: 30px;
+}
+
+#content {
+    float: left;
+    width: 400px;
+    margin: 20px;
+}
+
+#aside {
+    font-size: 0.9em;
+    width: 300px;
+    float: left;
+    margin: 20px 0px;
+    border: 1px solid white;
+    padding: 20px;
+}
+
+#aside ul {
+    padding-left: 30px;
+}
+
+#footer {
+    text-align: center;
+    color: green;
+    font-size: 0.9em;
+}

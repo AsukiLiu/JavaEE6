@@ -1,8 +1,7 @@
 package org.asuki.schedule;
 
-import java.util.Collection;
-
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -47,12 +46,9 @@ public class CustomScheduler {
     }
 
     @PostConstruct
-    public void changeSchedule() {
+    public void startTimer() {
 
-        Collection<Timer> timers = timerService.getTimers();
-        for (Timer timer : timers) {
-            timer.cancel();
-        }
+        stopTimer();
 
         ScheduleExpression expression = new ScheduleExpression();
         // expression.second("*/10").minute("*").hour("*");
@@ -60,6 +56,13 @@ public class CustomScheduler {
 
         final TimerConfig config = new TimerConfig(TIMER_NAME, false);
         timerService.createCalendarTimer(expression, config);
+    }
+
+    @PreDestroy
+    public void stopTimer() {
+        for (Timer timer : timerService.getTimers()) {
+            timer.cancel();
+        }
     }
 
     @Timeout
