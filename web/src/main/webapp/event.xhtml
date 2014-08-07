@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui" 
+    template="/template/main.xhtml">
+
+    <ui:define name="content">
+
+        <h:form>
+            <fieldset>
+                <h:outputLabel value="Amount: " for="amount" />
+                <span class="add-on">\</span>
+                <h:inputText id="amount" value="#{eventBean.amount}" maxlength="10"
+                    required="true"
+                    requiredMessage="Amount is required." />
+                <h:message for="amount" errorClass="invalid" />
+
+                <br />
+
+                <h:outputLabel value="Payment Options:" for="option" />
+                <h:selectOneRadio id="option" value="#{eventBean.paymentOption}" 
+                    required="true"
+                    requiredMessage="Option is required.">
+                    <f:selectItem id="credit" itemLabel="Credit Operation" itemValue="1" />
+                    <f:selectItem id="debit" itemLabel="Debit Operation" itemValue="2" />
+                </h:selectOneRadio>
+                <h:message for="option" errorClass="invalid" />
+
+                <br />
+
+                <div class="actions">
+                    <h:commandButton value="Reset" action="#{eventBean.reset}" />
+                    <h:commandButton id="submit" value=" Pay" action="#{eventBean.pay}" />
+                </div>
+            </fieldset>
+        </h:form>
+
+        <h:dataTable var="payment" value="#{payments}"
+            rendered="#{not empty payments}">
+            <h:column>
+                <f:facet name="header">Date</f:facet>
+                <h:outputText value="#{payment.datetime}">
+                    <f:convertDateTime type="date" pattern="yyyy/MM/dd hh:mm:ss" />
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">type</f:facet>
+                #{payment.type}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Amount(\)</f:facet>
+                #{payment.amount}
+            </h:column>
+        </h:dataTable>
+
+    </ui:define>
+</ui:composition>
