@@ -2,7 +2,12 @@ package org.asuki.common.javase;
 
 import static org.asuki.common.exception.CommonError.CANNOT_BE_INSTANCED;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,6 +25,16 @@ public final class NioUtil {
         throw new CommonError(CANNOT_BE_INSTANCED);
     }
 
+    public static void saveFileByIO(String filePath, String content)
+            throws IOException {
+
+        File file = new File(filePath);
+
+        try (OutputStream outputStream = new FileOutputStream(file)) {
+            outputStream.write(content.getBytes());
+        }
+    }
+
     public static void saveFile(String filePath, String content)
             throws IOException {
 
@@ -27,6 +42,23 @@ public final class NioUtil {
         Path path = Paths.get(filePath);
         // Files.write(path, content.getBytes());
         Files.write(path, content.getBytes(), StandardOpenOption.CREATE_NEW);
+    }
+
+    public static String readFileByIO(String filePath) throws IOException {
+
+        File file = new File(filePath);
+
+        if (!file.exists()) {
+            return "";
+        }
+
+        byte[] content = new byte[(int) file.length()];
+
+        try (InputStream intputStream = new FileInputStream(file)) {
+            intputStream.read(content);
+        }
+
+        return new String(content);
     }
 
     public static String readFile(String filePath) throws IOException {

@@ -19,12 +19,25 @@ public class NioUtilTest {
 
         final String expected = "This is test";
 
-        saveFile(FILE_PATH, expected);
-        String actual = readFile(FILE_PATH);
+        // IO
+        {
+            saveFileByIO(FILE_PATH, expected);
+            String actual = readFileByIO(FILE_PATH);
 
-        assertThat(actual, is(expected));
+            assertThat(actual, is(expected));
 
-        Files.deleteIfExists(Paths.get(FILE_PATH));
+            Files.deleteIfExists(Paths.get(FILE_PATH));
+        }
+
+        // NIO
+        {
+            saveFile(FILE_PATH, expected);
+            String actual = readFile(FILE_PATH);
+
+            assertThat(actual, is(expected));
+
+            Files.deleteIfExists(Paths.get(FILE_PATH));
+        }
     }
 
     @Test
