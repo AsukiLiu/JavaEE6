@@ -44,11 +44,11 @@ public class SecurityInterceptor implements PreProcessInterceptor {
     private static final ServerResponse RESPONSE_UNAUTHORIZED = new ServerResponse(
             UNAUTHORIZED.getReasonPhrase(), 
             UNAUTHORIZED.getStatusCode(), 
-            new Headers<Object>());;
+            new Headers<Object>());
     private static final ServerResponse RESPONSE_FORBIDDEN = new ServerResponse(
             FORBIDDEN.getReasonPhrase(), 
             FORBIDDEN.getStatusCode(), 
-            new Headers<Object>());;
+            new Headers<Object>());
     private static final ServerResponse RESPONSE_ERROR = new ServerResponse(
             INTERNAL_SERVER_ERROR.getReasonPhrase(), 
             INTERNAL_SERVER_ERROR.getStatusCode(), 
