@@ -13,16 +13,24 @@ public class DummyUserDatabase {
 
     static {
         // @formatter:off
-        User user = builder()
+        User user1 = builder()
                 .id(1)
                 .firstName("Andy")
                 .lastName("L")
                 .uri("/users/1")
                 .lastModified(new Date())
             .build();
+        User user2 = builder()
+                .id(2)
+                .firstName("Tom")
+                .lastName("R")
+                .uri("/users/2")
+                .lastModified(new Date())
+            .build();
         // @formatter:on
 
-        users.put(1, user);
+        users.put(user1.getId(), user1);
+        users.put(user2.getId(), user2);
     }
 
     public static User getUserById(Integer id) {

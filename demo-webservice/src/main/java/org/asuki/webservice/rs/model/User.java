@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Builder;
 
 @NoArgsConstructor
@@ -14,6 +15,7 @@ import lombok.experimental.Builder;
 @Getter
 @Setter
 @Builder
+@ToString
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
