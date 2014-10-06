@@ -54,4 +54,22 @@ public class AddressServiceMock implements AddressService {
         
     }
 
+    @Override
+    public void put(Address address) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void delete() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public List<Address> getCache() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }
