@@ -71,6 +71,11 @@
             <artifactId>reflections</artifactId>
             <version>0.9.9-RC2</version>
         </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>0.7.2</version>
+        </dependency>
         <!-- Test -->
         <dependency>
             <groupId>org.testng</groupId>
