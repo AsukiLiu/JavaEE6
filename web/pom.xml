@@ -74,6 +74,13 @@
             <artifactId>jboss-transaction-api_1.1_spec</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- Cluster -->
+        <dependency>
+            <groupId>org.jboss.as</groupId>
+            <artifactId>jboss-as-server</artifactId>
+            <version>${jboss.as.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- Infinispan -->
         <dependency>
             <groupId>org.infinispan</groupId>
