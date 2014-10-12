@@ -21,6 +21,10 @@
         </repository>
     </repositories>
 
+    <properties>
+        <infinispan.version>5.2.6.Final</infinispan.version>
+    </properties>
+
     <dependencies>
         <!-- Module -->
         <dependency>
@@ -85,8 +89,13 @@
         <dependency>
             <groupId>org.infinispan</groupId>
             <artifactId>infinispan-core</artifactId>
-            <version>5.2.6.Final</version>
+            <version>${infinispan.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-query</artifactId>
+            <version>${infinispan.version}</version>
         </dependency>
         <!-- Primefaces -->
         <dependency>
