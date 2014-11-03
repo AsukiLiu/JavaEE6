@@ -31,10 +31,17 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.testng.annotations.Test;
 
+import com.beust.jcommander.internal.Maps;
+import com.beust.jcommander.internal.Sets;
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Charsets;
 import com.google.common.base.Defaults;
@@ -357,6 +364,24 @@ public class BaseTest {
                 .toStringFunction();
 
         assertEquals(toStringFunction.apply(customer1), toString);
+
+        Map<String, State> stateMap = Maps.newHashMap();
+        stateMap.put("NY", createState());
+
+        Function<String, State> lookupState = Functions.forMap(stateMap);
+        Function<State, String> getCities = new Function<State, String>() {
+            @Override
+            public String apply(State input) {
+                return Joiner.on(",").join(input.getCities());
+            }
+        };
+
+        Function<String, String> composed = Functions.compose(getCities,
+                lookupState);
+        String cities = getCities.apply(lookupState.apply("NY"));
+
+        assertEquals(composed.apply("NY"), "Albany,Buffalo,NewYorkCity");
+        assertEquals(cities, composed.apply("NY"));
     }
 
     @Test
@@ -408,6 +433,34 @@ public class BaseTest {
                 supplierFunction);
 
         assertEquals(ingredients.size(), 2);
+    }
+
+    private State createState() {
+        Set<City> cities = Sets.newLinkedHashSet();
+        cities.add(new City("Albany"));
+        cities.add(new City("Buffalo"));
+        cities.add(new City("NewYorkCity"));
+        return new State("NY", cities);
+    }
+
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    private static class State {
+        private String name;
+        private Set<City> cities;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    private static class City {
+        private String name;
+
+        @Override
+        public String toString() {
+            return name;
+        }
     }
 
 }
