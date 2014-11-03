@@ -24,6 +24,7 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
@@ -184,6 +185,10 @@ public class BaseTest {
         Charset utf8 = Charsets.UTF_8;
         assertTrue(utf8.canEncode());
 
+        byte[] bytes = "foo".getBytes(Charsets.UTF_8);
+        String string = new String(bytes, StandardCharsets.UTF_8);
+        assertEquals(string, "foo");
+
         CharMatcher matcher = CharMatcher.anyOf("andy");
         assertTrue(matcher.matches('a'));
 
@@ -205,6 +210,22 @@ public class BaseTest {
 
         assertEquals(splits.toString(), "[090, 1234, 5678]");
         assertEquals(toArray(splits, String.class), splitsByJdk);
+
+        String stringWithLinebreaks = "aaa\nbbb\nccc";
+        assertEquals(CharMatcher.BREAKING_WHITESPACE.replaceFrom(
+                stringWithLinebreaks, ' '), "aaa bbb ccc");
+
+        String tabsAndSpaces = "   String with spaces and         tabs  ";
+
+        assertEquals(CharMatcher.WHITESPACE.collapseFrom(tabsAndSpaces, ' '),
+                " String with spaces and tabs ");
+        assertEquals(
+                CharMatcher.WHITESPACE.trimAndCollapseFrom(tabsAndSpaces, ' '),
+                "String with spaces and tabs");
+
+        String lettersAndNumbers = "foo123bar456";
+        assertEquals(CharMatcher.JAVA_DIGIT.retainFrom(lettersAndNumbers),
+                "123456");
     }
 
     @Test
