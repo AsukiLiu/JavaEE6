@@ -52,6 +52,7 @@ import com.google.common.base.Joiner.MapJoiner;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.google.common.base.Splitter;
 import com.google.common.base.Splitter.MapSplitter;
 import com.google.common.base.Supplier;
@@ -399,6 +400,21 @@ public class BaseTest {
                 isCustomer1OrCustomer2);
 
         assertEquals(ImmutableSet.copyOf(filtered).size(), 2);
+
+        Map<String, State> stateMap = Maps.newHashMap();
+        stateMap.put("NY", createState());
+
+        Function<String, State> lookupState = Functions.forMap(stateMap);
+        Predicate<State> greaterThan = new Predicate<State>() {
+            @Override
+            public boolean apply(State state) {
+                return state.getCities().size() > 2;
+            }
+        };
+
+        Predicate<String> predicate = Predicates.compose(greaterThan,
+                lookupState);
+        assertTrue(predicate.apply("NY"));
     }
 
     @Test
