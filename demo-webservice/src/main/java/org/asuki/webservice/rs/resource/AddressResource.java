@@ -4,6 +4,7 @@ import static org.asuki.model.jackson.JsonUtil.jsonSerialize;
 
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -36,6 +37,8 @@ public class AddressResource extends BaseResource {
         return addressService.findAll();
     }
 
+    //TODO
+    @PermitAll
     @Path("/get/{addressId}")
     @GET
     public Address getAddress(@PathParam("addressId") Integer addressId) {
