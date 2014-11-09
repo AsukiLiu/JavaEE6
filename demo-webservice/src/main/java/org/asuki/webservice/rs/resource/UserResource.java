@@ -29,8 +29,10 @@ public class UserResource {
     @PermitAll
     @GET
     @Path("{id}")
-    public Response getUser(@PathParam("id") int id, @QueryParam("id") int anotherId) {
-        User user = DummyUserDatabase.getUserById(anotherId == 0 ? id : anotherId);
+    public Response getUser(@PathParam("id") int id,
+            @QueryParam("id") int anotherId) {
+        User user = DummyUserDatabase.getUserById(anotherId == 0 ? id
+                : anotherId);
         return ok(user).build();
     }
 
@@ -48,5 +50,12 @@ public class UserResource {
     @Path("clearAll")
     public Response clearAll() {
         return status(OK).build();
+    }
+
+    @PermitAll
+    @POST
+    public Response getUserByPost(User request) {
+        User user = DummyUserDatabase.getUserById(request.getId());
+        return ok(user).build();
     }
 }
