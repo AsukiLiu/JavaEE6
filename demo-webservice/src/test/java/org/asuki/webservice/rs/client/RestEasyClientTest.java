@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
 
 public class RestEasyClientTest {
 
-    @Test
+    @Test(enabled = false)
     public void testParsing() throws Exception {
         ClientRequest cr = new ClientRequest(
                 "http://localhost:8080/demo-web/rs/users/1");
@@ -38,7 +38,7 @@ public class RestEasyClientTest {
                 startsWith("User(id=2, uri=/users/2, firstName=Tom, lastName=R"));
     }
 
-    @Test
+    @Test(enabled = false)
     public void testProxy() throws Exception {
         ClientRequestFactory crf = new ClientRequestFactory(UriBuilder.fromUri(
                 "http://localhost:8080/demo-web/rs").build());
@@ -56,7 +56,7 @@ public class RestEasyClientTest {
         public User getUser(@PathParam("id") int id);
     }
 
-    @Test
+    @Test(enabled = false)
     public void testInterceptor() throws Exception {
         ClientRequestFactory crf = new ClientRequestFactory(UriBuilder.fromUri(
                 "http://localhost:8080/demo-web/rs").build());

@@ -13,7 +13,7 @@ import com.jayway.restassured.response.Response;
 
 public class RestAssuredClientTest {
 
-    @Test
+    @Test(enabled = false)
     public void shouldPostUser() {
         User request = new User();
         request.setId(2);
