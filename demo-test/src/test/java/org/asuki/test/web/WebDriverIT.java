@@ -40,12 +40,12 @@ public class WebDriverIT extends BaseArquillian {
         driver.quit();
     }
 
-    @Test
+    @Test(enabled = false)
     public void shouldSendText() {
         testWebDriver(driver);
     }
 
-    @Test
+    @Test(enabled = false)
     public void shouldSendTextByDrone() {
         testWebDriver(droneDriver);
     }
