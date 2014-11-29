@@ -12,7 +12,6 @@ import javax.interceptor.Interceptors;
 import javax.interceptor.InvocationContext;
 import javax.transaction.TransactionSynchronizationRegistry;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import org.asuki.model.entity.Address;
@@ -37,12 +36,15 @@ public class ContextService {
         return (Address) tsr.getResource(PARAM.getKey());
     }
 
-    @AllArgsConstructor
     public static enum ContextData {
         PARAM("paramKey");
 
         @Getter
         private String key;
+
+        ContextData(String key) {
+            this.key = key;
+        }
 
     }
 
