@@ -179,8 +179,9 @@
             <id>it</id>
             <properties>
                 <jboss-as.home>${env.JBOSS_HOME}</jboss-as.home>
-                <jboss-as.hostname>localhost</jboss-as.hostname>
+                <jboss-as.hostname>127.0.0.1</jboss-as.hostname>
                 <jboss-as.port.offset>100</jboss-as.port.offset>
+                <jboss-as.management.port>10099</jboss-as.management.port>
             </properties>
             <build>
                 <plugins>
@@ -212,6 +213,7 @@
                         <version>7.4.Final</version>
                         <configuration>
                             <hostname>${jboss-as.hostname}</hostname>
+                            <port>${jboss-as.management.port}</port>
                         </configuration>
                     </plugin>
                 </plugins>
