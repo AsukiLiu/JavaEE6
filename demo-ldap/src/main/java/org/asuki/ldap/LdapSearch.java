@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 
 import com.unboundid.asn1.ASN1OctetString;
 import com.unboundid.ldap.sdk.Attribute;
+import com.unboundid.ldap.sdk.BindRequest;
+import com.unboundid.ldap.sdk.BindResult;
 import com.unboundid.ldap.sdk.DereferencePolicy;
 import com.unboundid.ldap.sdk.Filter;
 import com.unboundid.ldap.sdk.LDAPConnection;
@@ -23,6 +25,9 @@ import com.unboundid.ldap.sdk.SearchResultEntry;
 import com.unboundid.ldap.sdk.SearchResultListener;
 import com.unboundid.ldap.sdk.SearchResultReference;
 import com.unboundid.ldap.sdk.SearchScope;
+import com.unboundid.ldap.sdk.SimpleBindRequest;
+import com.unboundid.ldap.sdk.controls.AuthorizationIdentityRequestControl;
+import com.unboundid.ldap.sdk.controls.AuthorizationIdentityResponseControl;
 import com.unboundid.ldap.sdk.controls.ServerSideSortRequestControl;
 import com.unboundid.ldap.sdk.controls.SimplePagedResultsControl;
 import com.unboundid.ldap.sdk.controls.SortKey;
@@ -114,6 +119,7 @@ public final class LdapSearch implements SearchResultListener {
 
         } catch (Exception e) {
             log.error("Error occurred", e);
+            resultCode = ResultCode.OTHER;
         }
 
         return resultCode;
@@ -173,6 +179,7 @@ public final class LdapSearch implements SearchResultListener {
 
         } catch (Exception e) {
             log.error("Error occurred", e);
+            resultCode = ResultCode.OTHER;
         }
 
         return resultCode;
@@ -245,6 +252,36 @@ public final class LdapSearch implements SearchResultListener {
         }
 
         return searchResultEntries;
+    }
+
+    public String doAuthorizate(String dn, String password) {
+
+        String authzId = null;
+
+        try (LdapConnectionAdapter adapter = new LdapConnectionAdapter()) {
+
+            final LDAPConnection connection;
+            try {
+                connection = adapter.getConnection();
+            } catch (LDAPException e) {
+                log.error("Error connecting to the directory server", e);
+                return null;
+            }
+
+            BindRequest bindRequest = new SimpleBindRequest(dn, password,
+                    new AuthorizationIdentityRequestControl());
+
+            BindResult bindResult = connection.bind(bindRequest);
+            AuthorizationIdentityResponseControl authzIdentityResponse = AuthorizationIdentityResponseControl
+                    .get(bindResult);
+            if (authzIdentityResponse != null) {
+                authzId = authzIdentityResponse.getAuthorizationID();
+            }
+        } catch (Exception e) {
+            log.error("Error occurred", e);
+        }
+
+        return authzId;
     }
 
     @Override

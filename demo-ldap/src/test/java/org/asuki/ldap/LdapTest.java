@@ -8,8 +8,10 @@ import static org.hamcrest.MatcherAssert.*;
 
 import java.util.List;
 
+import org.hamcrest.Matcher;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.google.common.base.Function;
@@ -112,6 +114,27 @@ public class LdapTest {
 
         assertThat(names.toString(),
                 is("[osaka taro, tokyo jiro, tokyo saburo, tokyo taro]"));
+    }
+
+    @Test(dataProvider = "authzData")
+    public void shouldAuthorizate(String password, Matcher<Object> matcher)
+            throws LDAPException {
+
+        final LdapSearch ldapSearch = new LdapSearch();
+
+        // @formatter:off
+        String authzId = ldapSearch.doAuthorizate(
+                "uid=u001,ou=sale,dc=example,dc=com", 
+                password);
+        // @formatter:on
+
+        assertThat(authzId, is(matcher));
+    }
+
+    @DataProvider(name = "authzData")
+    private Object[][] authzData() {
+        return new Object[][] { { "p-1", notNullValue() },
+                { "incorrect", nullValue() }, };
     }
 
 }
