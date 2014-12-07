@@ -1,0 +1,38 @@
+dn: dc=example,dc=com
+objectClass: top
+objectClass: domain
+dc: example
+
+#部署ツリー
+dn: ou=sale,dc=example,dc=com
+objectClass: top
+objectClass: organizationalUnit
+ou: sale
+
+dn: ou=develop,dc=example,dc=com
+objectClass: top
+objectClass: organizationalUnit
+ou: develop
+
+#社員ツリー
+dn: uid=u001,ou=sale,dc=example,dc=com
+objectClass:inetOrgPerson
+cn: jiro
+sn: tokyo
+uid: u001
+userPassword: p-1
+
+dn: uid=u002,ou=develop,dc=example,dc=com
+objectClass:inetOrgPerson
+cn: taro
+sn: tokyo
+uid: u002
+userPassword: p-2
+
+dn: uid=u003,ou=develop,dc=example,dc=com
+objectClass:inetOrgPerson
+cn: saburo
+sn: tokyo
+uid: u003
+userPassword: p-3
+
