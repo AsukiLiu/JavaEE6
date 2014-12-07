@@ -23,7 +23,7 @@ public class LdapTest {
     private static final String BASE_DN = "dc=example, dc=com";
     private static final String LDIF_NAME = "example.ldif";
 
-    private InMemoryDirectoryServer server;
+    private static InMemoryDirectoryServer server;
 
     @BeforeClass
     public void before() throws Exception {
@@ -61,7 +61,22 @@ public class LdapTest {
         ResultCode resultCode = ldapSearch.doSearch(
                 "ou=develop,dc=example,dc=com", 
                 SearchScope.SUB,
-                Filter.createEqualityFilter("sn", "tokyo")); // Filter.create("(sn=tokyo)")
+                Filter.createEqualityFilter("sn", "tokyo"));
+        // @formatter:on
+
+        assertThat(resultCode, is(SUCCESS));
+    }
+
+    @Test
+    public void shouldSearchByPaging() throws LDAPException {
+
+        final LdapSearch ldapSearch = new LdapSearch();
+
+        // @formatter:off
+        ResultCode resultCode = ldapSearch.doSearchByPaging(
+                "dc=example,dc=com", 
+                SearchScope.SUB,
+                Filter.create("(objectClass=inetOrgPerson)"));
         // @formatter:on
 
         assertThat(resultCode, is(SUCCESS));
