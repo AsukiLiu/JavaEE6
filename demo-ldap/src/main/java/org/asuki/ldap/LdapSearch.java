@@ -1,8 +1,10 @@
 package org.asuki.ldap;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static com.unboundid.ldap.sdk.ResultCode.SUCCESS;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +23,11 @@ import com.unboundid.ldap.sdk.SearchResultEntry;
 import com.unboundid.ldap.sdk.SearchResultListener;
 import com.unboundid.ldap.sdk.SearchResultReference;
 import com.unboundid.ldap.sdk.SearchScope;
+import com.unboundid.ldap.sdk.controls.ServerSideSortRequestControl;
 import com.unboundid.ldap.sdk.controls.SimplePagedResultsControl;
+import com.unboundid.ldap.sdk.controls.SortKey;
+import com.unboundid.ldap.sdk.controls.VirtualListViewRequestControl;
+import com.unboundid.ldap.sdk.controls.VirtualListViewResponseControl;
 import com.unboundid.util.LDAPTestUtils;
 
 public final class LdapSearch implements SearchResultListener {
@@ -30,6 +36,10 @@ public final class LdapSearch implements SearchResultListener {
 
     private static final int POOL_SIZE = 5;
     private static final int PAGE_SIZE = 2;
+
+    private static final int BEFORE_COUNT = 0;
+    private static final int AFTER_COUNT = 1;
+    private static final int OFFSET = 2;
 
     private Logger log = LoggerFactory.getLogger(getClass().getName());
 
@@ -109,8 +119,8 @@ public final class LdapSearch implements SearchResultListener {
         return resultCode;
     }
 
-    public ResultCode doSearchByPaging(String baseDn, SearchScope scope,
-            Filter filter) {
+    public ResultCode doSearchBySimplePagedResultsControl(String baseDn,
+            SearchScope scope, Filter filter) {
 
         ResultCode resultCode = SUCCESS;
 
@@ -166,6 +176,75 @@ public final class LdapSearch implements SearchResultListener {
         }
 
         return resultCode;
+    }
+
+    public List<SearchResultEntry> doSearchByVirtualListViewRequestControl(
+            String baseDn, SearchScope scope, Filter filter) {
+
+        List<SearchResultEntry> searchResultEntries = newArrayList();
+
+        try (LdapConnectionAdapter adapter = new LdapConnectionAdapter()) {
+
+            final LDAPConnection connection;
+            try {
+                connection = adapter.getConnection();
+
+                log.info("Connected to {}:{}",
+                        connection.getConnectedAddress(),
+                        connection.getConnectedPort());
+
+            } catch (LDAPException e) {
+                log.error("Error connecting to the directory server", e);
+                return searchResultEntries;
+            }
+
+            int numSearches = 0;
+            int totalEntriesReturned = 0;
+
+            SearchRequest searchRequest = new SearchRequest(baseDn, scope,
+                    filter);
+            int vlvOffset = 1;
+            int vlvContentCount = 0;
+            ASN1OctetString vlvContextID = null;
+
+            while (true) {
+                searchRequest.setControls(new ServerSideSortRequestControl(
+                        new SortKey("sn"), new SortKey("cn")),
+                        new VirtualListViewRequestControl(vlvOffset,
+                                BEFORE_COUNT, AFTER_COUNT, vlvContentCount,
+                                vlvContextID));
+
+                SearchResult searchResult = connection.search(searchRequest);
+
+                numSearches++;
+                totalEntriesReturned += searchResult.getEntryCount();
+                printSearchEntries(searchResult.getSearchEntries());
+                searchResultEntries.addAll(searchResult.getSearchEntries());
+
+                LDAPTestUtils
+                        .assertHasControl(
+                                searchResult,
+                                VirtualListViewResponseControl.VIRTUAL_LIST_VIEW_RESPONSE_OID);
+
+                VirtualListViewResponseControl vlvResponseControl = VirtualListViewResponseControl
+                        .get(searchResult);
+
+                vlvContentCount = vlvResponseControl.getContentCount();
+                vlvOffset += OFFSET;
+                vlvContextID = vlvResponseControl.getContextID();
+                if (vlvOffset > vlvContentCount) {
+                    break;
+                }
+            }
+
+            log.info("numSearches:{}, totalEntriesReturned:{}", numSearches,
+                    totalEntriesReturned);
+
+        } catch (Exception e) {
+            log.error("Error occurred", e);
+        }
+
+        return searchResultEntries;
     }
 
     @Override

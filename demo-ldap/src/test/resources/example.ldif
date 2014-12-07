@@ -36,3 +36,10 @@ sn: tokyo
 uid: u003
 userPassword: p-3
 
+dn: uid=u004,ou=sale,dc=example,dc=com
+objectClass:inetOrgPerson
+cn: taro
+sn: osaka
+uid: u004
+userPassword: p-4
+
