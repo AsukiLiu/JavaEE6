@@ -3,14 +3,15 @@ package org.asuki.ldap;
 import static com.unboundid.ldap.sdk.ResultCode.SUCCESS;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.unboundid.ldap.sdk.Attribute;
 import com.unboundid.ldap.sdk.DereferencePolicy;
 import com.unboundid.ldap.sdk.Filter;
 import com.unboundid.ldap.sdk.LDAPConnection;
+import com.unboundid.ldap.sdk.LDAPConnectionPool;
 import com.unboundid.ldap.sdk.LDAPException;
 import com.unboundid.ldap.sdk.ResultCode;
 import com.unboundid.ldap.sdk.SearchRequest;
@@ -23,6 +24,8 @@ import com.unboundid.ldap.sdk.SearchScope;
 public final class LdapSearch implements SearchResultListener {
 
     private static final long serialVersionUID = 1L;
+
+    private static final int POOL_SIZE = 5;
 
     private Logger log = LoggerFactory.getLogger(getClass().getName());
 
@@ -50,23 +53,30 @@ public final class LdapSearch implements SearchResultListener {
                 final SearchResult searchResult1 = connection.search(baseDn,
                         scope, filter);
 
-                List<SearchResultEntry> entries = searchResult1
-                        .getSearchEntries();
-                for (SearchResultEntry entry : entries) {
-                    log.info(entry.getDN());
-                }
+                printSearchEntries(searchResult1.getSearchEntries());
 
                 // Approach two
-                final SearchRequest searchRequest = new SearchRequest(this,
+                final LDAPConnectionPool connectionPool = new LDAPConnectionPool(
+                        connection, POOL_SIZE);
+
+                final SearchRequest searchRequest2 = new SearchRequest(baseDn,
+                        SearchScope.SUB, filter);
+                final SearchResult searchResult2 = connectionPool
+                        .search(searchRequest2);
+
+                printSearchEntries(searchResult2.getSearchEntries());
+
+                // Approach three
+                final SearchRequest searchRequest3 = new SearchRequest(this,
                         baseDn, scope, DereferencePolicy.NEVER, 0, 0, false,
                         filter);
 
-                final SearchResult searchResult2 = connection
-                        .search(searchRequest);
+                final SearchResult searchResult3 = connection
+                        .search(searchRequest3);
 
-                log.info("Entries returned:  {}", searchResult2.getEntryCount());
+                log.info("Entries returned:  {}", searchResult3.getEntryCount());
                 log.info("References returned:  {}",
-                        searchResult2.getReferenceCount());
+                        searchResult3.getReferenceCount());
 
             } catch (LDAPException e) {
                 log.error("Error occurred while processing the search", e);
@@ -103,6 +113,16 @@ public final class LdapSearch implements SearchResultListener {
     @Override
     public void searchReferenceReturned(SearchResultReference reference) {
         log.info(reference.toString());
+    }
+
+    private void printSearchEntries(Iterable<SearchResultEntry> searchEntries) {
+        for (SearchResultEntry entry : searchEntries) {
+            log.info(entry.getDN());
+            for (Attribute attribute : entry.getAttributes()) {
+                log.info("\t{}", attribute.getName());
+                log.info("\t\t{}", Arrays.toString(attribute.getValues()));
+            }
+        }
     }
 
 }
