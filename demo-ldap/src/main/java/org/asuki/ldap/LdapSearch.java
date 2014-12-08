@@ -2,6 +2,11 @@ package org.asuki.ldap;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.unboundid.ldap.sdk.ResultCode.SUCCESS;
+import static com.unboundid.ldap.sdk.ResultCode.UNWILLING_TO_PERFORM;
+import static com.unboundid.ldap.sdk.controls.SimplePagedResultsControl.PAGED_RESULTS_OID;
+import static com.unboundid.ldap.sdk.controls.VirtualListViewRequestControl.VIRTUAL_LIST_VIEW_REQUEST_OID;
+import static com.unboundid.ldap.sdk.controls.VirtualListViewResponseControl.VIRTUAL_LIST_VIEW_RESPONSE_OID;
+import static org.asuki.ldap.util.SupportedFeature.isControlSupported;
 
 import java.util.Arrays;
 import java.util.List;
@@ -145,6 +150,11 @@ public final class LdapSearch implements SearchResultListener {
                 return e.getResultCode();
             }
 
+            String controlOID = PAGED_RESULTS_OID;
+            if (!isControlSupported(connection, controlOID)) {
+                return UNWILLING_TO_PERFORM;
+            }
+
             int numSearches = 0;
             int totalEntriesReturned = 0;
 
@@ -162,8 +172,7 @@ public final class LdapSearch implements SearchResultListener {
                 totalEntriesReturned += searchResult.getEntryCount();
                 printSearchEntries(searchResult.getSearchEntries());
 
-                LDAPTestUtils.assertHasControl(searchResult,
-                        SimplePagedResultsControl.PAGED_RESULTS_OID);
+                LDAPTestUtils.assertHasControl(searchResult, PAGED_RESULTS_OID);
 
                 SimplePagedResultsControl responseControl = SimplePagedResultsControl
                         .get(searchResult);
@@ -205,6 +214,11 @@ public final class LdapSearch implements SearchResultListener {
                 return searchResultEntries;
             }
 
+            String controlOID = VIRTUAL_LIST_VIEW_REQUEST_OID;
+            if (!isControlSupported(connection, controlOID)) {
+                return searchResultEntries;
+            }
+
             int numSearches = 0;
             int totalEntriesReturned = 0;
 
@@ -228,10 +242,8 @@ public final class LdapSearch implements SearchResultListener {
                 printSearchEntries(searchResult.getSearchEntries());
                 searchResultEntries.addAll(searchResult.getSearchEntries());
 
-                LDAPTestUtils
-                        .assertHasControl(
-                                searchResult,
-                                VirtualListViewResponseControl.VIRTUAL_LIST_VIEW_RESPONSE_OID);
+                LDAPTestUtils.assertHasControl(searchResult,
+                        VIRTUAL_LIST_VIEW_RESPONSE_OID);
 
                 VirtualListViewResponseControl vlvResponseControl = VirtualListViewResponseControl
                         .get(searchResult);
