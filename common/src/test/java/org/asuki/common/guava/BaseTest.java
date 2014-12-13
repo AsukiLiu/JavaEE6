@@ -14,6 +14,7 @@ import static com.google.common.base.Strings.padStart;
 import static com.google.common.base.Strings.repeat;
 import static com.google.common.collect.Iterables.toArray;
 
+import static java.lang.System.out;
 import static org.testng.Assert.*;
 
 import java.io.File;
@@ -250,6 +251,36 @@ public class BaseTest {
 
         assertEquals(Ints.max(array), 3);
         assertEquals(Ints.join(" : ", array), "1 : 2 : 3");
+    }
+
+    @Test(expectedExceptions = RuntimeException.class)
+    public void testThrowables1() {
+        try {
+            throw new IOException();
+        } catch (Throwable t) {
+            // Throwable root = Throwables.getRootCause(t);
+            // List<Throwable> exceptions = Throwables.getCausalChain(t);
+            String statckTrace = Throwables.getStackTraceAsString(t);
+            out.println(statckTrace);
+
+            Throwables.propagate(t);
+        }
+
+        fail("No exception happened!");
+    }
+
+    @Test(expectedExceptions = IOException.class)
+    public void testThrowables2() throws IOException {
+        try {
+            throw new IOException();
+        } catch (Throwable t) {
+            Throwables.propagateIfInstanceOf(t, IOException.class);
+            // Throwables.propagateIfPossible(t, IOException.class);
+
+            Throwables.propagate(t);
+        }
+
+        fail("No exception happened!");
     }
 
     /* IO */
