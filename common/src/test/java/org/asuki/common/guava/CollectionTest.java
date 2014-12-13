@@ -19,6 +19,11 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -26,6 +31,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicates;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.BiMap;
+import com.google.common.collect.ClassToInstanceMap;
 import com.google.common.collect.Constraints;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.HashBiMap;
@@ -36,6 +42,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Multiset;
+import com.google.common.collect.MutableClassToInstanceMap;
 import com.google.common.collect.Range;
 import com.google.common.collect.Table;
 
@@ -185,6 +192,23 @@ public class CollectionTest {
         }
     }
 
+    @Test
+    public void testClassToInstanceMap() {
+        ClassToInstanceMap<String> stringInstanceMap = MutableClassToInstanceMap
+                .create();
+        ClassToInstanceMap<Customer> customerInstanceMap = MutableClassToInstanceMap
+                .create();
+
+        stringInstanceMap.put(String.class, "Google");
+        assertEquals(stringInstanceMap.getInstance(String.class), "Google");
+
+        Customer expect = new Customer(10, "Google");
+        customerInstanceMap.putInstance(Customer.class, expect);
+
+        Customer actual = customerInstanceMap.getInstance(Customer.class);
+        assertEquals(actual.toString(), "Customer{name=Google, id=10}");
+    }
+
     @Test(dataProvider = "rangeData")
     public void testRanges(Range<Integer> range, boolean isContain,
             boolean isNotContain) {
@@ -203,6 +227,15 @@ public class CollectionTest {
                 { openClosed(0, 10), false, true } 
         };
         // @formatter:on
+    }
+
+    @AllArgsConstructor
+    @ToString
+    private static class Vertex {
+
+        @Getter
+        @Setter
+        private int mark;
     }
 
 }
