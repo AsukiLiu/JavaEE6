@@ -1,13 +1,16 @@
 package org.asuki.ldap;
 
 import static com.google.common.base.Joiner.on;
+import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.transform;
 import static com.unboundid.ldap.sdk.ResultCode.SUCCESS;
+import static java.lang.System.out;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
 import java.util.List;
 
+import org.asuki.ldap.util.ControlPrinter;
 import org.hamcrest.Matcher;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -19,11 +22,14 @@ import com.google.common.io.Resources;
 import com.unboundid.ldap.listener.InMemoryDirectoryServer;
 import com.unboundid.ldap.listener.InMemoryDirectoryServerConfig;
 import com.unboundid.ldap.listener.InMemoryListenerConfig;
+import com.unboundid.ldap.sdk.Control;
 import com.unboundid.ldap.sdk.Filter;
 import com.unboundid.ldap.sdk.LDAPException;
 import com.unboundid.ldap.sdk.ResultCode;
 import com.unboundid.ldap.sdk.SearchResultEntry;
 import com.unboundid.ldap.sdk.SearchScope;
+import com.unboundid.ldap.sdk.controls.PasswordExpiredControl;
+import com.unboundid.ldap.sdk.controls.SimplePagedResultsControl;
 
 public class LdapTest {
 
@@ -137,6 +143,19 @@ public class LdapTest {
         return new Object[][] {
                 { "p-1", is("dn:uid=u001,ou=sale,dc=example,dc=com") },
                 { "incorrect", nullValue() }, };
+    }
+
+    @Test
+    public void shouldPrintControls() {
+        @SuppressWarnings("unchecked")
+        List<? extends Control> controls = newArrayList(
+                new PasswordExpiredControl(), new SimplePagedResultsControl(10));
+
+        for (Control control : controls) {
+            ControlPrinter controlPrinter = new ControlPrinter(control);
+
+            out.println(controlPrinter.printControl());
+        }
     }
 
 }

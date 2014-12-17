@@ -11,11 +11,13 @@ import static org.asuki.ldap.util.SupportedFeature.isControlSupported;
 import java.util.Arrays;
 import java.util.List;
 
+import org.asuki.ldap.util.ControlPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.unboundid.asn1.ASN1OctetString;
 import com.unboundid.ldap.sdk.Attribute;
+import com.unboundid.ldap.sdk.Control;
 import com.unboundid.ldap.sdk.DereferencePolicy;
 import com.unboundid.ldap.sdk.Filter;
 import com.unboundid.ldap.sdk.LDAPConnection;
@@ -79,6 +81,7 @@ public final class LdapSearch implements SearchResultListener {
                         scope, filter);
 
                 printSearchEntries(searchResult1.getSearchEntries());
+                printResponseControl(searchResult1);
 
                 // Approach two
                 final LDAPConnectionPool connectionPool = new LDAPConnectionPool(
@@ -293,6 +296,18 @@ public final class LdapSearch implements SearchResultListener {
                 log.info("\t{}", attribute.getName());
                 log.info("\t\t{}", Arrays.toString(attribute.getValues()));
             }
+        }
+    }
+
+    private void printResponseControl(SearchResult searchResult) {
+        if (!searchResult.hasResponseControl()) {
+            return;
+        }
+
+        for (Control control : searchResult.getResponseControls()) {
+            ControlPrinter controlPrinter = new ControlPrinter(control);
+
+            log.info(controlPrinter.printControl());
         }
     }
 
