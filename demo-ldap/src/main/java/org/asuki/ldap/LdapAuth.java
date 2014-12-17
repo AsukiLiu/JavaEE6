@@ -1,5 +1,8 @@
 package org.asuki.ldap;
 
+import static com.unboundid.ldap.sdk.extensions.WhoAmIExtendedRequest.WHO_AM_I_REQUEST_OID;
+import static org.asuki.ldap.util.SupportedFeature.isExtendedOperationSupported;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +14,8 @@ import com.unboundid.ldap.sdk.LDAPException;
 import com.unboundid.ldap.sdk.SimpleBindRequest;
 import com.unboundid.ldap.sdk.controls.AuthorizationIdentityRequestControl;
 import com.unboundid.ldap.sdk.controls.AuthorizationIdentityResponseControl;
+import com.unboundid.ldap.sdk.extensions.WhoAmIExtendedRequest;
+import com.unboundid.ldap.sdk.extensions.WhoAmIExtendedResult;
 
 public final class LdapAuth {
 
@@ -18,6 +23,7 @@ public final class LdapAuth {
 
     private static final int INITIAL_CONNECTIONS = 2;
     private static final int MAX_CONNECTIONS = 6;
+    private static final long RESPONSE_TIMEOUT = 3000;
 
     public String authorizate(String dn, String password) {
 
@@ -28,6 +34,8 @@ public final class LdapAuth {
             final LDAPConnection connection;
             try {
                 connection = adapter.getConnection();
+
+                log.info("Who am I: {}", getWhoAmIExtension(connection));
             } catch (LDAPException e) {
                 log.error("Error connecting to the directory server", e);
                 return null;
@@ -39,6 +47,7 @@ public final class LdapAuth {
 
             BindRequest bindRequest = new SimpleBindRequest(dn, password,
                     new AuthorizationIdentityRequestControl());
+            bindRequest.setResponseTimeoutMillis(RESPONSE_TIMEOUT);
 
             BindResult bindResult = connectionPool.bind(bindRequest);
             AuthorizationIdentityResponseControl authzIdentityResponse = AuthorizationIdentityResponseControl
@@ -51,5 +60,17 @@ public final class LdapAuth {
         }
 
         return authzId;
+    }
+
+    private String getWhoAmIExtension(LDAPConnection connection)
+            throws LDAPException {
+
+        if (!isExtendedOperationSupported(connection, WHO_AM_I_REQUEST_OID)) {
+            return "";
+        }
+
+        WhoAmIExtendedResult whoAmIExtendedResult = (WhoAmIExtendedResult) connection
+                .processExtendedOperation(new WhoAmIExtendedRequest());
+        return whoAmIExtendedResult.getAuthorizationID();
     }
 }
