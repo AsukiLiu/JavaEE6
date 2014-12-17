@@ -131,9 +131,10 @@ public class LdapTest {
         assertThat(authzId, is(matcher));
     }
 
-    @DataProvider(name = "authzData")
+    @DataProvider
     private Object[][] authzData() {
-        return new Object[][] { { "p-1", notNullValue() },
+        return new Object[][] {
+                { "p-1", is("dn:uid=u001,ou=sale,dc=example,dc=com") },
                 { "incorrect", nullValue() }, };
     }
 
