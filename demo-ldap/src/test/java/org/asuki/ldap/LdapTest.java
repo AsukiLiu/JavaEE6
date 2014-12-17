@@ -120,10 +120,10 @@ public class LdapTest {
     public void shouldAuthorizate(String password, Matcher<Object> matcher)
             throws LDAPException {
 
-        final LdapSearch ldapSearch = new LdapSearch();
+        final LdapAuth ldapAuth = new LdapAuth();
 
         // @formatter:off
-        String authzId = ldapSearch.doAuthorizate(
+        String authzId = ldapAuth.authorizate(
                 "uid=u001,ou=sale,dc=example,dc=com", 
                 password);
         // @formatter:on
