@@ -46,6 +46,9 @@ public final class LdapSearch implements SearchResultListener {
     private static final int AFTER_COUNT = 1;
     private static final int OFFSET = 2;
 
+    private static final int SIZE_LIMIT = 10;
+    private static final int TIME_LIMIT = 3;
+
     private Logger log = LoggerFactory.getLogger(getClass().getName());
 
     public ResultCode doSearch(String baseDn, SearchScope scope, Filter filter) {
@@ -68,6 +71,9 @@ public final class LdapSearch implements SearchResultListener {
             }
 
             try {
+                log.info("baseDn:{}, scope:{}, filter:{}", baseDn, scope,
+                        filter);
+
                 // Approach one
                 final SearchResult searchResult1 = connection.search(baseDn,
                         scope, filter);
@@ -79,7 +85,9 @@ public final class LdapSearch implements SearchResultListener {
                         connection, POOL_SIZE);
 
                 final SearchRequest searchRequest2 = new SearchRequest(baseDn,
-                        SearchScope.SUB, filter);
+                        SearchScope.SUB, filter, createAttributes());
+                searchRequest2.setSizeLimit(SIZE_LIMIT);
+                searchRequest2.setTimeLimitSeconds(TIME_LIMIT);
                 final SearchResult searchResult2 = connectionPool
                         .search(searchRequest2);
 
@@ -123,6 +131,13 @@ public final class LdapSearch implements SearchResultListener {
         }
 
         return resultCode;
+    }
+
+    private String[] createAttributes() {
+        List<String> requestedAttributes = newArrayList("cn", "sn");
+        String[] attributes = new String[requestedAttributes.size()];
+        requestedAttributes.toArray(attributes);
+        return attributes;
     }
 
     public ResultCode doSearchBySimplePagedResultsControl(String baseDn,

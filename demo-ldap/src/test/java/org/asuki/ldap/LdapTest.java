@@ -69,7 +69,8 @@ public class LdapTest {
         ResultCode resultCode = ldapSearch.doSearch(
                 "ou=develop,dc=example,dc=com", 
                 SearchScope.SUB,
-                Filter.createEqualityFilter("sn", "tokyo"));
+                Filter.createPresenceFilter("sn"));
+                // Filter.createEqualityFilter("sn", "tokyo"));
         // @formatter:on
 
         assertThat(resultCode, is(SUCCESS));
