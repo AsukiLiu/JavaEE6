@@ -11,11 +11,14 @@ import static org.asuki.ldap.util.SupportedFeature.isControlSupported;
 import java.util.Arrays;
 import java.util.List;
 
+import org.asuki.ldap.listener.CustomAsyncSearchResultListener;
+import org.asuki.ldap.listener.CustomSearchResultListener;
 import org.asuki.ldap.util.ControlPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.unboundid.asn1.ASN1OctetString;
+import com.unboundid.ldap.sdk.AsyncRequestID;
 import com.unboundid.ldap.sdk.Attribute;
 import com.unboundid.ldap.sdk.Control;
 import com.unboundid.ldap.sdk.DereferencePolicy;
@@ -27,8 +30,6 @@ import com.unboundid.ldap.sdk.ResultCode;
 import com.unboundid.ldap.sdk.SearchRequest;
 import com.unboundid.ldap.sdk.SearchResult;
 import com.unboundid.ldap.sdk.SearchResultEntry;
-import com.unboundid.ldap.sdk.SearchResultListener;
-import com.unboundid.ldap.sdk.SearchResultReference;
 import com.unboundid.ldap.sdk.SearchScope;
 import com.unboundid.ldap.sdk.controls.ServerSideSortRequestControl;
 import com.unboundid.ldap.sdk.controls.SimplePagedResultsControl;
@@ -75,36 +76,16 @@ public final class LdapSearch {
                         filter);
 
                 // Approach one
-                final SearchResult searchResult1 = connection.search(baseDn,
-                        scope, filter);
-
-                printSearchEntries(searchResult1.getSearchEntries());
-                printResponseControl(searchResult1);
+                searchByLDAPConnection(baseDn, scope, filter, connection);
 
                 // Approach two
-                final LDAPConnectionPool connectionPool = new LDAPConnectionPool(
-                        connection, POOL_SIZE);
+                searchByLDAPConnectionPool(baseDn, scope, filter, connection);
 
-                final SearchRequest searchRequest2 = new SearchRequest(baseDn,
-                        SearchScope.SUB, filter, createAttributes());
-                searchRequest2.setSizeLimit(SIZE_LIMIT);
-                searchRequest2.setTimeLimitSeconds(TIME_LIMIT);
-                final SearchResult searchResult2 = connectionPool
-                        .search(searchRequest2);
+                // Approach three
+                searchBySearchResultListener(baseDn, scope, filter, connection);
 
-                printSearchEntries(searchResult2.getSearchEntries());
-
-//                // Approach three
-//                final SearchRequest searchRequest3 = new SearchRequest(this,
-//                        baseDn, scope, DereferencePolicy.NEVER, 0, 0, false,
-//                        filter);
-//
-//                final SearchResult searchResult3 = connection
-//                        .search(searchRequest3);
-//
-//                log.info("Entries returned:  {}", searchResult3.getEntryCount());
-//                log.info("References returned:  {}",
-//                        searchResult3.getReferenceCount());
+                // Approach four
+                searchByAsyncSearchResultListener(baseDn, scope, filter, connection);
 
             } catch (LDAPException e) {
                 log.error("Error occurred while processing the search", e);
@@ -132,6 +113,60 @@ public final class LdapSearch {
         }
 
         return resultCode;
+    }
+
+    private void searchByLDAPConnection(String baseDn, SearchScope scope,
+            Filter filter, LDAPConnection connection) throws LDAPException {
+
+        SearchResult searchResult = connection.search(baseDn, scope, filter);
+
+        printSearchEntries(searchResult.getSearchEntries());
+        printResponseControl(searchResult);
+    }
+
+    private void searchByLDAPConnectionPool(String baseDn, SearchScope scope,
+            Filter filter, LDAPConnection connection) throws LDAPException {
+
+        LDAPConnectionPool connectionPool = new LDAPConnectionPool(connection,
+                POOL_SIZE);
+
+        SearchRequest searchRequest = new SearchRequest(baseDn,
+                SearchScope.SUB, filter, createAttributes());
+        searchRequest.setSizeLimit(SIZE_LIMIT);
+        searchRequest.setTimeLimitSeconds(TIME_LIMIT);
+
+        SearchResult searchResult = connectionPool.search(searchRequest);
+
+        printSearchEntries(searchResult.getSearchEntries());
+    }
+
+    private void searchBySearchResultListener(String baseDn, SearchScope scope,
+            Filter filter, LDAPConnection connection) throws LDAPException {
+
+        SearchRequest searchRequest = new SearchRequest(
+                new CustomSearchResultListener(), baseDn, scope,
+                DereferencePolicy.NEVER, SIZE_LIMIT, TIME_LIMIT, false, filter);
+
+        SearchResult searchResult = connection.search(searchRequest);
+
+        log.info("Entries returned:  {}", searchResult.getEntryCount());
+        log.info("References returned:  {}", searchResult.getReferenceCount());
+    }
+
+    private void searchByAsyncSearchResultListener(String baseDn,
+            SearchScope scope, Filter filter, LDAPConnection connection)
+            throws LDAPException, InterruptedException {
+
+        SearchRequest searchRequest = new SearchRequest(
+                new CustomAsyncSearchResultListener(), baseDn, scope,
+                DereferencePolicy.NEVER, SIZE_LIMIT, TIME_LIMIT, false, filter);
+
+        AsyncRequestID asyncRequestID = connection.asyncSearch(searchRequest);
+
+        SearchResult searchResult = (SearchResult) asyncRequestID.get();
+
+        log.info("Entries returned:  {}", searchResult.getEntryCount());
+        log.info("References returned:  {}", searchResult.getReferenceCount());
     }
 
     private String[] createAttributes() {
