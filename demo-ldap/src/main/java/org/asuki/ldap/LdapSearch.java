@@ -37,9 +37,7 @@ import com.unboundid.ldap.sdk.controls.VirtualListViewRequestControl;
 import com.unboundid.ldap.sdk.controls.VirtualListViewResponseControl;
 import com.unboundid.util.LDAPTestUtils;
 
-public final class LdapSearch implements SearchResultListener {
-
-    private static final long serialVersionUID = 1L;
+public final class LdapSearch {
 
     private static final int POOL_SIZE = 5;
     private static final int PAGE_SIZE = 2;
@@ -96,17 +94,17 @@ public final class LdapSearch implements SearchResultListener {
 
                 printSearchEntries(searchResult2.getSearchEntries());
 
-                // Approach three
-                final SearchRequest searchRequest3 = new SearchRequest(this,
-                        baseDn, scope, DereferencePolicy.NEVER, 0, 0, false,
-                        filter);
-
-                final SearchResult searchResult3 = connection
-                        .search(searchRequest3);
-
-                log.info("Entries returned:  {}", searchResult3.getEntryCount());
-                log.info("References returned:  {}",
-                        searchResult3.getReferenceCount());
+//                // Approach three
+//                final SearchRequest searchRequest3 = new SearchRequest(this,
+//                        baseDn, scope, DereferencePolicy.NEVER, 0, 0, false,
+//                        filter);
+//
+//                final SearchResult searchResult3 = connection
+//                        .search(searchRequest3);
+//
+//                log.info("Entries returned:  {}", searchResult3.getEntryCount());
+//                log.info("References returned:  {}",
+//                        searchResult3.getReferenceCount());
 
             } catch (LDAPException e) {
                 log.error("Error occurred while processing the search", e);
@@ -277,16 +275,6 @@ public final class LdapSearch implements SearchResultListener {
         }
 
         return searchResultEntries;
-    }
-
-    @Override
-    public void searchEntryReturned(SearchResultEntry entry) {
-        log.info(entry.toLDIFString());
-    }
-
-    @Override
-    public void searchReferenceReturned(SearchResultReference reference) {
-        log.info(reference.toString());
     }
 
     private void printSearchEntries(Iterable<SearchResultEntry> searchEntries) {
