@@ -7,8 +7,9 @@ import static com.unboundid.ldap.sdk.extensions.WhoAmIExtendedRequest.WHO_AM_I_R
 import static org.asuki.ldap.util.SupportedFeature.isControlSupported;
 import static org.asuki.ldap.util.SupportedFeature.isExtendedOperationSupported;
 
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.unboundid.ldap.sdk.BindRequest;
 import com.unboundid.ldap.sdk.BindResult;
@@ -29,7 +30,8 @@ import com.unboundid.ldap.sdk.extensions.WhoAmIExtendedResult;
 
 public final class LdapAuth {
 
-    private Logger log = LoggerFactory.getLogger(getClass().getName());
+    @Inject
+    private Logger log;
 
     private static final int INITIAL_CONNECTIONS = 2;
     private static final int MAX_CONNECTIONS = 6;
