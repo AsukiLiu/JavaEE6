@@ -2,8 +2,10 @@ package org.asuki.ldap.util;
 
 import static com.unboundid.util.Validator.ensureNotNullWithMessage;
 
+import com.unboundid.ldap.sdk.LDAPConnection;
 import com.unboundid.ldap.sdk.LDAPException;
 import com.unboundid.ldap.sdk.LDAPInterface;
+import com.unboundid.ldap.sdk.schema.Schema;
 
 public final class SupportedFeature {
 
@@ -32,6 +34,21 @@ public final class SupportedFeature {
         } catch (LDAPException e) {
             return false;
         }
+    }
+
+    public static boolean isAttributeSupported(LDAPConnection conn,
+            String attributeName) {
+        ensureNotNullWithMessage(conn, "conn was null.");
+        ensureNotNullWithMessage(attributeName, "attributeName was null.");
+
+        Schema schema;
+        try {
+            schema = Schema.getSchema(conn);
+        } catch (LDAPException e) {
+            return false;
+        }
+
+        return schema.getAttributeType(attributeName) != null;
     }
 
 }
