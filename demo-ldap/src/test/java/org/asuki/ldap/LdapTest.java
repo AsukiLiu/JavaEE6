@@ -7,13 +7,21 @@ import static com.unboundid.ldap.sdk.ResultCode.SUCCESS;
 import static java.lang.System.out;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.List;
 
+import org.asuki.ldap.listener.CustomAsyncSearchResultListener;
+import org.asuki.ldap.listener.CustomSearchResultListener;
 import org.asuki.ldap.util.ControlPrinter;
 import org.hamcrest.Matcher;
+import org.mockito.InjectMocks;
+import org.mockito.Spy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -22,11 +30,13 @@ import com.google.common.io.Resources;
 import com.unboundid.ldap.listener.InMemoryDirectoryServer;
 import com.unboundid.ldap.listener.InMemoryDirectoryServerConfig;
 import com.unboundid.ldap.listener.InMemoryListenerConfig;
+import com.unboundid.ldap.sdk.AsyncSearchResultListener;
 import com.unboundid.ldap.sdk.Control;
 import com.unboundid.ldap.sdk.Filter;
 import com.unboundid.ldap.sdk.LDAPException;
 import com.unboundid.ldap.sdk.ResultCode;
 import com.unboundid.ldap.sdk.SearchResultEntry;
+import com.unboundid.ldap.sdk.SearchResultListener;
 import com.unboundid.ldap.sdk.SearchScope;
 import com.unboundid.ldap.sdk.controls.PasswordExpiredControl;
 import com.unboundid.ldap.sdk.controls.SimplePagedResultsControl;
@@ -68,10 +78,27 @@ public class LdapTest {
         }
     }
 
+    @BeforeMethod
+    public void setup() {
+        initMocks(this);
+    }
+
+    @Spy
+    private Logger log = LoggerFactory.getLogger(getClass().getName());
+
+    @InjectMocks
+    private LdapSearch ldapSearch;
+
+    @InjectMocks
+    @Spy
+    private SearchResultListener searchResultListener = new CustomSearchResultListener();
+
+    @InjectMocks
+    @Spy
+    private AsyncSearchResultListener asyncSearchResultListener = new CustomAsyncSearchResultListener();
+
     @Test
     public void shouldSearch() throws LDAPException {
-
-        final LdapSearch ldapSearch = new LdapSearch();
 
         // @formatter:off
         ResultCode resultCode = ldapSearch.doSearch(
@@ -87,8 +114,6 @@ public class LdapTest {
     @Test
     public void shouldSearchBySimplePagedResultsControl() throws LDAPException {
 
-        final LdapSearch ldapSearch = new LdapSearch();
-
         // @formatter:off
         ResultCode resultCode = ldapSearch.doSearchBySimplePagedResultsControl(
                 BASE_DN, 
@@ -102,8 +127,6 @@ public class LdapTest {
     @Test
     public void shouldSearchByVirtualListViewRequestControl()
             throws LDAPException {
-
-        final LdapSearch ldapSearch = new LdapSearch();
 
         // @formatter:off
         List<SearchResultEntry> entries = ldapSearch.doSearchByVirtualListViewRequestControl(

@@ -11,14 +11,16 @@ import static org.asuki.ldap.util.SupportedFeature.isControlSupported;
 import java.util.Arrays;
 import java.util.List;
 
-import org.asuki.ldap.listener.CustomAsyncSearchResultListener;
+import javax.enterprise.inject.New;
+import javax.inject.Inject;
+
 import org.asuki.ldap.listener.CustomSearchResultListener;
 import org.asuki.ldap.util.ControlPrinter;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.unboundid.asn1.ASN1OctetString;
 import com.unboundid.ldap.sdk.AsyncRequestID;
+import com.unboundid.ldap.sdk.AsyncSearchResultListener;
 import com.unboundid.ldap.sdk.Attribute;
 import com.unboundid.ldap.sdk.Control;
 import com.unboundid.ldap.sdk.DereferencePolicy;
@@ -30,6 +32,7 @@ import com.unboundid.ldap.sdk.ResultCode;
 import com.unboundid.ldap.sdk.SearchRequest;
 import com.unboundid.ldap.sdk.SearchResult;
 import com.unboundid.ldap.sdk.SearchResultEntry;
+import com.unboundid.ldap.sdk.SearchResultListener;
 import com.unboundid.ldap.sdk.SearchScope;
 import com.unboundid.ldap.sdk.controls.ServerSideSortRequestControl;
 import com.unboundid.ldap.sdk.controls.SimplePagedResultsControl;
@@ -50,7 +53,15 @@ public final class LdapSearch {
     private static final int SIZE_LIMIT = 10;
     private static final int TIME_LIMIT = 3;
 
-    private Logger log = LoggerFactory.getLogger(getClass().getName());
+    @Inject
+    private Logger log;
+
+    @Inject
+    @New(CustomSearchResultListener.class)
+    private SearchResultListener searchResultListener;
+
+    @Inject
+    private AsyncSearchResultListener asyncSearchResultListener;
 
     public ResultCode doSearch(String baseDn, SearchScope scope, Filter filter) {
 
@@ -76,16 +87,21 @@ public final class LdapSearch {
                         filter);
 
                 // Approach one
+                log.info("=========searchByLDAPConnection=========");
                 searchByLDAPConnection(baseDn, scope, filter, connection);
 
                 // Approach two
+                log.info("=========searchByLDAPConnectionPool=========");
                 searchByLDAPConnectionPool(baseDn, scope, filter, connection);
 
                 // Approach three
+                log.info("=========searchBySearchResultListener=========");
                 searchBySearchResultListener(baseDn, scope, filter, connection);
 
                 // Approach four
-                searchByAsyncSearchResultListener(baseDn, scope, filter, connection);
+                log.info("=========searchByAsyncSearchResultListener=========");
+                searchByAsyncSearchResultListener(baseDn, scope, filter,
+                        connection);
 
             } catch (LDAPException e) {
                 log.error("Error occurred while processing the search", e);
@@ -143,9 +159,9 @@ public final class LdapSearch {
     private void searchBySearchResultListener(String baseDn, SearchScope scope,
             Filter filter, LDAPConnection connection) throws LDAPException {
 
-        SearchRequest searchRequest = new SearchRequest(
-                new CustomSearchResultListener(), baseDn, scope,
-                DereferencePolicy.NEVER, SIZE_LIMIT, TIME_LIMIT, false, filter);
+        SearchRequest searchRequest = new SearchRequest(searchResultListener,
+                baseDn, scope, DereferencePolicy.NEVER, SIZE_LIMIT, TIME_LIMIT,
+                false, filter);
 
         SearchResult searchResult = connection.search(searchRequest);
 
@@ -158,7 +174,7 @@ public final class LdapSearch {
             throws LDAPException, InterruptedException {
 
         SearchRequest searchRequest = new SearchRequest(
-                new CustomAsyncSearchResultListener(), baseDn, scope,
+                asyncSearchResultListener, baseDn, scope,
                 DereferencePolicy.NEVER, SIZE_LIMIT, TIME_LIMIT, false, filter);
 
         AsyncRequestID asyncRequestID = connection.asyncSearch(searchRequest);
