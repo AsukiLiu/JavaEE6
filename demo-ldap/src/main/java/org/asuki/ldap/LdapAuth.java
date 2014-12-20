@@ -2,6 +2,7 @@ package org.asuki.ldap;
 
 import static com.unboundid.ldap.sdk.controls.PasswordExpiredControl.PASSWORD_EXPIRED_OID;
 import static com.unboundid.ldap.sdk.controls.PasswordExpiringControl.PASSWORD_EXPIRING_OID;
+import static com.unboundid.ldap.sdk.extensions.PasswordModifyExtendedRequest.PASSWORD_MODIFY_REQUEST_OID;
 import static com.unboundid.ldap.sdk.extensions.WhoAmIExtendedRequest.WHO_AM_I_REQUEST_OID;
 import static org.asuki.ldap.util.SupportedFeature.isControlSupported;
 import static org.asuki.ldap.util.SupportedFeature.isExtendedOperationSupported;
@@ -15,11 +16,14 @@ import com.unboundid.ldap.sdk.LDAPConnection;
 import com.unboundid.ldap.sdk.LDAPConnectionPool;
 import com.unboundid.ldap.sdk.LDAPException;
 import com.unboundid.ldap.sdk.LDAPResult;
+import com.unboundid.ldap.sdk.ResultCode;
 import com.unboundid.ldap.sdk.SimpleBindRequest;
 import com.unboundid.ldap.sdk.controls.AuthorizationIdentityRequestControl;
 import com.unboundid.ldap.sdk.controls.AuthorizationIdentityResponseControl;
 import com.unboundid.ldap.sdk.controls.PasswordExpiredControl;
 import com.unboundid.ldap.sdk.controls.PasswordExpiringControl;
+import com.unboundid.ldap.sdk.extensions.PasswordModifyExtendedRequest;
+import com.unboundid.ldap.sdk.extensions.PasswordModifyExtendedResult;
 import com.unboundid.ldap.sdk.extensions.WhoAmIExtendedRequest;
 import com.unboundid.ldap.sdk.extensions.WhoAmIExtendedResult;
 
@@ -109,6 +113,45 @@ public final class LdapAuth {
             }
         }
 
+    }
+
+    public ResultCode changePassword(String dn, String oldPassword,
+            String newPassword) {
+
+        ResultCode resultCode = ResultCode.SUCCESS;
+
+        try (LdapConnectionAdapter adapter = new LdapConnectionAdapter()) {
+
+            final LDAPConnection connection;
+            try {
+                connection = adapter.getConnection();
+                connection.bind(new SimpleBindRequest(dn, oldPassword));
+            } catch (LDAPException e) {
+                log.error("Error connecting to the directory server", e);
+                return e.getResultCode();
+            }
+
+            if (!isExtendedOperationSupported(connection,
+                    PASSWORD_MODIFY_REQUEST_OID)) {
+                return ResultCode.NOT_SUPPORTED;
+            }
+
+            final PasswordModifyExtendedRequest passwordModifyExtendedRequest = new PasswordModifyExtendedRequest(
+                    oldPassword, newPassword);
+            passwordModifyExtendedRequest
+                    .setResponseTimeoutMillis(RESPONSE_TIMEOUT);
+
+            final PasswordModifyExtendedResult extendedResult = (PasswordModifyExtendedResult) connection
+                    .processExtendedOperation(passwordModifyExtendedRequest);
+
+            resultCode = extendedResult.getResultCode();
+
+        } catch (Exception e) {
+            log.error("Error occurred", e);
+            resultCode = ResultCode.OTHER;
+        }
+
+        return resultCode;
     }
 
 }

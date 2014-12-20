@@ -37,6 +37,8 @@ public class LdapTest {
     private static final String BASE_DN = "dc=example, dc=com";
     private static final String LDIF_NAME = "example.ldif";
 
+    private static final String DN_UID_IS_U001 = "uid=u001,ou=sale,dc=example,dc=com";
+
     private static InMemoryDirectoryServer server;
 
     @BeforeClass
@@ -131,7 +133,7 @@ public class LdapTest {
 
         // @formatter:off
         String authzId = ldapAuth.authorizate(
-                "uid=u001,ou=sale,dc=example,dc=com", 
+                DN_UID_IS_U001, 
                 password);
         // @formatter:on
 
@@ -143,6 +145,29 @@ public class LdapTest {
         return new Object[][] {
                 { "p-1", is("dn:uid=u001,ou=sale,dc=example,dc=com") },
                 { "incorrect", nullValue() }, };
+    }
+
+    @Test
+    public void shouldChangePassword() {
+        final LdapAuth ldapAuth = new LdapAuth();
+
+        // first time
+        ResultCode resultCode1 = ldapAuth.changePassword(DN_UID_IS_U001, "p-1",
+                "p-new");
+
+        assertThat(resultCode1, is(ResultCode.SUCCESS));
+
+        // second time
+        ResultCode resultCode2 = ldapAuth.changePassword(DN_UID_IS_U001, "p-1",
+                "p-new2");
+
+        assertThat(resultCode2, is(ResultCode.INVALID_CREDENTIALS));
+
+        // third time
+        ResultCode resultCode3 = ldapAuth.changePassword(DN_UID_IS_U001,
+                "p-new", "p-other");
+
+        assertThat(resultCode3, is(ResultCode.SUCCESS));
     }
 
     @Test
