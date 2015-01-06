@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui" template="/template/main.xhtml">
+
+    <ui:define name="content">
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                updateItems(); 
+            });
+        </script>
+
+        <h:form>
+            <p:remoteCommand name="updateItems" process="@this"
+                update="target"
+                actionListener="#{remoteCommandBean.loadItems}" />
+
+<!--             <p:outputPanel autoUpdate="true"> -->
+                <p:panel id="target">
+                    <ui:repeat value="#{remoteCommandBean.items}"
+                        var="item">
+                        <p:outputLabel value="#{item.name}" />
+                        <p:separator />
+                    </ui:repeat>
+                </p:panel>
+<!--             </p:outputPanel> -->
+        </h:form>
+
+        <h:panelGroup style="position:fixed;top:40%;left:30%;">
+            <p:ajaxStatus>
+                <f:facet name="start">
+                    <h:panelGrid
+                        styleClass="ui-state-default ui-corner-all">
+
+                        <h:graphicImage
+                            value="/image/ajaxloadingbar.gif" />
+                    </h:panelGrid>
+                </f:facet>
+
+                <f:facet name="complete">
+                    <h:outputText value="" />
+                </f:facet>
+            </p:ajaxStatus>
+        </h:panelGroup>
+
+    </ui:define>
+</ui:composition>
