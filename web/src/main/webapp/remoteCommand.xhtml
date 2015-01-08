@@ -9,14 +9,14 @@
     <ui:define name="content">
 
         <script type="text/javascript">
-            $(document).ready(function() {
-                updateItems(); 
-            });
+//             $(document).ready(function() {
+//                 updateItems(); 
+//             });
         </script>
 
         <h:form>
             <p:remoteCommand name="updateItems" process="@this"
-                update="target"
+                update="target" autoRun="true"
                 actionListener="#{remoteCommandBean.loadItems}" />
 
 <!--             <p:outputPanel autoUpdate="true"> -->
