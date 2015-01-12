@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui" template="/template/main.xhtml">
+
+    <ui:define name="content">
+
+        <h:form id="form">
+            <h:outputText id="out" value="#{counterBean.count}" />
+
+            <p:commandButton value="Click"
+                actionListener="#{counterBean.increment}" />
+        </h:form>
+
+        <p:socket channel="#{counterBean.channelName}">
+            <p:ajax event="message" update="form:out" />
+        </p:socket>
+
+    </ui:define>
+</ui:composition>
