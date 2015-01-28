@@ -13,11 +13,15 @@ import org.slf4j.Logger;
 
 import com.unboundid.ldap.sdk.BindRequest;
 import com.unboundid.ldap.sdk.BindResult;
+import com.unboundid.ldap.sdk.Filter;
 import com.unboundid.ldap.sdk.LDAPConnection;
 import com.unboundid.ldap.sdk.LDAPConnectionPool;
 import com.unboundid.ldap.sdk.LDAPException;
 import com.unboundid.ldap.sdk.LDAPResult;
 import com.unboundid.ldap.sdk.ResultCode;
+import com.unboundid.ldap.sdk.SearchRequest;
+import com.unboundid.ldap.sdk.SearchResult;
+import com.unboundid.ldap.sdk.SearchScope;
 import com.unboundid.ldap.sdk.SimpleBindRequest;
 import com.unboundid.ldap.sdk.controls.AuthorizationIdentityRequestControl;
 import com.unboundid.ldap.sdk.controls.AuthorizationIdentityResponseControl;
@@ -49,9 +53,21 @@ public final class LdapAuth {
                 log.info("Who am I before bind: {}",
                         getWhoAmIExtension(connection));
 
+                // Approach 1
                 connection.bind(new SimpleBindRequest(dn, password));
                 log.info("Who am I after bind: {}",
                         getWhoAmIExtension(connection));
+
+                // Approach 2
+                BindResult bindResult = connection.bind(dn, password);
+                if (bindResult.getResultCode().isConnectionUsable()) {
+                    SearchRequest request = new SearchRequest(dn,
+                            SearchScope.SUB, Filter.createEqualityFilter(
+                                    "objectclass", "person"));
+
+                    SearchResult search = connection.search(request);
+                    log.info(search.getSearchEntries().toString());
+                }
             } catch (LDAPException e) {
                 log.error("Error connecting to the directory server", e);
                 return null;
@@ -61,6 +77,7 @@ public final class LdapAuth {
                     .getConnectionPool(connection, INITIAL_CONNECTIONS,
                             MAX_CONNECTIONS);
 
+            // Approach 3
             BindRequest bindRequest = new SimpleBindRequest(dn, password,
                     new AuthorizationIdentityRequestControl());
             bindRequest.setResponseTimeoutMillis(RESPONSE_TIMEOUT);
