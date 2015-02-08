@@ -2,6 +2,7 @@ package org.asuki.model.entity;
 
 import static javax.persistence.FetchType.LAZY;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +23,9 @@ import lombok.Setter;
 @Embeddable
 @Getter
 @Setter
-public class ProjectDetail {
+public class ProjectDetail implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @ElementCollection(fetch = LAZY)
     @CollectionTable(name = "language")
