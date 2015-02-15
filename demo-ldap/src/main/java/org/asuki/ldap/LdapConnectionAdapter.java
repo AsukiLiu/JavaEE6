@@ -11,6 +11,10 @@ public class LdapConnectionAdapter implements AutoCloseable {
 
     private static final int NUM_THREADS = 5;
 
+    public static final String HOST = "localhost";
+    public static final int LDAP_POST = 34389;
+    public static final int LDAPS_POST = 34636;
+
     private LDAPConnection connection;
     private LDAPConnectionPool connectionPool;
 
@@ -21,7 +25,7 @@ public class LdapConnectionAdapter implements AutoCloseable {
         // connection.bind("cn=admin,dc=nodomain", "ldap");
 
         // In memory server
-        connection = new LDAPConnection("127.0.0.1", 34343);
+        connection = new LDAPConnection(HOST, LDAP_POST);
         connection.bind("cn=admin,dc=example,dc=com", "password");
 
         return connection;
