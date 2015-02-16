@@ -41,7 +41,7 @@ public abstract class AbstractTestBase {
     protected static final String BASE_DN = "dc=example, dc=com";
     private static final String LDIF_NAME = "example.ldif";
 
-    private static final String SERVER_KEY_STORE_FILE = getResource(
+    private static final String SERVER_KEY_STORE_PATH = getResource(
             "keystore.p12").getPath();
     private static final char[] SERVER_KEY_STORE_PIN = "password".toCharArray();
     private static final String KEY_STORE_FORMAT = "PKCS12";
@@ -87,7 +87,7 @@ public abstract class AbstractTestBase {
             UnknownHostException, GeneralSecurityException {
 
         SSLUtil serverSSLUtil = new SSLUtil(new KeyStoreKeyManager(
-                SERVER_KEY_STORE_FILE, SERVER_KEY_STORE_PIN, KEY_STORE_FORMAT,
+                SERVER_KEY_STORE_PATH, SERVER_KEY_STORE_PIN, KEY_STORE_FORMAT,
                 CERTIFICATE_ALIAS), null);
 
         // LDAP (with StartTLS)
@@ -100,7 +100,7 @@ public abstract class AbstractTestBase {
             UnknownHostException, GeneralSecurityException {
 
         SSLUtil serverSSLUtil = new SSLUtil(new KeyStoreKeyManager(
-                SERVER_KEY_STORE_FILE, SERVER_KEY_STORE_PIN, KEY_STORE_FORMAT,
+                SERVER_KEY_STORE_PATH, SERVER_KEY_STORE_PIN, KEY_STORE_FORMAT,
                 CERTIFICATE_ALIAS), null);
 
         SSLUtil clientSSLUtil = new SSLUtil(new TrustAllTrustManager());

@@ -4,6 +4,8 @@ import static com.unboundid.ldap.sdk.ResultCode.SUCCESS;
 import static java.lang.String.format;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.asuki.ldap.LdapConnectionAdapter.LDAP_POST;
+import static org.asuki.ldap.LdapConnectionAdapter.LDAPS_POST;
 
 import java.util.Properties;
 
@@ -31,8 +33,8 @@ public class LdapConnectionProviderTest extends AbstractTestBase {
     public Object[][] propertyData() {
         // @formatter:off
         return new Object[][] { 
-            { 34389, false, }, 
-            { 34636, true }, 
+            { LDAP_POST, false, }, 
+            { LDAPS_POST, true }, 
         };
         // @formatter:on
     }
