@@ -1,7 +1,5 @@
 package org.asuki.webservice.rs.resource;
 
-import static org.asuki.model.jackson.JsonUtil.jsonSerialize;
-
 import java.util.List;
 
 import javax.annotation.security.PermitAll;
@@ -17,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.asuki.model.entity.Address;
+import org.asuki.model.jackson.JsonConverters;
 import org.asuki.service.AddressService;
 import org.slf4j.Logger;
 
@@ -54,8 +53,7 @@ public class AddressResource extends BaseResource {
         Address address = addressService.findById(1);
         log.info(address.toString());
 
-        return jsonSerialize(address);
-
+        return JsonConverters.toString(address);
     }
 
     @Path("/create")
