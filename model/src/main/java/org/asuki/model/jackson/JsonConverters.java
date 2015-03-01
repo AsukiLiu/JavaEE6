@@ -10,12 +10,16 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.asuki.common.exception.CommonError;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public final class JsonConverters {
+
+    private static Logger log = LoggerFactory.getLogger(JsonConverters.class);
 
     private static ObjectMapper mapper = new ObjectMapper();
 
@@ -28,6 +32,7 @@ public final class JsonConverters {
         try {
             return mapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
+            log.error("Failed to convert object", e);
             return nullToEmpty(null);
         }
     }
@@ -40,6 +45,7 @@ public final class JsonConverters {
         try {
             return mapper.readValue(jsonString, clazz);
         } catch (IOException e) {
+            log.error("Failed to convert json string", e);
             return null;
         }
     }
@@ -53,6 +59,7 @@ public final class JsonConverters {
         try {
             return mapper.readValue(jsonString, valueTypeRef);
         } catch (IOException e) {
+            log.error("Failed to convert json string", e);
             return null;
         }
     }
