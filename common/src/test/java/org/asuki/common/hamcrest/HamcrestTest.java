@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.EventObject;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +52,10 @@ public class HamcrestTest {
         assertThat(one, is(equalTo(another))); // equals()
         assertThat(one, is(not(sameInstance(another)))); // ==
 
+        one.setAge(20);
+        another.setAge(20);
+        assertThat(one, is(comparesEqualTo(another)));  // compareTo()
+
         assertThat(str1, is(equalToIgnoringCase("FOO")));
         assertThat(str3,
                 is(equalToIgnoringWhiteSpace("foo        bar        baz")));
@@ -85,6 +90,7 @@ public class HamcrestTest {
         assertThat(array, is(arrayContainingInAnyOrder("foo", "baz", "bar")));
         assertThat(array, is(arrayWithSize(3)));
         assertThat(array, hasItemInArray("bar"));
+        assertThat("bar", isIn(array));
     }
 
     @SuppressWarnings("unchecked")
@@ -97,6 +103,7 @@ public class HamcrestTest {
         map.put("A", "a");
         map.put("B", "b");
 
+        assertThat(collet, hasItem("bar"));
         assertThat(collet, hasItems("bar", "baz"));
         assertThat(str, isIn(collet));
         assertThat(str, isOneOf(array));
@@ -120,6 +127,15 @@ public class HamcrestTest {
         List<String> list = Collections.emptyList();
         assertThat(list, is(empty()));
         assertThat(list, is(emptyCollectionOf(String.class)));
+
+        Iterable<String> iterable = new Iterable<String>() {
+            @Override
+            public Iterator<String> iterator() {
+                return Collections.emptyIterator();
+            }
+        };
+        assertThat(iterable, is(emptyIterable()));
+        assertThat(iterable, is(emptyIterableOf(String.class)));
     }
 
     @Test
@@ -136,10 +152,12 @@ public class HamcrestTest {
     @Test
     public void testBean() {
         Hoge one = new Hoge();
-        assertThat(one, hasProperty("name"));
-        assertThat(one, not(hasProperty("age")));
-
         one.setName("Tom");
+
+        assertThat(one, hasProperty("name"));
+        assertThat(one, hasProperty("name", is("Tom")));
+        assertThat(one, not(hasProperty("address")));
+
         assertThat(one, hasToString(equalTo("Hoge[Tom]")));
         assertThat(one.toString(), is(equalTo("Hoge[Tom]")));
 
@@ -169,14 +187,25 @@ public class HamcrestTest {
     @NoArgsConstructor
     @AllArgsConstructor
     @EqualsAndHashCode
-    public class Hoge {
-        @Getter
-        @Setter
+    @Getter
+    @Setter
+    public class Hoge implements Comparable<Hoge> {
+
         private String name;
+        private int age;
+
+        public Hoge(String name) {
+            this.name = name;
+        }
 
         @Override
         public String toString() {
             return "Hoge[" + name + "]";
+        }
+
+        @Override
+        public int compareTo(Hoge hoge) {
+            return this.age - hoge.age;
         }
     }
 }
