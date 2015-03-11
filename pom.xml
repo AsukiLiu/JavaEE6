@@ -19,6 +19,7 @@
         <module>demo-test</module>
         <module>demo-webservice</module>
         <module>demo-ldap</module>
+        <module>demo-deltaSpike</module>
   </modules>
 
     <properties>
