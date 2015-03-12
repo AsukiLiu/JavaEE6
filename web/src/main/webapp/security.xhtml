@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/template/main.xhtml">
+
+    <ui:define name="content">
+
+        <h:messages id="msg" globalOnly="true" />
+
+        <h:form id="loginForm" rendered="#{not identity.loggedIn}">
+
+            <div class="loginRow">
+                <h:outputLabel for="name" value="Name: "
+                    styleClass="loginLabel" />
+                <h:inputText id="name"
+                    value="#{loginCredentials.userId}" />
+            </div>
+
+            <div class="loginRow">
+                <h:outputLabel for="password" value="Password: "
+                    styleClass="loginLabel" />
+                <h:inputSecret id="password"
+                    value="#{loginCredentials.password}"
+                    redisplay="true" />
+            </div>
+
+            <div class="buttons">
+                <h:commandButton id="login" value="Login"
+                    action="#{identity.login}" styleClass="loginButton" />
+            </div>
+            <p>Try employee/1234 or admin/1234</p>
+
+        </h:form>
+
+        <ui:fragment rendered="#{identity.loggedIn}">
+            <h:form>
+                Welcome <b>#{identity.account.loginName}</b>!
+                <h:commandButton value="Logout" action="#{identity.logout}" />
+                <p />
+                <h:commandButton value="Above Employee could execute"
+                    action="#{securityBean.executeByEmployee}">
+                    <f:ajax execute="@this" render=":msg" />
+                </h:commandButton>
+                <br /><br />
+                <h:commandButton value="Only Admin could execute"
+                    action="#{securityBean.executeByAdmin}" />
+            </h:form>
+        </ui:fragment>
+
+    </ui:define>
+</ui:composition>

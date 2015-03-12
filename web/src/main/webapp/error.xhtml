@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/template/main.xhtml">
+
+    <ui:define name="content">
+
+        <h:form>
+            <h:commandButton value="Back" action="security.xhtml" />
+            <p />
+            Error occured:
+            <textarea rows="30" cols="100">  
+                <h:outputText escape="false" value="#{securityBean.stackTrace}" />
+            </textarea>
+            <p />
+        </h:form>
+
+    </ui:define>
+</ui:composition>

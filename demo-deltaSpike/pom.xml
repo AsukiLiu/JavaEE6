@@ -17,6 +17,23 @@
     </properties>
 
     <dependencies>
+        <!-- Module -->
+        <dependency>
+            <groupId>org.asuki</groupId>
+            <artifactId>demo-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- Spec -->
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!-- DeltaSpike -->
         <dependency>
             <groupId>org.apache.deltaspike.core</groupId>
@@ -32,13 +49,13 @@
         </dependency>
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
-            <artifactId>deltaspike-jsf-module-api</artifactId>
+            <artifactId>deltaspike-security-module-api</artifactId>
             <version>${deltaspike.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
-            <artifactId>deltaspike-jsf-module-impl</artifactId>
+            <artifactId>deltaspike-security-module-impl</artifactId>
             <version>${deltaspike.version}</version>
             <scope>compile</scope>
         </dependency>
@@ -66,7 +83,6 @@
             <version>${deltaspike.version}</version>
             <scope>runtime</scope>
         </dependency>
-
         <!-- PicketLink -->
         <dependency>
             <groupId>org.picketlink</groupId>
@@ -80,7 +96,6 @@
             <scope>runtime</scope>
             <version>${picketlink.version}</version>
         </dependency>
-
     </dependencies>
 
 </project>

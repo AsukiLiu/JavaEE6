@@ -23,6 +23,7 @@
 
     <properties>
         <infinispan.version>5.2.6.Final</infinispan.version>
+        <deltaspike.version>1.2.1</deltaspike.version>
     </properties>
 
     <dependencies>
@@ -45,6 +46,11 @@
         <dependency>
             <groupId>org.asuki</groupId>
             <artifactId>demo-webservice</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.asuki</groupId>
+            <artifactId>demo-deltaSpike</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- Spec -->
@@ -114,7 +120,6 @@
             <artifactId>atmosphere-runtime</artifactId>
             <version>1.0.19</version>
         </dependency>
-
     </dependencies>
 
 </project>
