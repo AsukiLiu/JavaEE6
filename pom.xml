@@ -26,6 +26,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.hibernate.version>4.2.0.Final</org.hibernate.version>
         <jboss.as.version>7.2.0.Final</jboss.as.version>
+        <deltaspike.version>1.2.1</deltaspike.version>
     </properties>
 
     <!-- JBoss Enterprise Application Platform - Version 6.1.0.GA -->

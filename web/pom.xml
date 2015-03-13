@@ -120,6 +120,18 @@
             <artifactId>atmosphere-runtime</artifactId>
             <version>1.0.19</version>
         </dependency>
+        <!-- DeltaSpike -->
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-servlet-module-api</artifactId>
+            <version>${deltaspike.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-servlet-module-impl</artifactId>
+            <version>${deltaspike.version}</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
 </project>

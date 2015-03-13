@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/template/main.xhtml">
+
+    <ui:define name="content">
+
+        <b><h:outputText id="msg"
+                value="#{requestBean.showInfo()}"
+                rendered="#{not empty requestBean.name}" /></b>
+        <br /><br />
+        <h:form>
+            <label for="greeting">Name </label>
+            <h:inputText value="#{requestBean.name}" id="name"></h:inputText>
+            <br /><br />
+            <h:commandButton id="submit" value="Submit">
+                <f:param name="delay" value="1" />
+            </h:commandButton>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

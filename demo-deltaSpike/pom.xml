@@ -12,7 +12,6 @@
     <name>DeltaSpike Demo</name>
 
     <properties>
-        <deltaspike.version>1.2.1</deltaspike.version>
         <picketlink.version>2.7.0.Final</picketlink.version>
     </properties>
 
@@ -39,43 +38,39 @@
             <groupId>org.apache.deltaspike.core</groupId>
             <artifactId>deltaspike-core-api</artifactId>
             <version>${deltaspike.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.deltaspike.core</groupId>
             <artifactId>deltaspike-core-impl</artifactId>
             <version>${deltaspike.version}</version>
-            <scope>compile</scope>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-security-module-api</artifactId>
             <version>${deltaspike.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-security-module-impl</artifactId>
             <version>${deltaspike.version}</version>
-            <scope>compile</scope>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-data-module-api</artifactId>
             <version>${deltaspike.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-data-module-impl</artifactId>
             <version>${deltaspike.version}</version>
-            <scope>compile</scope>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
             <artifactId>deltaspike-jpa-module-api</artifactId>
             <version>${deltaspike.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.deltaspike.modules</groupId>
@@ -87,14 +82,13 @@
         <dependency>
             <groupId>org.picketlink</groupId>
             <artifactId>picketlink-api</artifactId>
-            <scope>compile</scope>
             <version>${picketlink.version}</version>
         </dependency>
         <dependency>
             <groupId>org.picketlink</groupId>
             <artifactId>picketlink-impl</artifactId>
-            <scope>runtime</scope>
             <version>${picketlink.version}</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
