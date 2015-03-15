@@ -50,6 +50,7 @@
         </dependency>
         <dependency>
             <groupId>org.asuki</groupId>
+            <!-- Not use EJB -->
             <artifactId>demo-dao</artifactId>
             <version>${project.version}</version>
         </dependency>
