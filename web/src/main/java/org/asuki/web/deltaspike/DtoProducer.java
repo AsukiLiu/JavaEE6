@@ -1,7 +1,6 @@
 package org.asuki.web.deltaspike;
 
 import javax.enterprise.inject.Produces;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import org.apache.deltaspike.core.api.scope.ConversationGroup;
@@ -24,6 +23,9 @@ import org.asuki.deltaspike.dto.group.TicketDtoGroup;
 import org.asuki.web.deltaspike.annotation.Produced;
 
 public class DtoProducer {
+
+    @Inject
+    private Utils utils;
 
     @Inject
     private BusDtoAccess busDtoAccess;
@@ -60,40 +62,33 @@ public class DtoProducer {
     @ConversationGroup(BusTicketGroupable.class)
     private TicketDtoGroup ticketDtoGroup;
 
-    @Inject
-    private FacesContext facesContext;
-
-    public boolean isGroup() {
-        return facesContext.getViewRoot().getViewId().contains("group");
-    }
-
     @Produces
     @Produced
     public BusDto getBusDto() {
-        return isGroup() ? busDtoGroup : busDtoAccess;
+        return utils.isGroup() ? busDtoGroup : busDtoAccess;
     }
 
     @Produces
     @Produced
     public LineDto getLineDto() {
-        return isGroup() ? lineDtoGroup : lineDtoAccess;
+        return utils.isGroup() ? lineDtoGroup : lineDtoAccess;
     }
 
     @Produces
     @Produced
     public OrderDto getOrderDto() {
-        return isGroup() ? orderDtoGroup : orderDtoAccess;
+        return utils.isGroup() ? orderDtoGroup : orderDtoAccess;
     }
 
     @Produces
     @Produced
     public SeatsDto getSeatsDto() {
-        return isGroup() ? seatsDtoGroup : seatsDtoAccess;
+        return utils.isGroup() ? seatsDtoGroup : seatsDtoAccess;
     }
 
     @Produces
     @Produced
     public TicketDto getTicketDto() {
-        return isGroup() ? ticketDtoGroup : ticketDtoAccess;
+        return utils.isGroup() ? ticketDtoGroup : ticketDtoAccess;
     }
 }

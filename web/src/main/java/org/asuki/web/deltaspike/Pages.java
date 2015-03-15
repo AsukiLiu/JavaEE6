@@ -11,6 +11,8 @@ public interface Pages extends ViewConfig {
 
     public interface Access extends Pages {
 
+        /* @ViewAccessScoped */
+
         @View(name = "bus_line")
         public class BusLine implements Pages {
         }
