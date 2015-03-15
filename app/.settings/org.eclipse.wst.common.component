@@ -23,6 +23,54 @@
         <dependent-module archiveName="demo-dao.jar" deploy-path="/lib" handle="module:/resource/demo-dao/demo-dao">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="demo-deltaSpike.jar" deploy-path="/lib" handle="module:/resource/demo-deltaSpike/demo-deltaSpike">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="deltaspike-core-api.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/deltaspike/core/deltaspike-core-api/1.2.1/deltaspike-core-api-1.2.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="deltaspike-core-impl.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/deltaspike/core/deltaspike-core-impl/1.2.1/deltaspike-core-impl-1.2.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="deltaspike-security-module-api.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/deltaspike/modules/deltaspike-security-module-api/1.2.1/deltaspike-security-module-api-1.2.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="deltaspike-security-module-impl.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/deltaspike/modules/deltaspike-security-module-impl/1.2.1/deltaspike-security-module-impl-1.2.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="deltaspike-data-module-api.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/deltaspike/modules/deltaspike-data-module-api/1.2.1/deltaspike-data-module-api-1.2.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="deltaspike-partial-bean-module-api.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/deltaspike/modules/deltaspike-partial-bean-module-api/1.2.1/deltaspike-partial-bean-module-api-1.2.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="deltaspike-data-module-impl.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/deltaspike/modules/deltaspike-data-module-impl/1.2.1/deltaspike-data-module-impl-1.2.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="deltaspike-partial-bean-module-impl.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/deltaspike/modules/deltaspike-partial-bean-module-impl/1.2.1/deltaspike-partial-bean-module-impl-1.2.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="deltaspike-jpa-module-api.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/deltaspike/modules/deltaspike-jpa-module-api/1.2.1/deltaspike-jpa-module-api-1.2.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="deltaspike-jpa-module-impl.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/deltaspike/modules/deltaspike-jpa-module-impl/1.2.1/deltaspike-jpa-module-impl-1.2.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="picketlink-api.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/picketlink/picketlink-api/2.7.0.Final/picketlink-api-2.7.0.Final.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="picketlink-idm-api.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/picketlink/picketlink-idm-api/2.7.0.Final/picketlink-idm-api-2.7.0.Final.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="picketlink-impl.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/picketlink/picketlink-impl/2.7.0.Final/picketlink-impl-2.7.0.Final.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="picketlink-common.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/picketlink/picketlink-common/2.7.0.Final/picketlink-common-2.7.0.Final.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="picketlink-idm-impl.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/picketlink/picketlink-idm-impl/2.7.0.Final/picketlink-idm-impl-2.7.0.Final.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="demo-service.jar" deploy-path="/lib" handle="module:/resource/demo-service/demo-service">
             <dependency-type>uses</dependency-type>
         </dependent-module>

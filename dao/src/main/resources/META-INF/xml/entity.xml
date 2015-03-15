@@ -12,4 +12,9 @@
     <entity class="org.asuki.model.entity.Project" cacheable="true" />
     <entity class="org.asuki.model.entity.Qualification" cacheable="true" />
 
+    <entity class="org.asuki.model.entity.deltaspike.Bus" />
+    <entity class="org.asuki.model.entity.deltaspike.Line" />
+    <entity class="org.asuki.model.entity.deltaspike.Order" />
+    <entity class="org.asuki.model.entity.deltaspike.Ticket" />
+
 </entity-mappings>
