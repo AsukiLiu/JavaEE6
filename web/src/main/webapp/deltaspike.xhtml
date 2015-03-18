@@ -8,6 +8,7 @@
 
     <ui:define name="content">
 
+        <h3>Servlet Demo</h3>
         <b><h:outputText id="msg"
                 value="#{requestBean.showInfo()}"
                 rendered="#{not empty requestBean.name}" /></b>
@@ -21,5 +22,30 @@
             </h:commandButton>
         </h:form>
 
+        <br />
+
+        <h3>Message Demo</h3>
+        <h:form id="inputForm">
+            <h:outputLabel value="Translate English to " for="language" />
+            <h:selectOneMenu id="language"
+                value="#{translateBean.language}">
+                <f:selectItems value="#{translateBean.languages}"
+                    var="lang" itemValue="#{lang}"
+                    itemLabel="#{lang.value}" />
+            </h:selectOneMenu>
+            <br />
+
+            <h:inputText id="text" value="#{translateBean.inputText}" />
+            <span class="hint">Try "hello"</span>
+            <br /><br />
+            <h:commandButton id="translate"
+                action="#{translateBean.translate()}" value="Translate" />
+            <br />
+        </h:form>
+        <p>
+            <h:outputLabel value="Translation: " for="translation" />
+            <h:outputText id="translation"
+                value="#{translateBean.translatedText}" />
+        </p>
     </ui:define>
 </ui:composition>

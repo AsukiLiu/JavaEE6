@@ -1,5 +1,8 @@
 package org.asuki.common;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import com.google.common.base.Ascii;
 import com.google.common.base.Charsets;
 
@@ -9,6 +12,7 @@ public interface Constants {
 
         String ADDRESS_SERVICE = "java:global/demo-app/demo-service-impl/AddressService";
         String EMPLOYEE_SERVICE = "java:global/demo-app/demo-service-impl/EmployeeService";
+        String TRANSLATOR_SERVICE = "java:global/demo-app/demo-service-impl/TranslatorService";
     }
 
     interface Systems {
@@ -28,4 +32,13 @@ public interface Constants {
         String CONTEXT_DATA_KEY = "xKey";
     }
 
+    @AllArgsConstructor
+    enum Language {
+
+        JAPAN("Japan"), CHINA("China");
+
+        @Getter
+        private final String value;
+
+    }
 }
