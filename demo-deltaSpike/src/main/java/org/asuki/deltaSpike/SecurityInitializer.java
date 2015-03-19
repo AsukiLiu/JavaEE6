@@ -3,6 +3,7 @@ package org.asuki.deltaSpike;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.PartitionManager;
 import org.picketlink.idm.RelationshipManager;
+import org.picketlink.idm.credential.Digest;
 import org.picketlink.idm.credential.Password;
 import org.picketlink.idm.model.basic.Role;
 import org.picketlink.idm.model.basic.User;
@@ -30,6 +31,8 @@ public class SecurityInitializer {
         IdentityManager identityManager = partitionManager
                 .createIdentityManager();
 
+        /*--------testing role---------*/
+
         User employee = new User("employee");
         employee.setEmail("employee@example.com");
         identityManager.add(employee);
@@ -50,5 +53,19 @@ public class SecurityInitializer {
 
         grantRole(relationshipManager, employee, employeeRole);
         grantRole(relationshipManager, admin, adminRole);
+
+        /*--------testing digest---------*/
+
+        User user = new User("digest");
+        user.setEmail("digest@example.com");
+        identityManager.add(user);
+
+        Digest digestCredential = new Digest();
+        digestCredential
+            .setRealm("Test Realm")
+            .setUsername(user.getLoginName())
+            .setPassword("1234");
+
+        identityManager.updateCredential(user, digestCredential);
     }
 }

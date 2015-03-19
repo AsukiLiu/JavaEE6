@@ -1,5 +1,7 @@
 package org.asuki.web.bean;
 
+import static org.picketlink.Identity.AuthenticationResult.FAILED;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -7,12 +9,17 @@ import javax.inject.Named;
 
 import org.asuki.deltaSpike.annotation.Admin;
 import org.asuki.deltaSpike.annotation.Employee;
+import org.picketlink.Identity;
+import org.picketlink.Identity.AuthenticationResult;
 
 @Named
 public class SecurityBean {
 
     @Inject
     private FacesContext facesContext;
+
+    @Inject
+    private Identity identity;
 
     @Employee
     public void executeByEmployee() {
@@ -39,4 +46,11 @@ public class SecurityBean {
         return builder.toString();
     }
 
+    public void login() {
+        AuthenticationResult result = identity.login();
+        if (FAILED.equals(result)) {
+            facesContext.addMessage(null, new FacesMessage(
+                    "Authentication was unsuccessful."));
+        }
+    }
 }

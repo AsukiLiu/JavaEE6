@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/template/main.xhtml">
+
+    <ui:define name="content">
+
+        <h:form id="loginForm" rendered="#{not identity.loggedIn}">
+            <h:messages globalOnly="true" />
+
+            <div class="loginRow">
+                <h:outputLabel for="name" value="Username"
+                    styleClass="loginLabel" />
+                <h:inputText id="name"
+                    value="#{loginCredentials.userId}" />
+            </div>
+
+            <div class="loginRow">
+                <h:outputLabel for="password" value="Password"
+                    styleClass="loginLabel" />
+                <h:inputSecret id="password"
+                    value="#{loginCredentials.password}"
+                    redisplay="true" />
+            </div>
+
+            <div class="loginRow"></div>
+
+            <div class="buttons">
+                <h:commandButton id="login" value="Login"
+                    action="#{securityBean.login}"
+                    styleClass="loginButton" />
+            </div>
+            <p>Try admin/1234</p>
+
+        </h:form>
+
+        <ui:fragment rendered="#{identity.loggedIn}">
+            Welcome <b>#{identity.account.loginName}</b>!
+            <h:form>
+                <h:commandButton id="logout" value="Logout"
+                    action="#{identity.logout}" />
+            </h:form>
+        </ui:fragment>
+
+    </ui:define>
+</ui:composition>
