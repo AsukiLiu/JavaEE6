@@ -12,7 +12,6 @@ public interface Constants {
 
         String ADDRESS_SERVICE = "java:global/demo-app/demo-service-impl/AddressService";
         String EMPLOYEE_SERVICE = "java:global/demo-app/demo-service-impl/EmployeeService";
-        String TRANSLATOR_SERVICE = "java:global/demo-app/demo-service-impl/TranslatorService";
     }
 
     interface Systems {

@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import org.asuki.common.Constants.Language;
-import org.asuki.service.TranslatorService;
+import org.asuki.web.deltaspike.service.TranslatorService;
 
 @Model
 public class TranslateBean {

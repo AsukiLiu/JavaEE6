@@ -47,5 +47,17 @@
             <h:outputText id="translation"
                 value="#{translateBean.translatedText}" />
         </p>
+
+        <br />
+
+        <h3>JMX Demo</h3>
+        <h:form>
+            Number of all translations: <h:outputText
+                value="#{translationMBeanClient.translations}"
+                id="translations" />
+            <br /><br />
+            <h:commandButton id="reset" value="Reset"
+                action="#{translationMBeanClient.reset()}" />
+        </h:form>
     </ui:define>
 </ui:composition>

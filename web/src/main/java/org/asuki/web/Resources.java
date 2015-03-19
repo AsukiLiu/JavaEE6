@@ -9,7 +9,6 @@ import javax.inject.Named;
 import org.asuki.common.Constants.Services;
 import org.asuki.service.AddressService;
 import org.asuki.service.EmployeeService;
-import org.asuki.service.TranslatorService;
 
 public class Resources {
 
@@ -20,10 +19,6 @@ public class Resources {
     @Produces
     @EJB(lookup = Services.EMPLOYEE_SERVICE)
     private EmployeeService employeeService;
-
-    @Produces
-    @EJB(lookup = Services.TRANSLATOR_SERVICE)
-    private TranslatorService translatorService;
 
     @Named
     @Produces
