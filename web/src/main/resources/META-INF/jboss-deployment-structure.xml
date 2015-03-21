@@ -10,9 +10,6 @@
             <module name="org.jboss.as.domain-management" export="true" />
             <module name="org.jboss.as.controller" export="true" />
             <module name="org.infinispan" export="true" />
-            <module name="org.jboss.as.clustering.infinispan" export="true"/>
-            <module name="org.jboss.as.server" export="true"/>
-            <module name="org.jgroups" export="true"/>
         </dependencies>
     </deployment>
 </jboss-deployment-structure>
