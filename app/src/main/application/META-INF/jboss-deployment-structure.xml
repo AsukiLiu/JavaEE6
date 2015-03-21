@@ -20,6 +20,9 @@
             <module name="javax.validation.api" export="true" />
             <module name="javax.xml.bind.api" export="true" />
             <module name="javax.api" export="true" />
+            <module name="org.jboss.as.clustering.singleton" export="true"/>
+            <module name="org.jboss.as.server" export="true"/>
+            <module name="org.jboss.msc" export="true"/>
         </dependencies>
 
     </deployment>

@@ -7,6 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.asuki.common.Constants.Services;
+import org.asuki.service.AccessService;
 import org.asuki.service.AddressService;
 import org.asuki.service.EmployeeService;
 
@@ -19,6 +20,10 @@ public class Resources {
     @Produces
     @EJB(lookup = Services.EMPLOYEE_SERVICE)
     private EmployeeService employeeService;
+
+    @Produces
+    @EJB(lookup = Services.ACCESS_SERVICE)
+    private AccessService accessService;
 
     @Named
     @Produces

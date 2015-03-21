@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.asuki.service.AccessService;
 import org.infinispan.manager.CacheContainer;
 import org.jboss.as.server.CurrentServiceContainer;
 import org.jboss.msc.service.ServiceName;
@@ -37,6 +38,9 @@ public class ClusterServlet extends HttpServlet {
     @Resource(lookup = "java:jboss/infinispan/container/singleton")
     private CacheContainer container;
 
+    @Inject
+    private AccessService accessService;
+
     public ClusterServlet() {
         super();
     }
@@ -55,7 +59,8 @@ public class ClusterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+
+        log.info(accessService.getNodeName());
     }
 
     private void getClusterMembersByJGroups() {
