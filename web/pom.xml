@@ -29,27 +29,27 @@
     <dependencies>
         <!-- Module -->
         <dependency>
-            <groupId>org.asuki</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>demo-common</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.asuki</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>demo-model</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.asuki</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>demo-service</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.asuki</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>demo-webservice</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.asuki</groupId>
+            <groupId>${project.groupId}</groupId>
             <!-- Not use EJB -->
             <artifactId>demo-dao</artifactId>
             <version>${project.version}</version>

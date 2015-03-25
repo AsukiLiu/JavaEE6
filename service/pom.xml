@@ -13,22 +13,10 @@
 
     <name>Demo EJB services</name>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.jboss.as</groupId>
-                <artifactId>jboss-as-ejb-client-bom</artifactId>
-                <version>7.1.1.Final</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <!-- Module -->
         <dependency>
-            <groupId>org.asuki</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>demo-model</artifactId>
             <version>${project.version}</version>
         </dependency>

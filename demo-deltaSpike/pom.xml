@@ -18,7 +18,7 @@
     <dependencies>
         <!-- Module -->
         <dependency>
-            <groupId>org.asuki</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>demo-common</artifactId>
             <version>${project.version}</version>
         </dependency>

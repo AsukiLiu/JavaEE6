@@ -18,7 +18,7 @@
     <dependencies>
         <!-- Module -->
         <dependency>
-            <groupId>org.asuki</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>demo-common</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -53,13 +53,11 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>${org.hibernate.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>${org.hibernate.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
