@@ -13,9 +13,11 @@ import org.jboss.shrinkwrap.api.ArchivePath;
 import org.jboss.shrinkwrap.api.Filters;
 import org.jboss.shrinkwrap.api.Node;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.descriptor.api.persistence20.PersistenceDescriptor;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 
 public abstract class BaseArquillian extends Arquillian {
@@ -25,6 +27,7 @@ public abstract class BaseArquillian extends Arquillian {
 
     protected static Map<String, String> webInfResources = newHashMap();
     protected static Map<String, String> resources = newHashMap();
+    protected static PersistenceDescriptor persistenceXml;
     protected static String jarFilterRegexp = "^/WEB-INF/lib/demo-.*\\.jar$";
 
     @Deployment
@@ -68,6 +71,12 @@ public abstract class BaseArquillian extends Arquillian {
 
         for (Entry<String, String> entry : resources.entrySet()) {
             war.addAsResource(entry.getKey(), entry.getValue());
+        }
+
+        if (persistenceXml != null) {
+            war.addAsWebInfResource(
+                    new StringAsset(persistenceXml.exportAsString()),
+                    "classes/META-INF/persistence.xml");
         }
 
         deleteConflictedLibraries(war);

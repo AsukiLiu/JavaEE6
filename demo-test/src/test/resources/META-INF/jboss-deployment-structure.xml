@@ -7,6 +7,7 @@
             <module name="org.hibernate.validator" export="true" />
             <module name="org.jboss.resteasy.resteasy-jaxrs" export="true" />
             <module name="org.jboss.resteasy.resteasy-jackson-provider" export="true" />
+            <module name="org.infinispan" export="true" />
         </dependencies>
     </deployment>
 </jboss-deployment-structure>

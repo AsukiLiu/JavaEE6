@@ -15,6 +15,8 @@ import javax.inject.Inject;
 import org.asuki.bv.CustomValidator;
 import org.asuki.exception.ServiceException;
 import org.asuki.test.BaseArquillian;
+import org.jboss.shrinkwrap.descriptor.api.Descriptors;
+import org.jboss.shrinkwrap.descriptor.api.persistence20.PersistenceDescriptor;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -28,6 +30,12 @@ public class ValidatorIT extends BaseArquillian {
                 "ValidationMessages_en.properties");
         resources.put("ValidationMessages_ja.properties",
                 "ValidationMessages_ja.properties");
+
+        persistenceXml = Descriptors.create(PersistenceDescriptor.class)  
+                .createPersistenceUnit()  
+                    .name("testU")  
+                    .jtaDataSource("java:jboss/datasources/ExampleDS")  
+                .up();
     }
 
     @Inject
