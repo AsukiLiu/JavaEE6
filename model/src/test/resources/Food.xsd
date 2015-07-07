@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:test="http://asuki.org/model/jackson/generated"
+    targetNamespace="http://asuki.org/model/jackson/generated"
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xs:element name="Food">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Vegetable" type="test:Vegetable" />
+                <xs:element ref="test:Fruit" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="Vegetable">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Carrot" />
+            <xs:enumeration value="Squash" />
+            <xs:enumeration value="Spinach" />
+            <xs:enumeration value="Celery" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="Fruit">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="Watermelon" />
+                <xs:enumeration value="Apple" />
+                <xs:enumeration value="Orange" />
+                <xs:enumeration value="Grape" />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+</xs:schema>
+<!-- Usage: xjc -d your_folder Food.xsd -->
